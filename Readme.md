@@ -57,3 +57,5 @@ They have sensible defaults on the major platforms and toolchains.
 
 # Todo
 
+- Adjust C++ string_ref thunk function to return a `bool` (true for success).
+- `atomic_refcounted_string_ref` should store its atomic at the front of the malloc buffer.

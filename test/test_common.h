@@ -7,11 +7,12 @@
 
 #define STRINGISE2(x) #x
 #define STRINGISE(x) STRINGISE2(x)
-#define CHECK(x)                                                                                                                                               \
-  if(!(x))                                                                                                                                                     \
-  {                                                                                                                                                            \
-    fprintf(stderr, "CHECK(" STRINGISE(x) ") failed at " __FILE__ ":" STRINGISE(__LINE__) "\n");                                                               \
-    ret++;                                                                                                                                                     \
+#define CHECK(x)                                                               \
+  if(!(x))                                                                     \
+  {                                                                            \
+    fprintf(stderr, "CHECK(" STRINGISE(x) ") failed at " __FILE__              \
+                                          ":" STRINGISE(__LINE__) "\n");       \
+    ret++;                                                                     \
   }
 
 #if __has_include(<threads.h>)
@@ -34,7 +35,7 @@ static inline void *thrd_runner(void *arg)
 {
   thrd_t thr = (thrd_t) arg;
   thr->res = thr->func(thr->arg);
-  return WG14_SIGNALS_NULLPTR;
+  return NULL;
 }
 
 static inline int thrd_create(thrd_t *thr, thrd_start_t func, void *arg)
@@ -44,12 +45,12 @@ static inline int thrd_create(thrd_t *thr, thrd_start_t func, void *arg)
   ret->res = 0;
   ret->func = func;
   *thr = ret;
-  return pthread_create(&ret->thread, WG14_SIGNALS_NULLPTR, thrd_runner, ret);
+  return pthread_create(&ret->thread, NULL, thrd_runner, ret);
 }
 
 static inline int thrd_join(thrd_t thr, int *res)
 {
-  int ret = pthread_join(thr->thread, WG14_SIGNALS_NULLPTR);
+  int ret = pthread_join(thr->thread, NULL);
   if(ret != -1)
   {
     *res = thr->res;

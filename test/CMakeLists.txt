@@ -1,1 +1,1 @@
-#add_code_test(async_signal_safe_tls_test SOURCES "async_signal_safe_tls_test.c" FEATURES c_std_11)
+add_code_test(status_code_test SOURCES "status_code_test.c")

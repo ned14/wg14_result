@@ -10,10 +10,11 @@ enable_testing()
 
 set(LIBRARY_SOURCES
   "src/wg14_result/status_code_domain.c"
+  "src/wg14_result/status_code_generic.c"
 )
 
 add_library(${PROJECT_NAME} ${LIBRARY_SOURCES})
-target_compile_features(${PROJECT_NAME} PRIVATE c_std_11 cxx_std_11)
+target_compile_features(${PROJECT_NAME} PRIVATE c_std_11)
 target_compile_definitions(${PROJECT_NAME} PRIVATE WG14_RESULT_SOURCE)
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
