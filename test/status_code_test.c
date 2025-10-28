@@ -22,19 +22,24 @@ enum Code
 
 // "Full fat" custom status code domain
 static WG14_RESULT_PREFIX(status_code_domain_string_ref)
-Code_domain_vtable_name(void);
+Code_domain_vtable_name(WG14_RESULT_PREFIX(status_code_domain) * domain);
 static WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-Code_domain_vtable_payload_info(void);
+Code_domain_vtable_payload_info(WG14_RESULT_PREFIX(status_code_domain) *
+                                domain);
 static bool Code_domain_vtable_failure(
+WG14_RESULT_PREFIX(status_code_domain) * domain,
 const WG14_RESULT_PREFIX(status_code_untyped) * code);
 static bool Code_domain_vtable_equivalent(
+WG14_RESULT_PREFIX(status_code_domain) * domain,
 const WG14_RESULT_PREFIX(status_code_untyped) * code1,
 const WG14_RESULT_PREFIX(status_code_untyped) * code2);
 static WG14_RESULT_PREFIX(status_code_generic)
-Code_domain_vtable_generic_code(const WG14_RESULT_PREFIX(status_code_untyped) *
+Code_domain_vtable_generic_code(WG14_RESULT_PREFIX(status_code_domain) * domain,
+                                const WG14_RESULT_PREFIX(status_code_untyped) *
                                 code);
 static WG14_RESULT_PREFIX(status_code_domain_string_ref)
-Code_domain_vtable_message(const WG14_RESULT_PREFIX(status_code_untyped) *
+Code_domain_vtable_message(WG14_RESULT_PREFIX(status_code_domain) * domain,
+                           const WG14_RESULT_PREFIX(status_code_untyped) *
                            code);
 
 static WG14_RESULT_CONSTEXPR
@@ -63,15 +68,17 @@ STATUS_CODE_WITH_PAYLOAD_DECLARE(enum Code, Code)
 typedef STATUS_CODE_WITH_PAYLOAD(Code) StatusCode;
 
 static WG14_RESULT_PREFIX(status_code_domain_string_ref)
-Code_domain_vtable_name(void)
+Code_domain_vtable_name(WG14_RESULT_PREFIX(status_code_domain) * domain)
 {
+  (void) domain;
   return WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string)(
   "Code_category_impl");
 }
 
 static WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-Code_domain_vtable_payload_info(void)
+Code_domain_vtable_payload_info(WG14_RESULT_PREFIX(status_code_domain) * domain)
 {
+  (void) domain;
   WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
   ret = {
   sizeof(enum Code),
@@ -83,20 +90,23 @@ Code_domain_vtable_payload_info(void)
 }
 
 static bool
-Code_domain_vtable_failure(const WG14_RESULT_PREFIX(status_code_untyped) * code)
+Code_domain_vtable_failure(WG14_RESULT_PREFIX(status_code_domain) * domain,
+                           const WG14_RESULT_PREFIX(status_code_untyped) * code)
 {
-  assert(code->domain == &Code_domain);
+  (void) domain;
+  assert(domain->id == Code_domain.id);
   const StatusCode *c = (const StatusCode *) code;
   return ((int) c->value & 1) != 0;  // NOLINT
 }
 
 static bool Code_domain_vtable_equivalent(
+WG14_RESULT_PREFIX(status_code_domain) * domain,
 const WG14_RESULT_PREFIX(status_code_untyped) * code1,
 const WG14_RESULT_PREFIX(status_code_untyped) * code2)
 {
-  assert(code1->domain == &Code_domain);
+  assert(domain->id == Code_domain.id);
   const StatusCode *c1 = (const StatusCode *) code1;
-  if(code2->domain->id == code1->domain->id)
+  if(code2->domain->id == domain->id)
   {
     const StatusCode *c2 = (const StatusCode *) code2;
     return c1->value == c2->value;
@@ -128,10 +138,12 @@ const WG14_RESULT_PREFIX(status_code_untyped) * code2)
 }
 
 static WG14_RESULT_PREFIX(status_code_generic)
-Code_domain_vtable_generic_code(const WG14_RESULT_PREFIX(status_code_untyped) *
+Code_domain_vtable_generic_code(WG14_RESULT_PREFIX(status_code_domain) * domain,
+                                const WG14_RESULT_PREFIX(status_code_untyped) *
                                 code)
 {
-  assert(code->domain == &Code_domain);
+  (void) domain;
+  assert(domain->id == Code_domain.id);
   const StatusCode *c = (const StatusCode *) code;
   switch(c->value)
   {
@@ -151,9 +163,11 @@ Code_domain_vtable_generic_code(const WG14_RESULT_PREFIX(status_code_untyped) *
 }
 
 static WG14_RESULT_PREFIX(status_code_domain_string_ref)
-Code_domain_vtable_message(const WG14_RESULT_PREFIX(status_code_untyped) * code)
+Code_domain_vtable_message(WG14_RESULT_PREFIX(status_code_domain) * domain,
+                           const WG14_RESULT_PREFIX(status_code_untyped) * code)
 {
-  assert(code->domain == &Code_domain);
+  (void) domain;
+  assert(domain->id == Code_domain.id);
   const StatusCode *c = (const StatusCode *) code;
   switch(c->value)
   {

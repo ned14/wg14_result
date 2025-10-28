@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 set(CMAKE_C_VISIBILITY_PRESET "hidden" CACHE STRING "Only make explicitly exported symbols visible")
 set(CMAKE_C_STANDARD "11" CACHE STRING "C standard to use")
+option(HEADER_ONLY_BUILD "Build using header only (unity build)" OFF)
 
 project(wg14_result LANGUAGES C)
 include(GNUInstallDirs)
@@ -14,7 +15,12 @@ set(LIBRARY_SOURCES
 )
 
 add_library(${PROJECT_NAME} ${LIBRARY_SOURCES})
-target_compile_features(${PROJECT_NAME} PRIVATE c_std_11)
+if(HEADER_ONLY_BUILD)
+  target_compile_features(${PROJECT_NAME} PUBLIC c_std_11)
+  target_compile_definitions(${PROJECT_NAME} PUBLIC WG14_RESULT_ENABLE_HEADER_ONLY)
+else()
+  target_compile_features(${PROJECT_NAME} PRIVATE c_std_11)
+endif()
 target_compile_definitions(${PROJECT_NAME} PRIVATE WG14_RESULT_SOURCE)
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"

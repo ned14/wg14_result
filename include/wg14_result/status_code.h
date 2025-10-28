@@ -26,6 +26,11 @@ limitations under the License.
 #ifdef __cplusplus
 extern "C"
 {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4190)  // has C linkage, but returns type which is
+                                 // incompatible with C
+#endif
 #endif
 
 #define STATUS_CODE_WITH_PAYLOAD(T)                                            \
@@ -57,16 +62,18 @@ extern "C"
   WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_success)(
   const WG14_RESULT_PREFIX(status_code_untyped) * r)
   {
-    return (r->domain != WG14_RESULT_NULLPTR) ? !r->domain->vptr->failure(r) :
-                                                false;
+    return (r->domain != WG14_RESULT_NULLPTR) ?
+           !r->domain->vptr->failure(r->domain, r) :
+           false;
   }
 
   //! \brief True if the status code is a failure (implementation)
   WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_failure)(
   const WG14_RESULT_PREFIX(status_code_untyped) * r)
   {
-    return (r->domain != WG14_RESULT_NULLPTR) ? r->domain->vptr->failure(r) :
-                                                false;
+    return (r->domain != WG14_RESULT_NULLPTR) ?
+           r->domain->vptr->failure(r->domain, r) :
+           false;
   }
 
   //! \brief Retrieves the message of the status code (implementation). Make
@@ -78,7 +85,7 @@ extern "C"
   {
     if(r->domain != WG14_RESULT_NULLPTR)
     {
-      return r->domain->vptr->message(r);
+      return r->domain->vptr->message(r->domain, r);
     }
     return WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string)(
     "(empty)");
@@ -96,7 +103,8 @@ extern "C"
     if(primary->domain != WG14_RESULT_NULLPTR &&
        secondary->domain != WG14_RESULT_NULLPTR)
     {
-      return primary->domain->vptr->equivalent(primary, secondary);
+      return primary->domain->vptr->equivalent(primary->domain, primary,
+                                               secondary);
     }
     // If we are both empty, we are equivalent
     if(WG14_RESULT_NULLPTR == primary->domain &&
@@ -133,6 +141,9 @@ extern "C"
   (&(primary).base, &(secondary).base)
 
 #ifdef __cplusplus
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 }
 #endif
 

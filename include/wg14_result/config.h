@@ -21,6 +21,18 @@ limitations under the License.
 #ifndef WG14_RESULT_CONFIG_H
 #define WG14_RESULT_CONFIG_H
 
+#if WG14_RESULT_ENABLE_HEADER_ONLY || WG14_RESULT_SOURCE
+#if defined(__cplusplus)
+#if __cplusplus < 202000L && !_HAS_CXX20
+#error                                                                         \
+"If being compiled as C++, the source code requires a minimum of a C++ 20 compiler for decent C11 support."
+#endif
+#elif __STDC_VERSION__ < 201100L
+#error                                                                         \
+"The source code requires a minimum of a C11 compiler for atomics support."
+#endif
+#endif
+
 #ifndef WG14_RESULT_PREFIX
 #define WG14_RESULT_PREFIX(x) x
 #endif
@@ -72,6 +84,8 @@ limitations under the License.
 #else
 #define WG14_RESULT_EXTERN extern __attribute__((visibility("default")))
 #endif
+#elif WG14_RESULT_ENABLE_HEADER_ONLY
+#define WG14_RESULT_EXTERN extern inline
 #else
 #define WG14_RESULT_EXTERN extern
 #endif

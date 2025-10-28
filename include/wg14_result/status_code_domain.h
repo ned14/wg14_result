@@ -29,6 +29,15 @@ limitations under the License.
 #ifdef __cplusplus
 extern "C"
 {
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wclass-memaccess"
+#endif
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4190)  // has C linkage, but returns type which is
+                                 // incompatible with C
+#endif
 #endif
 
   //! \brief Type of a unique id of a domain
@@ -36,7 +45,7 @@ extern "C"
   WG14_RESULT_PREFIX(status_code_domain_unique_id_type);
 
   //! \brief Type of a string ref of a domain
-  typedef struct WG14_RESULT_PREFIX(status_code_domain_string_ref)
+  typedef struct WG14_RESULT_PREFIX(status_code_domain_string_ref_s)
   WG14_RESULT_PREFIX(status_code_domain_string_ref);
 
   //! \brief Type of a string ref thunk op
@@ -53,7 +62,7 @@ extern "C"
   WG14_RESULT_PREFIX(status_code_domain_string_ref) * src,
   enum WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op) op);
 
-  struct WG14_RESULT_PREFIX(status_code_domain_string_ref)
+  struct WG14_RESULT_PREFIX(status_code_domain_string_ref_s)
   {
     const char *c_str, *end;
     void *state[3];
@@ -185,38 +194,46 @@ extern "C"
   typedef const struct WG14_RESULT_PREFIX(status_code_domain_vtable_s)
   {
     //! Name of this category.
-    WG14_RESULT_PREFIX(status_code_domain_string_ref) (*const name)(void);
+    WG14_RESULT_PREFIX(status_code_domain_string_ref)
+    (*const name)(WG14_RESULT_PREFIX(status_code_domain) * domain);
     //! Information about this domain's payload
     WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-    (*const payload_info)(void);
+    (*const payload_info)(WG14_RESULT_PREFIX(status_code_domain) * domain);
     //! True if code means failure.
-    bool (*const failure)(const WG14_RESULT_PREFIX(status_code_untyped) * code);
+    bool (*const failure)(WG14_RESULT_PREFIX(status_code_domain) * domain,
+                          const WG14_RESULT_PREFIX(status_code_untyped) * code);
     //! True if code is (potentially non-transitively) equivalent to another
     //! code in another domain.
-    bool (*const equivalent)(const WG14_RESULT_PREFIX(status_code_untyped) *
+    bool (*const equivalent)(WG14_RESULT_PREFIX(status_code_domain) * domain,
+                             const WG14_RESULT_PREFIX(status_code_untyped) *
                              code1,
                              const WG14_RESULT_PREFIX(status_code_untyped) *
                              code2);
     //! Returns the generic code closest to this code, if any.
     WG14_RESULT_PREFIX(status_code_generic)
-    (*const generic_code)(const WG14_RESULT_PREFIX(status_code_untyped) * code);
+    (*const generic_code)(WG14_RESULT_PREFIX(status_code_domain) * domain,
+                          const WG14_RESULT_PREFIX(status_code_untyped) * code);
     //! Return a reference to a string textually representing a code.
     WG14_RESULT_PREFIX(status_code_domain_string_ref)
-    (*const message)(const WG14_RESULT_PREFIX(status_code_untyped) * code);
+    (*const message)(WG14_RESULT_PREFIX(status_code_domain) * domain,
+                     const WG14_RESULT_PREFIX(status_code_untyped) * code);
     //! ABI compatibility slot for throwing a code as a C++ exception, do not
     //! call this even from C++ (use the C++ implementation instead).
     void (*const reserved_slot_for_cxx_throw_exception)(
+    WG14_RESULT_PREFIX(status_code_domain) * domain,
     const WG14_RESULT_PREFIX(status_code_untyped) * code);
     //! For a `status_code<erased<T>>` only, copy from `src` to `dst`. Default
     //! implementation uses `memcpy()`. You should return false here if your
     //! payload is not trivially copyable or would not fit.
     bool (*const erased_copy)(
+    WG14_RESULT_PREFIX(status_code_domain) * domain,
     WG14_RESULT_PREFIX(status_code_untyped) * dst,
     const WG14_RESULT_PREFIX(status_code_untyped) * src,
     WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo);
     //! For a `status_code<erased<T>>` only, destroy the erased value type.
     //! Default implementation does nothing.
     void (*const erased_destroy)(
+    WG14_RESULT_PREFIX(status_code_domain) * domain,
     WG14_RESULT_PREFIX(status_code_untyped) * code,
     WG14_RESULT_PREFIX(status_code_domain_payload_info_t) info);
   } WG14_RESULT_PREFIX(status_code_domain_vtable);
@@ -234,13 +251,15 @@ extern "C"
   //! \brief The default implementation for
   //! `status_code_domain_vtable.erased_copy()`.
   WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(default_erased_copy_impl)(
+  WG14_RESULT_PREFIX(status_code_domain) * domain,
   WG14_RESULT_PREFIX(status_code_untyped) * dst,
   const WG14_RESULT_PREFIX(status_code_untyped) * src,
   WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo)
   {
+    (void) domain;
     // Note that dst may not have its domain set
     const WG14_RESULT_PREFIX(status_code_domain_payload_info_t) srcinfo =
-    src->domain->vptr->payload_info();
+    src->domain->vptr->payload_info(src->domain);
     if(dstinfo.total_size < srcinfo.total_size)
     {
       return false;
@@ -255,9 +274,11 @@ extern "C"
   //! \brief The default implementation for
   //! `status_code_domain_vtable.erased_destroy()`.
   WG14_RESULT_INLINE void WG14_RESULT_PREFIX(default_erased_destroy_impl)(
+  WG14_RESULT_PREFIX(status_code_domain) * domain,
   WG14_RESULT_PREFIX(status_code_untyped) * code,
   WG14_RESULT_PREFIX(status_code_domain_payload_info_t) info)
   {
+    (void) domain;
     (void) code;
     (void) info;
   }
@@ -334,7 +355,17 @@ extern "C"
     << 60))
 
 #ifdef __cplusplus
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 }
+#endif
+
+#if WG14_RESULT_ENABLE_HEADER_ONLY
+#include "../../src/wg14_result/status_code_domain.c"
 #endif
 
 #endif

@@ -27,6 +27,11 @@ limitations under the License.
 #ifdef __cplusplus
 extern "C"
 {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4190)  // has C linkage, but returns type which is
+                                 // incompatible with C
+#endif
 #endif
 
   //! The generic error coding (POSIX)
@@ -155,25 +160,27 @@ extern "C"
     if(primary->domain != WG14_RESULT_NULLPTR &&
        secondary->domain != WG14_RESULT_NULLPTR)
     {
-      if(primary->domain->vptr->equivalent(primary, secondary))
+      if(primary->domain->vptr->equivalent(primary->domain, primary, secondary))
       {
         return true;
       }
-      if(secondary->domain->vptr->equivalent(secondary, primary))
+      if(secondary->domain->vptr->equivalent(secondary->domain, secondary,
+                                             primary))
       {
         return true;
       }
       const WG14_RESULT_PREFIX(status_code_generic) c1 =
-      secondary->domain->vptr->generic_code(secondary);
+      secondary->domain->vptr->generic_code(secondary->domain, secondary);
       if(c1.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
-         primary->domain->vptr->equivalent(primary, &c1.base))
+         primary->domain->vptr->equivalent(primary->domain, primary, &c1.base))
       {
         return true;
       }
       const WG14_RESULT_PREFIX(status_code_generic) c2 =
-      primary->domain->vptr->generic_code(primary);
+      primary->domain->vptr->generic_code(primary->domain, primary);
       if(c2.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
-         secondary->domain->vptr->equivalent(secondary, &c2.base))
+         secondary->domain->vptr->equivalent(secondary->domain, secondary,
+                                             &c2.base))
       {
         return true;
       }
@@ -198,7 +205,14 @@ extern "C"
   (&(primary).base, &(secondary).base)
 
 #ifdef __cplusplus
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 }
+#endif
+
+#if WG14_RESULT_ENABLE_HEADER_ONLY
+#include "../../src/wg14_result/status_code_generic.c"
 #endif
 
 #endif
