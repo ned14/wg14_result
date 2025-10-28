@@ -3,6 +3,10 @@
 #include "wg14_result/status_code.h"
 #include "wg14_result/status_code_generic.h"
 
+#ifdef _MSC_VER
+#include <crtdbg.h>
+#endif
+
 /* The unit test is heavily borrowed from
  * https://github.com/ned14/status-code/blob/master/test/main.cpp
  */
@@ -141,7 +145,8 @@ Code_domain_vtable_generic_code(const WG14_RESULT_PREFIX(status_code_untyped) *
   case Code_error2:
     break;
   }
-  WG14_RESULT_PREFIX(status_code_generic) ret = {WG14_RESULT_NULLPTR};
+  WG14_RESULT_PREFIX(status_code_generic)
+  ret = {{WG14_RESULT_NULLPTR}, WG14_RESULT_PREFIX(status_code_errc_success)};
   return ret;
 }
 
@@ -166,7 +171,8 @@ Code_domain_vtable_message(const WG14_RESULT_PREFIX(status_code_untyped) * code)
     "error2");
   }
   WG14_RESULT_PREFIX(status_code_domain_string_ref)
-  ret = {WG14_RESULT_NULLPTR};
+  ret;
+  memset(&ret, 0, sizeof(ret));
   return ret;
 }
 
@@ -174,9 +180,71 @@ Code_domain_vtable_message(const WG14_RESULT_PREFIX(status_code_untyped) * code)
 int main(void)
 {
   int ret = 0;
-  const StatusCode code = STATUS_CODE_WITH_PAYLOAD_MAKE(Code)(Code_success1);
-  printf("Message for code %d is '%s'\n", Code_success1,
-         Code_domain.vptr->message(&code.base).c_str);
+#ifdef _MSC_VER
+  _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
+  WG14_RESULT_CONSTEXPR_OR_CONST WG14_RESULT_PREFIX(status_code_generic)
+  empty1 = {{WG14_RESULT_NULLPTR},
+            WG14_RESULT_PREFIX(status_code_errc_success)},
+  success1 = WG14_RESULT_PREFIX(status_code_generic_make)(
+  WG14_RESULT_PREFIX(status_code_errc_success)),
+  failure1 = WG14_RESULT_PREFIX(status_code_generic_make)(
+  WG14_RESULT_PREFIX(status_code_errc_permission_denied));
+  CHECK(status_code_is_empty(empty1));
+  CHECK(!status_code_is_empty(success1));
+  CHECK(!status_code_is_empty(failure1));
+  CHECK(status_code_is_success(success1));
+  CHECK(status_code_is_failure(failure1));
+  printf("generic_code empty has value %d (%s) is success %d is failure %d\n",
+         empty1.value, status_code_message(empty1).c_str,
+         status_code_is_success(empty1), status_code_is_failure(empty1));
+  printf("generic_code success has value %d (%s) is success %d is failure %d\n",
+         success1.value, status_code_message(success1).c_str,
+         status_code_is_success(success1), status_code_is_failure(success1));
+  printf("generic_code failure has value %d (%s) is success %d is failure %d\n",
+         failure1.value, status_code_message(failure1).c_str,
+         status_code_is_success(failure1), status_code_is_failure(failure1));
+
+  WG14_RESULT_CONSTEXPR_OR_CONST StatusCode
+  empty2 = {{WG14_RESULT_NULLPTR}, Code_success1},
+  success2 = STATUS_CODE_WITH_PAYLOAD_MAKE(Code)(Code_success1),
+  failure2 = STATUS_CODE_WITH_PAYLOAD_MAKE(Code)(Code_goaway);
+  CHECK(status_code_is_success(success2));
+  CHECK(status_code_is_failure(failure2));
+  printf("\nStatusCode empty has value %d (%s) is success %d is failure %d\n",
+         empty2.value, status_code_message(empty2).c_str,
+         status_code_is_success(empty2), status_code_is_failure(empty2));
+  printf("StatusCode success has value %d (%s) is success %d is failure %d\n",
+         success2.value, status_code_message(success2).c_str,
+         status_code_is_success(success2), status_code_is_failure(success2));
+  printf("StatusCode failure has value %d (%s) is success %d is failure %d\n",
+         failure2.value, status_code_message(failure2).c_str,
+         status_code_is_success(failure2), status_code_is_failure(failure2));
+
+  printf("\n(empty1 == empty2) = %d\n",
+         status_code_equivalent(
+         empty1,
+         empty2));  // True, empty ec's always compare equal no matter the type
+  printf("(success1 == success2) = %d\n",
+         status_code_equivalent(success1,
+                                success2));  // True, success maps onto success
+  printf("(success1 == failure2) = %d\n",
+         status_code_equivalent(
+         success1, failure2));  // False, success does not map onto failure
+  printf("(failure1 == success2) = %d\n",
+         status_code_equivalent(
+         failure1, success2));  // False, failure does not map onto success
+  printf("(failure1 == failure2) = %d\n",
+         status_code_equivalent(
+         failure1, failure2));  // True, filename_too_long maps onto nospace
+  CHECK(status_code_equivalent(empty1, empty2));
+  CHECK(status_code_equivalent(success1, success2));
+  CHECK(!status_code_equivalent(success1, failure2));
+  CHECK(!status_code_equivalent(failure1, success2));
+  CHECK(status_code_equivalent(failure1, failure2));
+
+
   printf("Exiting main with result %d ...\n", ret);
   return ret;
 }

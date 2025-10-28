@@ -143,6 +143,60 @@ extern "C"
     return ret;
   }
 
+  //! \brief True if the status codes are semantically equivalent in any way
+  //! (implementation). Guaranteed transitive. Firstly
+  //! `status_code_strictly_equivalent()` is run in both directions. If neither
+  //! succeeds, each domain is asked for the equivalent generic code, and those
+  //! are compared.
+  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_equivalent)(
+  const WG14_RESULT_PREFIX(status_code_untyped) * primary,
+  const WG14_RESULT_PREFIX(status_code_untyped) * secondary)
+  {
+    if(primary->domain != WG14_RESULT_NULLPTR &&
+       secondary->domain != WG14_RESULT_NULLPTR)
+    {
+      if(primary->domain->vptr->equivalent(primary, secondary))
+      {
+        return true;
+      }
+      if(secondary->domain->vptr->equivalent(secondary, primary))
+      {
+        return true;
+      }
+      const WG14_RESULT_PREFIX(status_code_generic) c1 =
+      secondary->domain->vptr->generic_code(secondary);
+      if(c1.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
+         primary->domain->vptr->equivalent(primary, &c1.base))
+      {
+        return true;
+      }
+      const WG14_RESULT_PREFIX(status_code_generic) c2 =
+      primary->domain->vptr->generic_code(primary);
+      if(c2.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
+         secondary->domain->vptr->equivalent(secondary, &c2.base))
+      {
+        return true;
+      }
+    }
+    // If we are both empty, we are equivalent
+    if(WG14_RESULT_NULLPTR == primary->domain &&
+       WG14_RESULT_NULLPTR == secondary->domain)
+    {
+      return true;  // NOLINT
+    }
+    // Otherwise not equivalent
+    return false;
+  }
+
+//! \brief True if the status codes are semantically equivalent in any way
+//! (implementation). Guaranteed transitive. Firstly
+//! `status_code_strictly_equivalent()` is run in both directions. If neither
+//! succeeds, each domain is asked for the equivalent generic code, and those
+//! are compared.
+#define status_code_equivalent(primary, secondary)                             \
+  WG14_RESULT_PREFIX(status_code_equivalent)                                   \
+  (&(primary).base, &(secondary).base)
+
 #ifdef __cplusplus
 }
 #endif

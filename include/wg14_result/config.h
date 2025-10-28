@@ -50,7 +50,7 @@ limitations under the License.
 #endif
 
 #ifndef WG14_RESULT_CONSTEXPR_OR_CONST
-#if __STDC_VERSION__ >= 202300L
+#if __STDC_VERSION__ >= 202300L && (!defined(__clang__) || __clang_major >= 19)
 #define WG14_RESULT_CONSTEXPR_OR_CONST constexpr
 #else
 #define WG14_RESULT_CONSTEXPR_OR_CONST const
