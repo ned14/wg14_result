@@ -21,23 +21,24 @@ enum Code
 };
 
 // "Full fat" custom status code domain
-static WG14_RESULT_PREFIX(status_code_domain_string_ref)
+static WG14_RESULT_PREFIX(status_code_domain_string_ref) WG14_RESULT_VTABLE_API
 Code_domain_vtable_name(WG14_RESULT_PREFIX(status_code_domain) * domain);
 static WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
+WG14_RESULT_VTABLE_API
 Code_domain_vtable_payload_info(WG14_RESULT_PREFIX(status_code_domain) *
                                 domain);
-static bool Code_domain_vtable_failure(
+static bool WG14_RESULT_VTABLE_API Code_domain_vtable_failure(
 WG14_RESULT_PREFIX(status_code_domain) * domain,
 const WG14_RESULT_PREFIX(status_code_untyped) * code);
-static bool Code_domain_vtable_equivalent(
+static bool WG14_RESULT_VTABLE_API Code_domain_vtable_equivalent(
 WG14_RESULT_PREFIX(status_code_domain) * domain,
 const WG14_RESULT_PREFIX(status_code_untyped) * code1,
 const WG14_RESULT_PREFIX(status_code_untyped) * code2);
-static WG14_RESULT_PREFIX(status_code_generic)
+static WG14_RESULT_PREFIX(status_code_generic) WG14_RESULT_VTABLE_API
 Code_domain_vtable_generic_code(WG14_RESULT_PREFIX(status_code_domain) * domain,
                                 const WG14_RESULT_PREFIX(status_code_untyped) *
                                 code);
-static WG14_RESULT_PREFIX(status_code_domain_string_ref)
+static WG14_RESULT_PREFIX(status_code_domain_string_ref) WG14_RESULT_VTABLE_API
 Code_domain_vtable_message(WG14_RESULT_PREFIX(status_code_domain) * domain,
                            const WG14_RESULT_PREFIX(status_code_untyped) *
                            code);

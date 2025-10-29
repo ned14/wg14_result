@@ -43,9 +43,14 @@ extern "C"
 #endif
 
 #ifdef __cplusplus
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wclass-memaccess"
+#endif
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4190)  // has C linkage, but returns type which is
+                                 // incompatible with C
 #endif
 #endif
 
@@ -163,7 +168,10 @@ extern "C"
 #endif
 
 #ifdef __cplusplus
-#ifdef __GNUC__
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+#if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC diagnostic pop
 #endif
 #endif

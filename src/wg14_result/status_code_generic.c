@@ -5,27 +5,33 @@
 #ifdef __cplusplus
 extern "C"
 {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4190)  // has C linkage, but returns type which is
+                                 // incompatible with C
+#endif
 #endif
 
   static WG14_RESULT_PREFIX(status_code_domain_string_ref)
-  status_code_generic_domain_vtable_name(
+  WG14_RESULT_VTABLE_API status_code_generic_domain_vtable_name(
   WG14_RESULT_PREFIX(status_code_domain) * domain);
   static WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-  status_code_generic_domain_vtable_payload_info(
+  WG14_RESULT_VTABLE_API status_code_generic_domain_vtable_payload_info(
   WG14_RESULT_PREFIX(status_code_domain) * domain);
-  static bool status_code_generic_domain_vtable_failure(
+  static bool WG14_RESULT_VTABLE_API status_code_generic_domain_vtable_failure(
   WG14_RESULT_PREFIX(status_code_domain) * domain,
   const WG14_RESULT_PREFIX(status_code_untyped) * code);
-  static bool status_code_generic_domain_vtable_equivalent(
+  static bool WG14_RESULT_VTABLE_API
+  status_code_generic_domain_vtable_equivalent(
   WG14_RESULT_PREFIX(status_code_domain) * domain,
   const WG14_RESULT_PREFIX(status_code_untyped) * code1,
   const WG14_RESULT_PREFIX(status_code_untyped) * code2);
-  static WG14_RESULT_PREFIX(status_code_generic)
+  static WG14_RESULT_PREFIX(status_code_generic) WG14_RESULT_VTABLE_API
   status_code_generic_domain_vtable_generic_code(
   WG14_RESULT_PREFIX(status_code_domain) * domain,
   const WG14_RESULT_PREFIX(status_code_untyped) * code);
   static WG14_RESULT_PREFIX(status_code_domain_string_ref)
-  status_code_generic_domain_vtable_message(
+  WG14_RESULT_VTABLE_API status_code_generic_domain_vtable_message(
   WG14_RESULT_PREFIX(status_code_domain) * domain,
   const WG14_RESULT_PREFIX(status_code_untyped) * code);
 
@@ -213,7 +219,7 @@ extern "C"
   .erased_destroy = WG14_RESULT_PREFIX(default_erased_destroy_impl)  //
   };
 
-  WG14_RESULT_PREFIX(status_code_domain) *
+  WG14_RESULT_PREFIX(status_code_domain) * 
   WG14_RESULT_PREFIX(status_code_generic_domain)(void)
   {
     static WG14_RESULT_CONSTEXPR WG14_RESULT_PREFIX(status_code_domain)
@@ -223,7 +229,7 @@ extern "C"
   }
 
   static WG14_RESULT_PREFIX(status_code_domain_string_ref)
-  status_code_generic_domain_vtable_name(
+  WG14_RESULT_VTABLE_API status_code_generic_domain_vtable_name(
   WG14_RESULT_PREFIX(status_code_domain) * domain)
   {
     (void) domain;
@@ -232,7 +238,7 @@ extern "C"
   }
 
   static WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-  status_code_generic_domain_vtable_payload_info(
+  WG14_RESULT_VTABLE_API status_code_generic_domain_vtable_payload_info(
   WG14_RESULT_PREFIX(status_code_domain) * domain)
   {
     (void) domain;
@@ -247,7 +253,7 @@ extern "C"
     return ret;
   }
 
-  static bool status_code_generic_domain_vtable_failure(
+  static bool WG14_RESULT_VTABLE_API status_code_generic_domain_vtable_failure(
   WG14_RESULT_PREFIX(status_code_domain) * domain,
   const WG14_RESULT_PREFIX(status_code_untyped) * code)
   {
@@ -258,7 +264,8 @@ extern "C"
     return c->value != WG14_RESULT_PREFIX(status_code_errc_success);  // NOLINT
   }
 
-  static bool status_code_generic_domain_vtable_equivalent(
+  static bool WG14_RESULT_VTABLE_API
+  status_code_generic_domain_vtable_equivalent(
   WG14_RESULT_PREFIX(status_code_domain) * domain,
   const WG14_RESULT_PREFIX(status_code_untyped) * code1,
   const WG14_RESULT_PREFIX(status_code_untyped) * code2)
@@ -275,7 +282,7 @@ extern "C"
     return false;
   }
 
-  static WG14_RESULT_PREFIX(status_code_generic)
+  static WG14_RESULT_PREFIX(status_code_generic) WG14_RESULT_VTABLE_API
   status_code_generic_domain_vtable_generic_code(
   WG14_RESULT_PREFIX(status_code_domain) * domain,
   const WG14_RESULT_PREFIX(status_code_untyped) * code)
@@ -288,7 +295,7 @@ extern "C"
   }
 
   static WG14_RESULT_PREFIX(status_code_domain_string_ref)
-  status_code_generic_domain_vtable_message(
+  WG14_RESULT_VTABLE_API status_code_generic_domain_vtable_message(
   WG14_RESULT_PREFIX(status_code_domain) * domain,
   const WG14_RESULT_PREFIX(status_code_untyped) * code)
   {
@@ -301,5 +308,8 @@ extern "C"
   }
 
 #ifdef __cplusplus
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 }
 #endif

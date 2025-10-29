@@ -24,6 +24,9 @@ limitations under the License.
 #if WG14_RESULT_ENABLE_HEADER_ONLY || WG14_RESULT_SOURCE
 #if defined(__cplusplus)
 #if __cplusplus < 202000L && !_HAS_CXX20
+#include <version>  // some toolchains need this to set the version macros correctly
+#endif
+#if __cplusplus < 202000L && !_HAS_CXX20
 #error                                                                         \
 "If being compiled as C++, the source code requires a minimum of a C++ 20 compiler for decent C11 support."
 #endif

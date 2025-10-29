@@ -29,7 +29,7 @@ limitations under the License.
 #ifdef __cplusplus
 extern "C"
 {
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wclass-memaccess"
 #endif
@@ -189,50 +189,67 @@ extern "C"
   typedef struct WG14_RESULT_PREFIX(status_code_generic_s)
   WG14_RESULT_PREFIX(status_code_generic);
 
+//! \brief The implementation specific markup for a C++ vtable function, if any.
+#ifdef _MSC_VER
+#ifdef _M_IX86
+  // This is nasty, it should be __thiscall of course. But MSVC won't let you
+  // specify that on normal C functions. And __stdcall is close enough on x86.
+#define WG14_RESULT_VTABLE_API __stdcall
+#else
+#define WG14_RESULT_VTABLE_API
+#endif
+#else
+#define WG14_RESULT_VTABLE_API
+#endif
+
   //! \brief The functions defined by a status code domain, kept ABI compatible
   //! with a C++ vtable
   typedef const struct WG14_RESULT_PREFIX(status_code_domain_vtable_s)
   {
     //! Name of this category.
     WG14_RESULT_PREFIX(status_code_domain_string_ref)
-    (*const name)(WG14_RESULT_PREFIX(status_code_domain) * domain);
+    (WG14_RESULT_VTABLE_API *const name)(
+    WG14_RESULT_PREFIX(status_code_domain) * domain);
     //! Information about this domain's payload
     WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-    (*const payload_info)(WG14_RESULT_PREFIX(status_code_domain) * domain);
+    (WG14_RESULT_VTABLE_API *const payload_info)(
+    WG14_RESULT_PREFIX(status_code_domain) * domain);
     //! True if code means failure.
-    bool (*const failure)(WG14_RESULT_PREFIX(status_code_domain) * domain,
-                          const WG14_RESULT_PREFIX(status_code_untyped) * code);
+    bool(WG14_RESULT_VTABLE_API *const failure)(
+    WG14_RESULT_PREFIX(status_code_domain) * domain,
+    const WG14_RESULT_PREFIX(status_code_untyped) * code);
     //! True if code is (potentially non-transitively) equivalent to another
     //! code in another domain.
-    bool (*const equivalent)(WG14_RESULT_PREFIX(status_code_domain) * domain,
-                             const WG14_RESULT_PREFIX(status_code_untyped) *
-                             code1,
-                             const WG14_RESULT_PREFIX(status_code_untyped) *
-                             code2);
+    bool(WG14_RESULT_VTABLE_API *const equivalent)(
+    WG14_RESULT_PREFIX(status_code_domain) * domain,
+    const WG14_RESULT_PREFIX(status_code_untyped) * code1,
+    const WG14_RESULT_PREFIX(status_code_untyped) * code2);
     //! Returns the generic code closest to this code, if any.
     WG14_RESULT_PREFIX(status_code_generic)
-    (*const generic_code)(WG14_RESULT_PREFIX(status_code_domain) * domain,
-                          const WG14_RESULT_PREFIX(status_code_untyped) * code);
+    (WG14_RESULT_VTABLE_API *const generic_code)(
+    WG14_RESULT_PREFIX(status_code_domain) * domain,
+    const WG14_RESULT_PREFIX(status_code_untyped) * code);
     //! Return a reference to a string textually representing a code.
     WG14_RESULT_PREFIX(status_code_domain_string_ref)
-    (*const message)(WG14_RESULT_PREFIX(status_code_domain) * domain,
-                     const WG14_RESULT_PREFIX(status_code_untyped) * code);
+    (WG14_RESULT_VTABLE_API *const message)(
+    WG14_RESULT_PREFIX(status_code_domain) * domain,
+    const WG14_RESULT_PREFIX(status_code_untyped) * code);
     //! ABI compatibility slot for throwing a code as a C++ exception, do not
     //! call this even from C++ (use the C++ implementation instead).
-    void (*const reserved_slot_for_cxx_throw_exception)(
+    void(WG14_RESULT_VTABLE_API *const reserved_slot_for_cxx_throw_exception)(
     WG14_RESULT_PREFIX(status_code_domain) * domain,
     const WG14_RESULT_PREFIX(status_code_untyped) * code);
     //! For a `status_code<erased<T>>` only, copy from `src` to `dst`. Default
     //! implementation uses `memcpy()`. You should return false here if your
     //! payload is not trivially copyable or would not fit.
-    bool (*const erased_copy)(
+    bool(WG14_RESULT_VTABLE_API *const erased_copy)(
     WG14_RESULT_PREFIX(status_code_domain) * domain,
     WG14_RESULT_PREFIX(status_code_untyped) * dst,
     const WG14_RESULT_PREFIX(status_code_untyped) * src,
     WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo);
     //! For a `status_code<erased<T>>` only, destroy the erased value type.
     //! Default implementation does nothing.
-    void (*const erased_destroy)(
+    void(WG14_RESULT_VTABLE_API *const erased_destroy)(
     WG14_RESULT_PREFIX(status_code_domain) * domain,
     WG14_RESULT_PREFIX(status_code_untyped) * code,
     WG14_RESULT_PREFIX(status_code_domain_payload_info_t) info);
@@ -250,7 +267,8 @@ extern "C"
 
   //! \brief The default implementation for
   //! `status_code_domain_vtable.erased_copy()`.
-  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(default_erased_copy_impl)(
+  WG14_RESULT_INLINE bool WG14_RESULT_VTABLE_API
+  WG14_RESULT_PREFIX(default_erased_copy_impl)(
   WG14_RESULT_PREFIX(status_code_domain) * domain,
   WG14_RESULT_PREFIX(status_code_untyped) * dst,
   const WG14_RESULT_PREFIX(status_code_untyped) * src,
@@ -273,7 +291,8 @@ extern "C"
 
   //! \brief The default implementation for
   //! `status_code_domain_vtable.erased_destroy()`.
-  WG14_RESULT_INLINE void WG14_RESULT_PREFIX(default_erased_destroy_impl)(
+  WG14_RESULT_INLINE void WG14_RESULT_VTABLE_API
+  WG14_RESULT_PREFIX(default_erased_destroy_impl)(
   WG14_RESULT_PREFIX(status_code_domain) * domain,
   WG14_RESULT_PREFIX(status_code_untyped) * code,
   WG14_RESULT_PREFIX(status_code_domain_payload_info_t) info)
@@ -355,7 +374,7 @@ extern "C"
     << 60))
 
 #ifdef __cplusplus
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC diagnostic pop
 #endif
 #ifdef _MSC_VER
