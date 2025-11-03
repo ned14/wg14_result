@@ -21,27 +21,25 @@ enum Code
 };
 
 // "Full fat" custom status code domain
-static WG14_RESULT_PREFIX(status_code_domain_string_ref) WG14_RESULT_VTABLE_API
-Code_domain_vtable_name(WG14_RESULT_PREFIX(status_code_domain) * domain);
-static WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-WG14_RESULT_VTABLE_API
-Code_domain_vtable_payload_info(WG14_RESULT_PREFIX(status_code_domain) *
-                                domain);
-static bool WG14_RESULT_VTABLE_API Code_domain_vtable_failure(
-WG14_RESULT_PREFIX(status_code_domain) * domain,
-const WG14_RESULT_PREFIX(status_code_untyped) * code);
-static bool WG14_RESULT_VTABLE_API Code_domain_vtable_equivalent(
-WG14_RESULT_PREFIX(status_code_domain) * domain,
-const WG14_RESULT_PREFIX(status_code_untyped) * code1,
-const WG14_RESULT_PREFIX(status_code_untyped) * code2);
-static WG14_RESULT_PREFIX(status_code_generic) WG14_RESULT_VTABLE_API
-Code_domain_vtable_generic_code(WG14_RESULT_PREFIX(status_code_domain) * domain,
-                                const WG14_RESULT_PREFIX(status_code_untyped) *
-                                code);
-static WG14_RESULT_PREFIX(status_code_domain_string_ref) WG14_RESULT_VTABLE_API
-Code_domain_vtable_message(WG14_RESULT_PREFIX(status_code_domain) * domain,
-                           const WG14_RESULT_PREFIX(status_code_untyped) *
-                           code);
+static int WG14_RESULT_VTABLE_API(
+Code_domain_vtable_name,
+struct WG14_RESULT_PREFIX(status_code_domain_vtable_name_args) * args);
+static void WG14_RESULT_VTABLE_API(
+Code_domain_vtable_payload_info,
+struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args) * args);
+static bool
+WG14_RESULT_VTABLE_API(Code_domain_vtable_failure,
+                       const WG14_RESULT_PREFIX(status_code_untyped) * code);
+static bool
+WG14_RESULT_VTABLE_API(Code_domain_vtable_equivalent,
+                       const WG14_RESULT_PREFIX(status_code_untyped) * code1,
+                       const WG14_RESULT_PREFIX(status_code_untyped) * code2);
+static void WG14_RESULT_VTABLE_API(
+Code_domain_vtable_generic_code,
+struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args) * args);
+static int WG14_RESULT_VTABLE_API(
+Code_domain_vtable_message,
+struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args) * args);
 
 static WG14_RESULT_CONSTEXPR
 WG14_RESULT_PREFIX(status_code_domain_vtable) Code_domain_vtable = {
@@ -68,46 +66,45 @@ Code_domain = {.vptr = &Code_domain_vtable,
 STATUS_CODE_WITH_PAYLOAD_DECLARE(enum Code, Code)
 typedef STATUS_CODE_WITH_PAYLOAD(Code) StatusCode;
 
-static WG14_RESULT_PREFIX(status_code_domain_string_ref)
-Code_domain_vtable_name(WG14_RESULT_PREFIX(status_code_domain) * domain)
+static int WG14_RESULT_VTABLE_API(
+Code_domain_vtable_name,
+struct WG14_RESULT_PREFIX(status_code_domain_vtable_name_args) * args)
 {
-  (void) domain;
-  return WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string)(
-  "Code_category_impl");
+  args->ret = WG14_RESULT_PREFIX(
+  status_code_domain_string_ref_from_static_string)("Code_category_impl");
+  return 0;
 }
 
-static WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-Code_domain_vtable_payload_info(WG14_RESULT_PREFIX(status_code_domain) * domain)
+static void WG14_RESULT_VTABLE_API(
+Code_domain_vtable_payload_info,
+struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args) * args)
 {
-  (void) domain;
-  WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-  ret = {
+  const WG14_RESULT_PREFIX(status_code_domain_payload_info_t) ret = {
   sizeof(enum Code),
   sizeof(WG14_RESULT_PREFIX(status_code_domain) *) + sizeof(enum Code),
   (__alignof(enum Code) > __alignof(WG14_RESULT_PREFIX(status_code_domain) *)) ?
   __alignof(enum Code) :
   __alignof(WG14_RESULT_PREFIX(status_code_domain) *)};
-  return ret;
+  args->ret = ret;
 }
 
 static bool
-Code_domain_vtable_failure(WG14_RESULT_PREFIX(status_code_domain) * domain,
-                           const WG14_RESULT_PREFIX(status_code_untyped) * code)
+WG14_RESULT_VTABLE_API(Code_domain_vtable_failure,
+                       const WG14_RESULT_PREFIX(status_code_untyped) * code)
 {
-  (void) domain;
-  assert(domain->id == Code_domain.id);
+  assert(code->domain->id == Code_domain.id);
   const StatusCode *c = (const StatusCode *) code;
   return ((int) c->value & 1) != 0;  // NOLINT
 }
 
-static bool Code_domain_vtable_equivalent(
-WG14_RESULT_PREFIX(status_code_domain) * domain,
-const WG14_RESULT_PREFIX(status_code_untyped) * code1,
-const WG14_RESULT_PREFIX(status_code_untyped) * code2)
+static bool
+WG14_RESULT_VTABLE_API(Code_domain_vtable_equivalent,
+                       const WG14_RESULT_PREFIX(status_code_untyped) * code1,
+                       const WG14_RESULT_PREFIX(status_code_untyped) * code2)
 {
-  assert(domain->id == Code_domain.id);
+  assert(code1->domain->id == Code_domain.id);
   const StatusCode *c1 = (const StatusCode *) code1;
-  if(code2->domain->id == domain->id)
+  if(code2->domain->id == code1->domain->id)
   {
     const StatusCode *c2 = (const StatusCode *) code2;
     return c1->value == c2->value;
@@ -138,57 +135,60 @@ const WG14_RESULT_PREFIX(status_code_untyped) * code2)
   return false;
 }
 
-static WG14_RESULT_PREFIX(status_code_generic)
-Code_domain_vtable_generic_code(WG14_RESULT_PREFIX(status_code_domain) * domain,
-                                const WG14_RESULT_PREFIX(status_code_untyped) *
-                                code)
+static void WG14_RESULT_VTABLE_API(
+Code_domain_vtable_generic_code,
+struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args) * args)
 {
-  (void) domain;
-  assert(domain->id == Code_domain.id);
-  const StatusCode *c = (const StatusCode *) code;
+  assert(args->code->domain->id == Code_domain.id);
+  const StatusCode *c = (const StatusCode *) args->code;
   switch(c->value)
   {
   case Code_success1:
   case Code_success2:
-    return WG14_RESULT_PREFIX(status_code_generic_make)(
+    args->ret = WG14_RESULT_PREFIX(status_code_generic_make)(
     WG14_RESULT_PREFIX(status_code_errc_success));
+    return;
   case Code_goaway:
-    return WG14_RESULT_PREFIX(status_code_generic_make)(
+    args->ret = WG14_RESULT_PREFIX(status_code_generic_make)(
     WG14_RESULT_PREFIX(status_code_errc_permission_denied));
+    return;
   case Code_error2:
     break;
   }
-  WG14_RESULT_PREFIX(status_code_generic)
+  const WG14_RESULT_PREFIX(status_code_generic)
   ret = {{WG14_RESULT_NULLPTR}, WG14_RESULT_PREFIX(status_code_errc_success)};
-  return ret;
+  args->ret = ret;
 }
 
-static WG14_RESULT_PREFIX(status_code_domain_string_ref)
-Code_domain_vtable_message(WG14_RESULT_PREFIX(status_code_domain) * domain,
-                           const WG14_RESULT_PREFIX(status_code_untyped) * code)
+static int WG14_RESULT_VTABLE_API(
+Code_domain_vtable_message,
+struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args) * args)
 {
-  (void) domain;
-  assert(domain->id == Code_domain.id);
-  const StatusCode *c = (const StatusCode *) code;
+  assert(args->code->domain->id == Code_domain.id);
+  const StatusCode *c = (const StatusCode *) args->code;
   switch(c->value)
   {
   case Code_success1:
-    return WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string)(
-    "success1");
+    args->ret = WG14_RESULT_PREFIX(
+    status_code_domain_string_ref_from_static_string)("success1");
+    return 0;
   case Code_goaway:
-    return WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string)(
-    "goaway");
+    args->ret = WG14_RESULT_PREFIX(
+    status_code_domain_string_ref_from_static_string)("goaway");
+    return 0;
   case Code_success2:
-    return WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string)(
-    "success2");
+    args->ret = WG14_RESULT_PREFIX(
+    status_code_domain_string_ref_from_static_string)("success2");
+    return 0;
   case Code_error2:
-    return WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string)(
-    "error2");
+    args->ret = WG14_RESULT_PREFIX(
+    status_code_domain_string_ref_from_static_string)("error2");
+    return 0;
   }
-  WG14_RESULT_PREFIX(status_code_domain_string_ref)
-  ret;
+  WG14_RESULT_PREFIX(status_code_domain_string_ref) ret;
   memset(&ret, 0, sizeof(ret));
-  return ret;
+  args->ret = ret;
+  return 0;
 }
 
 

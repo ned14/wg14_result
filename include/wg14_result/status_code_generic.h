@@ -148,6 +148,13 @@ extern "C"
     return ret;
   }
 
+  //! \brief The arguments for `status_code_domain_vtable.generic_code`
+  struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args)
+  {
+    WG14_RESULT_PREFIX(status_code_generic) ret;
+    const WG14_RESULT_PREFIX(status_code_untyped) * code;
+  };
+
   //! \brief True if the status codes are semantically equivalent in any way
   //! (implementation). Guaranteed transitive. Firstly
   //! `status_code_strictly_equivalent()` is run in both directions. If neither
@@ -160,27 +167,37 @@ extern "C"
     if(primary->domain != WG14_RESULT_NULLPTR &&
        secondary->domain != WG14_RESULT_NULLPTR)
     {
-      if(primary->domain->vptr->equivalent(primary->domain, primary, secondary))
+       WG14_RESULT_PREFIX(status_code_domain) *const primary_domain =
+      primary->domain;
+       WG14_RESULT_PREFIX(status_code_domain) *const secondary_domain =
+      secondary->domain;
+      if(WG14_RESULT_VTABLE_INVOKE_API(primary_domain, equivalent, primary,
+                                       secondary))
       {
         return true;
       }
-      if(secondary->domain->vptr->equivalent(secondary->domain, secondary,
-                                             primary))
+      if(WG14_RESULT_VTABLE_INVOKE_API(secondary_domain, equivalent, secondary,
+                                       primary))
       {
         return true;
       }
-      const WG14_RESULT_PREFIX(status_code_generic) c1 =
-      secondary->domain->vptr->generic_code(secondary->domain, secondary);
-      if(c1.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
-         primary->domain->vptr->equivalent(primary->domain, primary, &c1.base))
+      struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args)
+      args;
+      memset(&args, 0, sizeof(args));
+      args.code = secondary;
+      WG14_RESULT_VTABLE_INVOKE_API(secondary_domain, generic_code, &args);
+      if(args.ret.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
+         WG14_RESULT_VTABLE_INVOKE_API(primary->domain, equivalent, primary,
+                                       &args.ret.base))
       {
         return true;
       }
-      const WG14_RESULT_PREFIX(status_code_generic) c2 =
-      primary->domain->vptr->generic_code(primary->domain, primary);
-      if(c2.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
-         secondary->domain->vptr->equivalent(secondary->domain, secondary,
-                                             &c2.base))
+      memset(&args, 0, sizeof(args));
+      args.code = primary;
+      WG14_RESULT_VTABLE_INVOKE_API(primary_domain, generic_code, &args);
+      if(args.ret.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
+         WG14_RESULT_VTABLE_INVOKE_API(secondary->domain, equivalent, secondary,
+                                       &args.ret.base))
       {
         return true;
       }

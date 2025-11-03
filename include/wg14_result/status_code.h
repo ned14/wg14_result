@@ -26,11 +26,10 @@ limitations under the License.
 #ifdef __cplusplus
 extern "C"
 {
+#endif
 #ifdef _MSC_VER
 #pragma warning(push)
-#pragma warning(disable : 4190)  // has C linkage, but returns type which is
-                                 // incompatible with C
-#endif
+#pragma warning(disable : 4996)  // use strerror_s instead
 #endif
 
 #define STATUS_CODE_WITH_PAYLOAD(T)                                            \
@@ -63,7 +62,7 @@ extern "C"
   const WG14_RESULT_PREFIX(status_code_untyped) * r)
   {
     return (r->domain != WG14_RESULT_NULLPTR) ?
-           !r->domain->vptr->failure(r->domain, r) :
+           !WG14_RESULT_VTABLE_INVOKE_API(r->domain, failure, r) :
            false;
   }
 
@@ -72,7 +71,7 @@ extern "C"
   const WG14_RESULT_PREFIX(status_code_untyped) * r)
   {
     return (r->domain != WG14_RESULT_NULLPTR) ?
-           r->domain->vptr->failure(r->domain, r) :
+           WG14_RESULT_VTABLE_INVOKE_API(r->domain, failure, r) :
            false;
   }
 
@@ -85,7 +84,17 @@ extern "C"
   {
     if(r->domain != WG14_RESULT_NULLPTR)
     {
-      return r->domain->vptr->message(r->domain, r);
+      struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args) args;
+      memset(&args, 0, sizeof(args));
+      args.code = r;
+      const int errcode =
+      WG14_RESULT_VTABLE_INVOKE_API(r->domain, message, &args);
+      if(errcode == 0)
+      {
+        return args.ret;
+      }
+      WG14_RESULT_ABORTF("status_code_message failed with %d (%s)", errcode,
+                         strerror(errcode));
     }
     return WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string)(
     "(empty)");
@@ -103,8 +112,8 @@ extern "C"
     if(primary->domain != WG14_RESULT_NULLPTR &&
        secondary->domain != WG14_RESULT_NULLPTR)
     {
-      return primary->domain->vptr->equivalent(primary->domain, primary,
-                                               secondary);
+      return WG14_RESULT_VTABLE_INVOKE_API(primary->domain, equivalent, primary,
+                                           secondary);
     }
     // If we are both empty, we are equivalent
     if(WG14_RESULT_NULLPTR == primary->domain &&
@@ -140,10 +149,10 @@ extern "C"
   WG14_RESULT_PREFIX(status_code_strictly_equivalent)                          \
   (&(primary).base, &(secondary).base)
 
-#ifdef __cplusplus
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
+#ifdef __cplusplus
 }
 #endif
 

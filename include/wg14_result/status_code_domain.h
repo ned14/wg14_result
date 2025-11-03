@@ -23,6 +23,7 @@ limitations under the License.
 #include "config.h"
 
 #include <assert.h>
+#include <errno.h>
 #include <stdbool.h>
 #include <string.h>
 
@@ -33,11 +34,10 @@ extern "C"
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wclass-memaccess"
 #endif
+#endif
 #ifdef _MSC_VER
 #pragma warning(push)
-#pragma warning(disable : 4190)  // has C linkage, but returns type which is
-                                 // incompatible with C
-#endif
+#pragma warning(disable : 4996)  // use strerror_s instead
 #endif
 
   //! \brief Type of a unique id of a domain
@@ -56,65 +56,88 @@ extern "C"
     WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_destruct),
   };
 
-  //! \brief Type of a string ref thunk function
-  typedef bool (*status_code_domain_string_ref_thunk_spec)(
-  WG14_RESULT_PREFIX(status_code_domain_string_ref) * dest,
-  WG14_RESULT_PREFIX(status_code_domain_string_ref) * src,
-  enum WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op) op);
+  //! \brief Type of the arguments to a string ref thunk function
+  typedef struct WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args_s)
+  {
+    WG14_RESULT_PREFIX(status_code_domain_string_ref) * dest;
+    WG14_RESULT_PREFIX(status_code_domain_string_ref) * src;
+    enum WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op) op;
+  } WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args);
+
+  //! \brief Type of a string ref thunk function. Returns an `errno` value.
+  //! Copies can fail. Nothing else can.
+  typedef int (*status_code_domain_string_ref_thunk_spec)(
+  const WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args) * args);
 
   struct WG14_RESULT_PREFIX(status_code_domain_string_ref_s)
   {
     const char *c_str, *end;
     void *state[3];
-    const status_code_domain_string_ref_thunk_spec thunk;
+    status_code_domain_string_ref_thunk_spec thunk;
   };
 
-  //! \brief Attempt to copy a string ref
-  WG14_RESULT_INLINE bool
-  WG14_RESULT_PREFIX(status_code_domain_string_ref_copy)(
+  //! \brief Attempt to copy a string ref, returning an `errno` cause if it
+  //! failed.
+  WG14_RESULT_INLINE int WG14_RESULT_PREFIX(status_code_domain_string_ref_copy)(
   WG14_RESULT_PREFIX(status_code_domain_string_ref) * dest,
   const WG14_RESULT_PREFIX(status_code_domain_string_ref) * src)
   {
     if(src->thunk != WG14_RESULT_NULLPTR)
     {
-      return src->thunk(
-      dest, (WG14_RESULT_PREFIX(status_code_domain_string_ref) *) src,
-      WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_copy));
+      const WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args)
+      args = {dest, (WG14_RESULT_PREFIX(status_code_domain_string_ref) *) src,
+              WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_copy)};
+      return src->thunk(&args);
     }
     memcpy(dest, src, sizeof(*dest));
-    return true;
+    return 0;
   }
 
   //! \brief Attempt to move a string ref
-  WG14_RESULT_INLINE bool
+  WG14_RESULT_INLINE void
   WG14_RESULT_PREFIX(status_code_domain_string_ref_move)(
   WG14_RESULT_PREFIX(status_code_domain_string_ref) * dest,
   WG14_RESULT_PREFIX(status_code_domain_string_ref) * src)
   {
     if(src->thunk != WG14_RESULT_NULLPTR)
     {
-      return src->thunk(
-      dest, src,
-      WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_move));
+      const WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args)
+      args = {dest, src,
+              WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_move)};
+      const int errcode = src->thunk(&args);
+      if(errcode != 0)
+      {
+        WG14_RESULT_ABORTF(
+        "status_code_domain_string_ref_move failed due to %d (%s)", errcode,
+        strerror(errcode));
+      }
+      return;
     }
     memcpy(dest, src, sizeof(*dest));
     memset(src, 0, sizeof(*src));
-    return true;
   }
 
   //! \brief Destroy a string ref
-  WG14_RESULT_INLINE bool
+  WG14_RESULT_INLINE void
   WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(
   WG14_RESULT_PREFIX(status_code_domain_string_ref) * src)
   {
     if(src->thunk != WG14_RESULT_NULLPTR)
     {
-      return src->thunk(
+      const WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args)
+      args = {
       src, WG14_RESULT_NULLPTR,
-      WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_destruct));
+      WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_destruct)};
+      const int errcode = src->thunk(&args);
+      if(errcode != 0)
+      {
+        WG14_RESULT_ABORTF(
+        "status_code_domain_string_ref_destroy failed due to %d (%s)", errcode,
+        strerror(errcode));
+      }
+      return;
     }
     memset(src, 0, sizeof(*src));
-    return true;
   }
 
   //! \brief Make a string ref which refers to a null terminated static string
@@ -189,70 +212,283 @@ extern "C"
   typedef struct WG14_RESULT_PREFIX(status_code_generic_s)
   WG14_RESULT_PREFIX(status_code_generic);
 
+  /* We have to do a bit of work to achieve C++ vtable calling convention
+  (__thiscall) compatibility which won't always be possible on all platforms,
+  but for those where it is then the C++ implementation can mark domains `final`
+  and get the benefits of linker implemented devirtualisation.
+
+  As a quick refresher as I'll likely forget all this in years to come, and
+  **remembering that complex return types take the first parameter register to
+  point to where in the stack the return type should be stored**:
+
+  - x86 Microsoft:
+      - cdecl right-to-left order, caller cleanup, always uses stack
+      - stdcall right-to-left order, **callee** cleanup, always uses stack
+      - thiscall right-to-left order, **callee** cleanup, always uses stack (BUT
+        ECX is `this` and effectively gets dropped for stdcall code)
+  - x86 System V:
+      - cdecl right-to-left order, caller cleanup, always uses stack
+      - thiscall right-to-left order, caller cleanup, always uses stack
+  - x64 Microsoft:
+      - cdecl right-to-left order, caller cleanup, starts from RCX
+      - thiscall right-to-left order, caller cleanup, starts from RDX (RCX is
+        specially treated as always `this`, so complex return type stack address
+        would go into RDX, then RCX and RDX are swapped compared to cdecl)
+  - x64 System V:
+      - cdecl right-to-left order, caller cleanup, starts from RDI
+      - thiscall right-to-left order, caller cleanup, starts from RDI
+
+  As far as I can tell, no major modern compiler other than MSVC does weird
+  things with `this`, so for everybody else we can safely assume `this` will be
+  the first argument. If we avoid complex return types, we eliminate a great
+  deal of complexity so we do exactly that.
+  */
 //! \brief The implementation specific markup for a C++ vtable function, if any.
+#ifndef WG14_RESULT_VTABLE_API
+#define WG14_RESULT_VTABLE_API_GLUE2(x, y) x##y
+#define WG14_RESULT_VTABLE_API_GLUE(x, y) WG14_RESULT_VTABLE_API_GLUE2(x, y)
+#define WG14_RESULT_VTABLE_API_UNIQUE_NAME                                     \
+  WG14_RESULT_VTABLE_API_GLUE(_wg14_result_vtable_api_unique_name_temporary,   \
+                              __COUNTER__)
+
 #ifdef _MSC_VER
 #ifdef _M_IX86
-  // This is nasty, it should be __thiscall of course. But MSVC won't let you
-  // specify that on normal C functions. And __stdcall is close enough on x86.
-#define WG14_RESULT_VTABLE_API __stdcall
+  // Use __stdcall to implement callee cleanup. `this` gets dropped.
+#define WG14_RESULT_VTABLE_API(name, ...) __stdcall name(__VA_ARGS__)
+#define WG14_RESULT_VTABLE_DECL(name, ...) (__stdcall name)(__VA_ARGS__)
+  /* There is almost certainly a more efficient way of doing this, but I'm not
+  sure how much I care for x86 MSVC which not a lot of people use nowadays.
+
+  TODO FIXME: This should use stack instead of TLS
+  */
+  static
+  __declspec(thread) struct WG14_RESULT_PREFIX(win32_invoke_with_this_storage_s)
+  {
+    void *ebp;
+    void *esp;
+    void *oldstack[3];
+  } WG14_RESULT_PREFIX(win32_invoke_with_this_storage);
+  inline int __declspec(naked) WG14_RESULT_PREFIX(win32_invoke_with_this)(
+  struct WG14_RESULT_PREFIX(win32_invoke_with_this_storage_s) * tls, void *func,
+  WG14_RESULT_PREFIX(status_code_domain) * domain, ...)
+  {
+    (void) tls;
+    (void) func;
+    (void) domain;
+    __asm {
+      // save ebp into TLS
+        mov eax, [esp + 4]
+        mov [eax + 0], ebp
+        mov ebp, eax
+      // ebp now points at the TLS. Save the original stack pointer
+        mov [ebp + 4], esp
+      // Save the twelve bytes of stack we are about to clobber
+        mov eax, [esp + 0]  // return address
+        mov [ebp + 8], eax
+        mov eax, [esp + 8]  // function to call
+        mov [ebp + 12], eax
+        mov eax, [esp + 12]  // this value
+        mov [ebp + 16], eax
+      // pop return address + tls
+        add esp, 8
+        pop eax  // function to call
+        pop ecx  // this value as per MSVC __thiscall calling convention
+        call eax   // jump to function
+                // WARNING: You cannot touch eax nor ecx from now on!
+
+      // ebp will point to tls
+      // Because __thiscall does callee cleanup, esp will now be wrong because
+      // this function is always __cdecl due to the varargs. So fix that first.
+        mov esp, [ebp + 4]
+        add esp, 16
+      // Restore the clobbered stack
+        push [ebp + 16]  // this value
+        push [ebp + 12]  // function to call
+        push ebp  // tls
+        push [ebp + 8]  // return address
+                   // restore ebp
+        mov ebp, [ebp + 0]
+                   // return to caller
+        ret
+    }
+  }
+  inline bool __declspec(naked) WG14_RESULT_PREFIX(win32_invoke_with_this_bool)(
+  struct WG14_RESULT_PREFIX(win32_invoke_with_this_storage_s) * tls, void *func,
+  WG14_RESULT_PREFIX(status_code_domain) * domain, ...)
+  {
+    (void) tls;
+    (void) func;
+    (void) domain;
+    __asm {
+      // save ebp into TLS
+        mov eax, [esp + 4]
+        mov [eax + 0], ebp
+        mov ebp, eax
+      // ebp now points at the TLS. Save the original stack pointer
+        mov [ebp + 4], esp
+      // Save the twelve bytes of stack we are about to clobber
+        mov eax, [esp + 0]  // return address
+        mov [ebp + 8], eax
+        mov eax, [esp + 8]  // function to call
+        mov [ebp + 12], eax
+        mov eax, [esp + 12]  // this value
+        mov [ebp + 16], eax
+      // pop return address + tls
+        add esp, 8
+        pop eax  // function to call
+        pop ecx  // this value as per MSVC __thiscall calling convention
+        call eax   // jump to function
+                // WARNING: You cannot touch eax nor ecx from now on!
+
+      // ebp will point to tls
+      // Because __thiscall does callee cleanup, esp will now be wrong because
+      // this function is always __cdecl due to the varargs. So fix that first.
+        mov esp, [ebp + 4]
+        add esp, 16
+      // Restore the clobbered stack
+        push [ebp + 16]  // this value
+        push [ebp + 12]  // function to call
+        push ebp  // tls
+        push [ebp + 8]  // return address
+                   // restore ebp
+        mov ebp, [ebp + 0]
+                   // return to caller
+        ret
+    }
+  }
+// We also need to work around a bug in MSVC's handling of bool ...
+#ifdef __cplusplus
+}
+template <class T> struct WG14_RESULT_PREFIX(win32_invoke_with_this_impl)
+{
+  static constexpr auto value = WG14_RESULT_PREFIX(win32_invoke_with_this);
+};
+template <> struct WG14_RESULT_PREFIX(win32_invoke_with_this_impl)<bool>
+{
+  static constexpr auto value = WG14_RESULT_PREFIX(win32_invoke_with_this_bool);
+};
+extern "C"
+{
+#define WG14_RESULT_VTABLE_INVOKE_API(domain, name, ...)                       \
+  WG14_RESULT_PREFIX(                                                          \
+  win32_invoke_with_this_impl<decltype((domain)->vptr->name(                   \
+  __VA_ARGS__))>)::value(&WG14_RESULT_PREFIX(win32_invoke_with_this_storage),  \
+                         (void *) (domain)->vptr->name, (domain), __VA_ARGS__)
 #else
-#define WG14_RESULT_VTABLE_API
+#define WG14_RESULT_VTABLE_INVOKE_API(domain, name, ...)                       \
+  (_Generic((domain)->vptr->name(__VA_ARGS__),                                 \
+   bool: WG14_RESULT_PREFIX(win32_invoke_with_this_bool)(                      \
+            &WG14_RESULT_PREFIX(win32_invoke_with_this_storage),               \
+            (void *) (domain)->vptr->name, (domain), __VA_ARGS__),             \
+   default: WG14_RESULT_PREFIX(win32_invoke_with_this)(                        \
+            &WG14_RESULT_PREFIX(win32_invoke_with_this_storage),               \
+            (void *) (domain)->vptr->name, (domain), __VA_ARGS__)))
 #endif
 #else
-#define WG14_RESULT_VTABLE_API
+#define WG14_RESULT_VTABLE_API(name, ...)                                      \
+  name(__pragma(warning(suppress : 4100))                                      \
+       const void *WG14_RESULT_VTABLE_API_UNIQUE_NAME /*discard this*/,        \
+       __VA_ARGS__)
+#define WG14_RESULT_VTABLE_DECL(name, ...)                                     \
+  (name)(__pragma(warning(suppress : 4100))                                    \
+         const void *WG14_RESULT_VTABLE_API_UNIQUE_NAME /*discard this*/,      \
+         __VA_ARGS__)
+#define WG14_RESULT_VTABLE_INVOKE_API(domain, name, ...)                       \
+  (domain)->vptr->name((domain), __VA_ARGS__)
 #endif
+#else
+// No special markup nor handling
+#define WG14_RESULT_VTABLE_API(name, ...)                                      \
+  name(__attribute__((unused))                                                 \
+       const void *WG14_RESULT_VTABLE_API_UNIQUE_NAME /*discard this*/,        \
+       __VA_ARGS__)
+#define WG14_RESULT_VTABLE_DECL(name, ...)                                     \
+  (name)(__attribute__((unused))                                               \
+         const void *WG14_RESULT_VTABLE_API_UNIQUE_NAME /*discard this*/,      \
+         __VA_ARGS__)
+#define WG14_RESULT_VTABLE_INVOKE_API(domain, name, ...)                       \
+  (domain)->vptr->name((domain), __VA_ARGS__)
+#endif
+#endif
+
+  //! \brief The arguments for `status_code_domain_vtable.name`
+  struct WG14_RESULT_PREFIX(status_code_domain_vtable_name_args)
+  {
+    WG14_RESULT_PREFIX(status_code_domain_string_ref) ret;
+    WG14_RESULT_PREFIX(status_code_domain) * domain;
+  };
+
+  //! \brief The arguments for `status_code_domain_vtable.payload_info`
+  struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args)
+  {
+    WG14_RESULT_PREFIX(status_code_domain_payload_info_t) ret;
+    WG14_RESULT_PREFIX(status_code_domain) * domain;
+  };
+
+  struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args);
+
+  //! \brief The arguments for `status_code_domain_vtable.message`
+  struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args)
+  {
+    WG14_RESULT_PREFIX(status_code_domain_string_ref) ret;
+    const WG14_RESULT_PREFIX(status_code_untyped) * code;
+  };
 
   //! \brief The functions defined by a status code domain, kept ABI compatible
   //! with a C++ vtable
   typedef const struct WG14_RESULT_PREFIX(status_code_domain_vtable_s)
   {
-    //! Name of this category.
-    WG14_RESULT_PREFIX(status_code_domain_string_ref)
-    (WG14_RESULT_VTABLE_API *const name)(
-    WG14_RESULT_PREFIX(status_code_domain) * domain);
+    //! Name of this category. Returns an `errno` if it failed.
+    int WG14_RESULT_VTABLE_DECL(*const name,
+                                struct WG14_RESULT_PREFIX(
+                                status_code_domain_vtable_name_args) *
+                                args);
     //! Information about this domain's payload
-    WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-    (WG14_RESULT_VTABLE_API *const payload_info)(
-    WG14_RESULT_PREFIX(status_code_domain) * domain);
+    void WG14_RESULT_VTABLE_DECL(*const payload_info,
+                                 struct WG14_RESULT_PREFIX(
+                                 status_code_domain_vtable_payload_info_args) *
+                                 args);
     //! True if code means failure.
-    bool(WG14_RESULT_VTABLE_API *const failure)(
-    WG14_RESULT_PREFIX(status_code_domain) * domain,
-    const WG14_RESULT_PREFIX(status_code_untyped) * code);
+    bool WG14_RESULT_VTABLE_DECL(*const failure,
+                                 const WG14_RESULT_PREFIX(status_code_untyped) *
+                                 code);
     //! True if code is (potentially non-transitively) equivalent to another
     //! code in another domain.
-    bool(WG14_RESULT_VTABLE_API *const equivalent)(
-    WG14_RESULT_PREFIX(status_code_domain) * domain,
-    const WG14_RESULT_PREFIX(status_code_untyped) * code1,
-    const WG14_RESULT_PREFIX(status_code_untyped) * code2);
+    bool WG14_RESULT_VTABLE_DECL(*const equivalent,
+                                 const WG14_RESULT_PREFIX(status_code_untyped) *
+                                 code1,
+                                 const WG14_RESULT_PREFIX(status_code_untyped) *
+                                 code2);
     //! Returns the generic code closest to this code, if any.
-    WG14_RESULT_PREFIX(status_code_generic)
-    (WG14_RESULT_VTABLE_API *const generic_code)(
-    WG14_RESULT_PREFIX(status_code_domain) * domain,
-    const WG14_RESULT_PREFIX(status_code_untyped) * code);
-    //! Return a reference to a string textually representing a code.
-    WG14_RESULT_PREFIX(status_code_domain_string_ref)
-    (WG14_RESULT_VTABLE_API *const message)(
-    WG14_RESULT_PREFIX(status_code_domain) * domain,
-    const WG14_RESULT_PREFIX(status_code_untyped) * code);
+    void WG14_RESULT_VTABLE_DECL(*const generic_code,
+                                 struct WG14_RESULT_PREFIX(
+                                 status_code_domain_vtable_generic_code_args) *
+                                 args);
+    //! Return a reference to a string textually representing a code. Returns an
+    //! `errno` if it failed.
+    int WG14_RESULT_VTABLE_DECL(*const message,
+                                struct WG14_RESULT_PREFIX(
+                                status_code_domain_vtable_message_args) *
+                                args);
     //! ABI compatibility slot for throwing a code as a C++ exception, do not
     //! call this even from C++ (use the C++ implementation instead).
-    void(WG14_RESULT_VTABLE_API *const reserved_slot_for_cxx_throw_exception)(
-    WG14_RESULT_PREFIX(status_code_domain) * domain,
-    const WG14_RESULT_PREFIX(status_code_untyped) * code);
+    void WG14_RESULT_VTABLE_DECL(*const reserved_slot_for_cxx_throw_exception,
+                                 const WG14_RESULT_PREFIX(status_code_untyped) *
+                                 code);
     //! For a `status_code<erased<T>>` only, copy from `src` to `dst`. Default
-    //! implementation uses `memcpy()`. You should return false here if your
-    //! payload is not trivially copyable or would not fit.
-    bool(WG14_RESULT_VTABLE_API *const erased_copy)(
-    WG14_RESULT_PREFIX(status_code_domain) * domain,
-    WG14_RESULT_PREFIX(status_code_untyped) * dst,
+    //! implementation uses `memcpy()`. Returns an `errno` if it failed. You
+    //! should return an error code here if your payload is not trivially
+    //! copyable or would not fit.
+    int WG14_RESULT_VTABLE_DECL(
+    *const erased_copy, WG14_RESULT_PREFIX(status_code_untyped) * dst,
     const WG14_RESULT_PREFIX(status_code_untyped) * src,
     WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo);
     //! For a `status_code<erased<T>>` only, destroy the erased value type.
     //! Default implementation does nothing.
-    void(WG14_RESULT_VTABLE_API *const erased_destroy)(
-    WG14_RESULT_PREFIX(status_code_domain) * domain,
-    WG14_RESULT_PREFIX(status_code_untyped) * code,
-    WG14_RESULT_PREFIX(status_code_domain_payload_info_t) info);
+    void WG14_RESULT_VTABLE_DECL(*const erased_destroy,
+                                 WG14_RESULT_PREFIX(status_code_untyped) * code,
+                                 WG14_RESULT_PREFIX(
+                                 status_code_domain_payload_info_t) info);
   } WG14_RESULT_PREFIX(status_code_domain_vtable);
 
   //! \brief The functions defined by a status code domain, kept ABI compatible
@@ -267,37 +503,37 @@ extern "C"
 
   //! \brief The default implementation for
   //! `status_code_domain_vtable.erased_copy()`.
-  WG14_RESULT_INLINE bool WG14_RESULT_VTABLE_API
-  WG14_RESULT_PREFIX(default_erased_copy_impl)(
-  WG14_RESULT_PREFIX(status_code_domain) * domain,
-  WG14_RESULT_PREFIX(status_code_untyped) * dst,
-  const WG14_RESULT_PREFIX(status_code_untyped) * src,
-  WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo)
+  WG14_RESULT_INLINE int
+  WG14_RESULT_VTABLE_API(WG14_RESULT_PREFIX(default_erased_copy_impl),
+                         WG14_RESULT_PREFIX(status_code_untyped) * dst,
+                         const WG14_RESULT_PREFIX(status_code_untyped) * src,
+                         WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
+                         dstinfo)
   {
-    (void) domain;
     // Note that dst may not have its domain set
-    const WG14_RESULT_PREFIX(status_code_domain_payload_info_t) srcinfo =
-    src->domain->vptr->payload_info(src->domain);
-    if(dstinfo.total_size < srcinfo.total_size)
+    struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args) args;
+    memset(&args, 0, sizeof(args));
+    args.domain = src->domain;
+    WG14_RESULT_VTABLE_INVOKE_API(src->domain, payload_info, &args);
+    if(dstinfo.total_size < args.ret.total_size)
     {
-      return false;
+      return ENOBUFS;
     }
-    const size_t tocopy = (dstinfo.total_size > srcinfo.total_size) ?
-                          srcinfo.total_size :
+    const size_t tocopy = (dstinfo.total_size > args.ret.total_size) ?
+                          args.ret.total_size :
                           dstinfo.total_size;
     memcpy(&dst, &src, tocopy);
-    return true;
+    return 0;
   }
 
   //! \brief The default implementation for
   //! `status_code_domain_vtable.erased_destroy()`.
-  WG14_RESULT_INLINE void WG14_RESULT_VTABLE_API
-  WG14_RESULT_PREFIX(default_erased_destroy_impl)(
-  WG14_RESULT_PREFIX(status_code_domain) * domain,
-  WG14_RESULT_PREFIX(status_code_untyped) * code,
-  WG14_RESULT_PREFIX(status_code_domain_payload_info_t) info)
+  WG14_RESULT_INLINE void
+  WG14_RESULT_VTABLE_API(WG14_RESULT_PREFIX(default_erased_destroy_impl),
+                         WG14_RESULT_PREFIX(status_code_untyped) * code,
+                         WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
+                         info)
   {
-    (void) domain;
     (void) code;
     (void) info;
   }
@@ -373,12 +609,12 @@ extern "C"
      STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_PARSE_HEX_BYTE(uuid[35]))          \
     << 60))
 
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 #ifdef __cplusplus
 #if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC diagnostic pop
-#endif
-#ifdef _MSC_VER
-#pragma warning(pop)
 #endif
 }
 #endif

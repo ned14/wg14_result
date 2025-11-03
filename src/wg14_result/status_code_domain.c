@@ -54,43 +54,41 @@ extern "C"
 #endif
 #endif
 
-  static bool atomic_refcounted_string_thunk(
-  WG14_RESULT_PREFIX(status_code_domain_string_ref) * dest,
-  WG14_RESULT_PREFIX(status_code_domain_string_ref) * src,
-  enum WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op) op)
+  static int atomic_refcounted_string_thunk(
+  const WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args) * args)
   {
-    switch(op)
+    switch(args->op)
     {
     case WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_copy):
     {
-      memcpy(dest, src, sizeof(*src));
+      memcpy(args->dest, args->src, sizeof(*args->src));
       struct atomic_refcounted_string *p =
-      (struct atomic_refcounted_string *) src->state[0];
+      (struct atomic_refcounted_string *) args->src->state[0];
       WG14_RESULT_ATOMIC_PREFIX
       atomic_fetch_add_explicit(&p->count, 1,
                                 WG14_RESULT_ATOMIC_PREFIX memory_order_relaxed);
-      return true;
+      return 0;
     }
     case WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_move):
     {
-      memcpy(dest, src, sizeof(*dest));
-      memset(src, 0, sizeof(*src));
-      return true;
+      memcpy(args->dest, args->src, sizeof(*args->dest));
+      memset(args->src, 0, sizeof(*args->src));
+      return 0;
     }
     case WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_destruct):
     {
       struct atomic_refcounted_string *p =
-      (struct atomic_refcounted_string *) dest->state[0];
+      (struct atomic_refcounted_string *) args->dest->state[0];
       if(1 == WG14_RESULT_ATOMIC_PREFIX atomic_fetch_sub_explicit(
               &p->count, 1, WG14_RESULT_ATOMIC_PREFIX memory_order_relaxed))
       {
         free(p);
       }
-      memset(dest, 0, sizeof(*dest));
-      return true;
+      memset(args->dest, 0, sizeof(*args->dest));
+      return 0;
     }
     }
-    return true;
+    return 0;
   }
 
   WG14_RESULT_PREFIX(status_code_domain_string_ref)

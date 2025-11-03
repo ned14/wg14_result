@@ -124,6 +124,13 @@ WG14_RESULT_INLINE unsigned WG14_RESULT_PREFIX(abortf_impl)(const char *msg,
   return 0;
 #endif
 }
+#if defined(_MSC_VER) && !defined(__clang__)
+#define WG14_RESULT_ABORTF(X, ...)                                             \
+  WG14_RESULT_PREFIX(abortf_impl)("FATAL: " X "\n", ##__VA_ARGS__)
+#elif __STDC_VERSION__ >= 202300L && !defined(__clang__)
+#define WG14_RESULT_ABORTF(X, ...)                                             \
+  WG14_RESULT_PREFIX(abortf_impl)("FATAL: " X "\n" __VA_OPT(, ) __VA_ARGS__)
+#else
 #define WG14_RESULT_ABORTF_HAS_COMMA(...)                                      \
   WG14_RESULT_ABORTF_HAS_COMMA_16__(__VA_ARGS__, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, \
                                     1, 1, 1, 1, 0, 0)
@@ -135,12 +142,13 @@ _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, ...)     \
 #define WG14_RESULT_ABORTF_INVOKE0(X)                                          \
   WG14_RESULT_PREFIX(abortf_impl)("FATAL: " X "\n")
 #define WG14_RESULT_ABORTF_INVOKE1(X, ...)                                     \
-  WG14_RESULT_PREFIX(abortf_impl)("FATAL: " msg "\n", __VA_ARGS__)
+  WG14_RESULT_PREFIX(abortf_impl)("FATAL: " X "\n", __VA_ARGS__)
 
 #define WG14_RESULT_ABORTF(...)                                                \
   WG14_RESULT_ABORTF_CAT(WG14_RESULT_ABORTF_INVOKE,                            \
                          WG14_RESULT_ABORTF_HAS_COMMA(__VA_ARGS__))            \
   (__VA_ARGS__)
+#endif
 #endif
 
 #ifdef __cplusplus
