@@ -64,6 +64,26 @@ limitations under the License.
 #endif
 #endif
 
+#ifndef WG14_RESULT_TYPEOF
+#if __STDC_VERSION__ >= 202300L
+#define WG14_RESULT_TYPEOF(...) typeof(__VA_ARGS__)
+#else
+#define WG14_RESULT_TYPEOF(...) __typeof__(__VA_ARGS__)
+#endif
+#endif
+
+#ifndef WG14_RESULT_TYPEOF_UNQUAL
+#if __STDC_VERSION__ >= 202300L
+#define WG14_RESULT_TYPEOF_UNQUAL(...) typeof_unqual(__VA_ARGS__)
+#elif(defined(__GNUC__) && !defined(__clang__) && __GNUC__ < 14) ||            \
+(defined(__clang__) && __clang_major__ < 19)
+// Not much else we can do here
+#define WG14_RESULT_TYPEOF_UNQUAL(...) __typeof__(__VA_ARGS__)
+#else
+#define WG14_RESULT_TYPEOF_UNQUAL(...) __typeof_unqual__(__VA_ARGS__)
+#endif
+#endif
+
 #ifndef WG14_RESULT_CONSTEXPR_OR_CONST
 #if __STDC_VERSION__ >= 202300L && (!defined(__clang__) || __clang_major >= 19)
 #define WG14_RESULT_CONSTEXPR_OR_CONST constexpr

@@ -4,6 +4,7 @@ option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 set(CMAKE_C_VISIBILITY_PRESET "hidden" CACHE STRING "Only make explicitly exported symbols visible")
 set(CMAKE_C_STANDARD "11" CACHE STRING "C standard to use")
 option(HEADER_ONLY_BUILD "Build using header only (unity build)" OFF)
+option(BUILD_POSIX_SUPPORT "Build POSIX code support" ON)
 
 project(wg14_result LANGUAGES C)
 include(GNUInstallDirs)
@@ -13,6 +14,9 @@ set(LIBRARY_SOURCES
   "src/wg14_result/status_code_domain.c"
   "src/wg14_result/status_code_generic.c"
 )
+if(BUILD_POSIX_SUPPORT)
+  list(APPEND LIBRARY_SOURCES "src/wg14_result/status_code_posix.c")
+endif()
 
 add_library(${PROJECT_NAME} ${LIBRARY_SOURCES})
 if(HEADER_ONLY_BUILD)
@@ -69,6 +73,9 @@ if(PROJECT_IS_TOP_LEVEL AND (NOT DEFINED BUILD_TESTING OR BUILD_TESTING))
       target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic)
     endif()
     target_compile_features(${target} PRIVATE ${ADD_EXAMPLE_FEATURES})
+    if(BUILD_POSIX_SUPPORT)
+      target_compile_definitions(${target} PRIVATE WG14_RESULT_HAVE_POSIX_SUPPORT)
+    endif()
     target_link_libraries(${target} PRIVATE ${PROJECT_NAME})
     set_target_properties(${target} PROPERTIES
       RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"

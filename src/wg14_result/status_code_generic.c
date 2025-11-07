@@ -235,14 +235,9 @@ extern "C"
   status_code_generic_domain_vtable_payload_info,
   struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args) * args)
   {
-    const WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-    ret = {sizeof(enum WG14_RESULT_PREFIX(status_code_errc)),
-           sizeof(WG14_RESULT_PREFIX(status_code_domain) *) +
-           sizeof(enum WG14_RESULT_PREFIX(status_code_errc)),
-           (__alignof(enum WG14_RESULT_PREFIX(status_code_errc)) >
-            __alignof(WG14_RESULT_PREFIX(status_code_domain) *)) ?
-           __alignof(enum WG14_RESULT_PREFIX(status_code_errc)) :
-           __alignof(WG14_RESULT_PREFIX(status_code_domain) *)};
+    const WG14_RESULT_PREFIX(status_code_domain_payload_info_t) ret =
+    STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT(
+    enum WG14_RESULT_PREFIX(status_code_errc));
     args->ret = ret;
   }
 

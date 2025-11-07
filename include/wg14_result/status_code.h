@@ -125,6 +125,39 @@ extern "C"
     return false;
   }
 
+  //! \brief Destroys the status code (erased)
+  WG14_RESULT_INLINE void WG14_RESULT_PREFIX(status_code_erased_destroy)(
+  WG14_RESULT_PREFIX(status_code_untyped) * r)
+  {
+    if(r->domain != WG14_RESULT_NULLPTR &&
+       r->domain->vptr->erased_destroy != WG14_RESULT_NULLPTR)
+    {
+      struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args)
+      args;
+      memset(&args, 0, sizeof(args));
+      args.domain = r->domain;
+      WG14_RESULT_VTABLE_INVOKE_API(r->domain, payload_info, &args);
+      WG14_RESULT_VTABLE_INVOKE_API(r->domain, erased_destroy, r, args.ret);
+      r->domain = WG14_RESULT_NULLPTR;
+    }
+  }
+
+  //! \brief Clones the status code (erased), returning an `errno` value
+  //! if failed.
+  WG14_RESULT_INLINE int WG14_RESULT_PREFIX(status_code_erased_clone)(
+  WG14_RESULT_PREFIX(status_code_untyped) * dest,
+  const WG14_RESULT_PREFIX(status_code_untyped) * src,
+  WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo)
+  {
+    WG14_RESULT_PREFIX(status_code_erased_destroy)(dest);
+    if(src->domain != WG14_RESULT_NULLPTR)
+    {
+      return WG14_RESULT_VTABLE_INVOKE_API(src->domain, erased_copy, dest, src,
+                                           dstinfo);
+    }
+    return 0;
+  }
+
 
 //! \brief True if the status code is empty (convenience macro)
 #define status_code_is_empty(...)                                              \
@@ -148,6 +181,63 @@ extern "C"
 #define status_code_strictly_equivalent(primary, secondary)                    \
   WG14_RESULT_PREFIX(status_code_strictly_equivalent)                          \
   (&(primary).base, &(secondary).base)
+//! \brief Destroys the status code (type aware)
+#define status_code_destroy(...)                                               \
+  {                                                                            \
+    typedef WG14_RESULT_TYPEOF_UNQUAL(*(__VA_ARGS__))                          \
+    WG14_RESULT_PREFIX(_code_type_);                                           \
+    WG14_RESULT_PREFIX(_code_type_) * WG14_RESULT_PREFIX(_code_ptr_) =         \
+    (WG14_RESULT_PREFIX(_code_type_) *) (&(*(__VA_ARGS__)));                   \
+    if(WG14_RESULT_PREFIX(_code_ptr_)->base.domain != WG14_RESULT_NULLPTR &&   \
+       WG14_RESULT_PREFIX(_code_ptr_)->base.domain->vptr->erased_destroy !=    \
+       WG14_RESULT_NULLPTR)                                                    \
+    {                                                                          \
+      typedef WG14_RESULT_TYPEOF(WG14_RESULT_PREFIX(_code_ptr_)->value)        \
+      WG14_RESULT_PREFIX(_value_type_);                                        \
+      const WG14_RESULT_PREFIX(status_code_domain_payload_info_t)              \
+      WG14_RESULT_PREFIX(_info_) =                                             \
+      STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT(WG14_RESULT_PREFIX(_value_type_));  \
+      WG14_RESULT_VTABLE_INVOKE_API(                                           \
+      WG14_RESULT_PREFIX(_code_ptr_)->base.domain, erased_destroy,             \
+      &WG14_RESULT_PREFIX(_code_ptr_)->base, WG14_RESULT_PREFIX(_info_));      \
+      WG14_RESULT_PREFIX(_code_ptr_)->base.domain = WG14_RESULT_NULLPTR;       \
+    }                                                                          \
+  }
+#if !defined(_MSC_VER) || defined(__clang__)
+#ifdef __GCC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+#endif
+//! \brief Clones the status code (type aware)
+#define status_code_clone(dest, src)                                           \
+  ({                                                                           \
+    typedef WG14_RESULT_TYPEOF(*(dest)) WG14_RESULT_PREFIX(_dest_code_type_);  \
+    typedef WG14_RESULT_TYPEOF(*(src)) WG14_RESULT_PREFIX(_src_code_type_);    \
+    WG14_RESULT_PREFIX(_dest_code_type_) *                                     \
+    WG14_RESULT_PREFIX(_dest_code_ptr_) =                                      \
+    (WG14_RESULT_PREFIX(_dest_code_type_) *) (&(*(dest)));                     \
+    WG14_RESULT_PREFIX(_src_code_type_) * WG14_RESULT_PREFIX(_src_code_ptr_) = \
+    (WG14_RESULT_PREFIX(_src_code_type_) *) (&(*(src)));                       \
+    typedef WG14_RESULT_TYPEOF(WG14_RESULT_PREFIX(_dest_code_ptr_)->value)     \
+    WG14_RESULT_PREFIX(_dest_value_type_);                                     \
+    status_code_destroy(_dest_code_ptr_);                                      \
+    int WG14_RESULT_PREFIX(ret) = 0;                                           \
+    if(WG14_RESULT_PREFIX(_src_code_ptr_)->base.domain != WG14_RESULT_NULLPTR) \
+    {                                                                          \
+      const WG14_RESULT_PREFIX(status_code_domain_payload_info_t)              \
+      WG14_RESULT_PREFIX(_info_) = STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT(       \
+      WG14_RESULT_PREFIX(_dest_value_type_));                                  \
+      WG14_RESULT_PREFIX(ret) = WG14_RESULT_VTABLE_INVOKE_API(                 \
+      WG14_RESULT_PREFIX(_src_code_ptr_)->base.domain, erased_copy,            \
+      &WG14_RESULT_PREFIX(_dest_code_ptr_)->base,                              \
+      &WG14_RESULT_PREFIX(_src_code_ptr_)->base, WG14_RESULT_PREFIX(_info_));  \
+    }                                                                          \
+    WG14_RESULT_PREFIX(ret);                                                   \
+  })
+#ifdef __GCC__
+#pragma GCC diagnostic pop
+#endif
+#endif
 
 #ifdef _MSC_VER
 #pragma warning(pop)

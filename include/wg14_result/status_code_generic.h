@@ -27,11 +27,6 @@ limitations under the License.
 #ifdef __cplusplus
 extern "C"
 {
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4190)  // has C linkage, but returns type which is
-                                 // incompatible with C
-#endif
 #endif
 
   //! The generic error coding (POSIX)
@@ -167,9 +162,9 @@ extern "C"
     if(primary->domain != WG14_RESULT_NULLPTR &&
        secondary->domain != WG14_RESULT_NULLPTR)
     {
-       WG14_RESULT_PREFIX(status_code_domain) *const primary_domain =
+      WG14_RESULT_PREFIX(status_code_domain) *const primary_domain =
       primary->domain;
-       WG14_RESULT_PREFIX(status_code_domain) *const secondary_domain =
+      WG14_RESULT_PREFIX(status_code_domain) *const secondary_domain =
       secondary->domain;
       if(WG14_RESULT_VTABLE_INVOKE_API(primary_domain, equivalent, primary,
                                        secondary))
@@ -212,19 +207,31 @@ extern "C"
     return false;
   }
 
+  //! \brief True if the status code is semantically equivalent in any way to
+  //! the generic enum value (implementation).
+  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_equivalent_errc)(
+  const WG14_RESULT_PREFIX(status_code_untyped) * primary,
+  enum WG14_RESULT_PREFIX(status_code_errc) errc)
+  {
+    const WG14_RESULT_PREFIX(status_code_generic) secondary =
+    WG14_RESULT_PREFIX(status_code_generic_make)(errc);
+    return WG14_RESULT_PREFIX(status_code_equivalent)(primary, &secondary.base);
+  }
+
 //! \brief True if the status codes are semantically equivalent in any way
-//! (implementation). Guaranteed transitive. Firstly
+//! (convenience macro). Guaranteed transitive. Firstly
 //! `status_code_strictly_equivalent()` is run in both directions. If neither
 //! succeeds, each domain is asked for the equivalent generic code, and those
 //! are compared.
 #define status_code_equivalent(primary, secondary)                             \
-  WG14_RESULT_PREFIX(status_code_equivalent)                                   \
-  (&(primary).base, &(secondary).base)
+  WG14_RESULT_PREFIX(status_code_equivalent)(&(primary).base, &(secondary).base)
+//! \brief True if the status code is semantically equivalent in any way to the
+//! generic enum value (convenience macro). Guaranteed transitive.
+#define status_code_equivalent_errc(primary, errc)                             \
+  WG14_RESULT_PREFIX(status_code_equivalent_errc)(&(primary).base, (errc))
+
 
 #ifdef __cplusplus
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
 }
 #endif
 

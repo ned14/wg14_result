@@ -76,6 +76,14 @@ extern "C"
     status_code_domain_string_ref_thunk_spec thunk;
   };
 
+  //! \brief Returns true if the string ref is empty
+  WG14_RESULT_INLINE bool
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_is_empty)(
+  const WG14_RESULT_PREFIX(status_code_domain_string_ref) * s)
+  {
+    return s->c_str == WG14_RESULT_NULLPTR;
+  }
+
   //! \brief Attempt to copy a string ref, returning an `errno` cause if it
   //! failed.
   WG14_RESULT_INLINE int WG14_RESULT_PREFIX(status_code_domain_string_ref_copy)(
@@ -120,8 +128,10 @@ extern "C"
   //! \brief Destroy a string ref
   WG14_RESULT_INLINE void
   WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(
-  WG14_RESULT_PREFIX(status_code_domain_string_ref) * src)
+  const WG14_RESULT_PREFIX(status_code_domain_string_ref) * _src)
   {
+    WG14_RESULT_PREFIX(status_code_domain_string_ref) *src =
+    (WG14_RESULT_PREFIX(status_code_domain_string_ref) *) _src;
     if(src->thunk != WG14_RESULT_NULLPTR)
     {
       const WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args)
@@ -201,6 +211,14 @@ extern "C"
     total_size;  //!< The total status code size in bytes (includes domain pointer and mixins state)
     size_t total_alignment;  //!< The total status code alignment in bytes
   } WG14_RESULT_PREFIX(status_code_domain_payload_info_t);
+
+//! \brief A default initialiser for a `status_code_domain_payload_info_t` for
+//! most types
+#define STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT(T)                                \
+  {sizeof(T), sizeof(WG14_RESULT_PREFIX(status_code_domain) *) + sizeof(T),    \
+   (__alignof(T) > __alignof(WG14_RESULT_PREFIX(status_code_domain) *)) ?      \
+   __alignof(T) :                                                              \
+   __alignof(WG14_RESULT_PREFIX(status_code_domain) *)}
 
   //! \brief Type of an untyped status code
   typedef struct WG14_RESULT_PREFIX(status_code_untyped)
@@ -377,10 +395,10 @@ extern "C"
 #else
 #define WG14_RESULT_VTABLE_INVOKE_API(domain, name, ...)                       \
   (_Generic((domain)->vptr->name(__VA_ARGS__),                                 \
-   bool: WG14_RESULT_PREFIX(win32_invoke_with_this_bool)(                      \
+  bool: WG14_RESULT_PREFIX(win32_invoke_with_this_bool)(                       \
             &WG14_RESULT_PREFIX(win32_invoke_with_this_storage),               \
             (void *) (domain)->vptr->name, (domain), __VA_ARGS__),             \
-   default: WG14_RESULT_PREFIX(win32_invoke_with_this)(                        \
+  default: WG14_RESULT_PREFIX(win32_invoke_with_this)(                         \
             &WG14_RESULT_PREFIX(win32_invoke_with_this_storage),               \
             (void *) (domain)->vptr->name, (domain), __VA_ARGS__)))
 #endif
@@ -522,7 +540,7 @@ extern "C"
     const size_t tocopy = (dstinfo.total_size > args.ret.total_size) ?
                           args.ret.total_size :
                           dstinfo.total_size;
-    memcpy(&dst, &src, tocopy);
+    memcpy(dst, src, tocopy);
     return 0;
   }
 

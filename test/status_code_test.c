@@ -3,8 +3,20 @@
 #include "wg14_result/status_code.h"
 #include "wg14_result/status_code_generic.h"
 
+#if WG14_RESULT_HAVE_POSIX_SUPPORT
+#include "wg14_result/status_code_posix.h"
+#endif
+
 #ifdef _MSC_VER
 #include <crtdbg.h>
+#endif
+
+#ifdef __clang__
+#pragma clang diagnostic ignored                                               \
+"-Wgnu-statement-expression-from-macro-expansion"
+#endif
+#ifdef __GCC__
+#pragma GCC diagnostic ignored "-Wpedantic"
 #endif
 
 /* The unit test is heavily borrowed from
@@ -79,12 +91,8 @@ static void WG14_RESULT_VTABLE_API(
 Code_domain_vtable_payload_info,
 struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args) * args)
 {
-  const WG14_RESULT_PREFIX(status_code_domain_payload_info_t) ret = {
-  sizeof(enum Code),
-  sizeof(WG14_RESULT_PREFIX(status_code_domain) *) + sizeof(enum Code),
-  (__alignof(enum Code) > __alignof(WG14_RESULT_PREFIX(status_code_domain) *)) ?
-  __alignof(enum Code) :
-  __alignof(WG14_RESULT_PREFIX(status_code_domain) *)};
+  const WG14_RESULT_PREFIX(status_code_domain_payload_info_t) ret =
+  STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT(enum Code);
   args->ret = ret;
 }
 
@@ -259,6 +267,82 @@ int main(void)
   CHECK(!status_code_equivalent(failure1, success2));
   CHECK(status_code_equivalent(failure1, failure2));
 
+  // Test typed clone and destroy macros
+#if !defined(_MSC_VER) || defined(__clang__)
+  {
+    StatusCode dest = {{WG14_RESULT_NULLPTR}, Code_success1};
+    CHECK(status_code_clone(&dest, &failure2) == 0);
+    printf("(dest == failure2) = %d\n",
+           status_code_strictly_equivalent(dest, failure2));
+    CHECK(status_code_strictly_equivalent(dest, failure2));
+    status_code_destroy(&dest);
+  }
+#endif
+
+  // Test atomic_refcounted_string_ref (used by Windows status codes)
+  {
+    const char msg[] = "status test message";
+
+    WG14_RESULT_PREFIX(status_code_domain_string_ref)
+    shared_str1 = WG14_RESULT_PREFIX(
+    status_code_domain_string_ref_atomic_refcounted_from_string)(msg);
+    WG14_RESULT_PREFIX(status_code_domain_string_ref) shared_str2;
+    CHECK(0 == WG14_RESULT_PREFIX(status_code_domain_string_ref_copy)(
+               &shared_str2, &shared_str1));
+
+    CHECK(!status_code_domain_string_ref_is_empty(&shared_str1));
+    CHECK(!status_code_domain_string_ref_is_empty(&shared_str2));
+    CHECK(shared_str1.c_str == shared_str2.c_str);
+    CHECK(0 == strcmp(shared_str1.c_str, msg));
+    CHECK(0 == strcmp(shared_str2.c_str, msg));
+
+    WG14_RESULT_PREFIX(status_code_domain_string_ref) shared_str3;
+    WG14_RESULT_PREFIX(status_code_domain_string_ref_move)
+    (&shared_str3, &shared_str1);
+    CHECK(status_code_domain_string_ref_is_empty(&shared_str1));
+    CHECK(!status_code_domain_string_ref_is_empty(&shared_str2));
+    CHECK(!status_code_domain_string_ref_is_empty(&shared_str3));
+    CHECK(shared_str2.c_str == shared_str3.c_str);
+    CHECK(0 == strcmp(shared_str3.c_str, msg));
+
+    WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(&shared_str1);
+    WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(&shared_str2);
+    WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(&shared_str3);
+  }
+
+#if WG14_RESULT_HAVE_POSIX_SUPPORT
+  // Test posix_code
+  WG14_RESULT_CONSTEXPR_OR_CONST WG14_RESULT_PREFIX(status_code_posix)
+  success9 = WG14_RESULT_PREFIX(status_code_posix_make)(0),
+  failure9 = WG14_RESULT_PREFIX(status_code_posix_make)(EACCES);
+  CHECK(status_code_is_success(success9));
+  CHECK(status_code_is_failure(failure9));
+  const WG14_RESULT_PREFIX(status_code_domain_string_ref) success9msg =
+  status_code_message(success9);
+  const WG14_RESULT_PREFIX(status_code_domain_string_ref) failure9msg =
+  status_code_message(failure9);
+  printf("\nPOSIX code success has value %d (%s) is success %d is failure %d\n",
+         success9.value, success9msg.c_str, status_code_is_success(success9),
+         status_code_is_failure(success9));
+  printf("POSIX code failure has value %d (%s) is success %d is failure %d\n",
+         failure9.value, failure9msg.c_str, status_code_is_success(failure9),
+         status_code_is_failure(failure9));
+  CHECK(status_code_equivalent_errc(
+  success9, WG14_RESULT_PREFIX(status_code_errc_success)));
+  CHECK(status_code_equivalent_errc(
+  failure9, WG14_RESULT_PREFIX(status_code_errc_permission_denied)));
+  CHECK(status_code_equivalent(failure9, failure1));
+  CHECK(status_code_equivalent(failure9, failure2));
+#if 0
+  system_code success10(success9), failure10(failure9);
+  CHECK(success10 == errc::success);
+  CHECK(failure10 == errc::permission_denied);
+  CHECK(failure10 == failure1);
+  CHECK(failure10 == failure2);
+#endif
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(&success9msg);
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(&failure9msg);
+#endif
 
   printf("Exiting main with result %d ...\n", ret);
   return ret;

@@ -9,6 +9,28 @@ on:
   - cron: '0 0 1 * *'
 
 jobs:
+  ESP32:
+    name: ESP32
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        debug: [Debug, Release]
+        standard: [11]
+    env:
+      NAME: ESP32
+          
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Configure and Build ESP32
+      uses: espressif/esp-idf-ci-action@v1
+      with:
+        esp_idf_version: latest
+        target: esp32c3
+        path: .
+        command: mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} && cmake --build . --parallel
+
   Linux:
     name: Linux
     runs-on: ubuntu-latest

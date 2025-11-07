@@ -32,13 +32,16 @@ todo
 
 This library should work well on any POSIX implementation, as well as
 Microsoft Windows. You will need a minimum of C 11 in your toolchain to compile
-the library, however its header files work in all standards of C right back to C 90.
+the library, however its header files work in all standards of C right back to C 90
+(NOTE that some macros do use features from later C standards, if on an earlier C
+then don't use that macro).
 
 Current CI test targets:
 
 - Ubuntu Linux, x64.
 - Mac OS, AArch64.
 - Microsoft Windows, x64.
+- ESP32, RISC V.
 
 Current compilers:
 
@@ -51,11 +54,12 @@ Current compilers:
 You can find a number of user definable macros to override in `config.h`.
 They have sensible defaults on the major platforms and toolchains.
 
-## Features from C++ `status-code` out of scope
+## Features from C++ `status-code` out of scope for the C implementation
 
 - `status_code_errored`, without Contracts it doesn't really make sense.
 - `status_code` mixins, which require template trait based inheritance to be easy to use.
-- `quick_status_code_from_enum` would need C compiler magic to work I think.
+- `quick_status_code_from_enum` would need C compiler magic to work I think. Not
+ruling that out at all, but it's definitely a later proposal paper.
 - `system_code_from_exception` makes no sense without C++ exceptions.
 - C++ i/o stream support obviously makes no sense in C.
 
@@ -75,23 +79,27 @@ They have sensible defaults on the major platforms and toolchains.
 - Ought to generate some sort of reference docs
 - Ought to generate examples to ensure optimised codegen
 - Convenience functions for serialising and printing.
+- Need example bindings for:
+    - Rust
+    - FORTRAN
+    - Swift
 
-## Features from C++ `status-code`
+## Features reimplemented in C from C++ `status-code`
 - [x] `status_code_domain`
 - [x] `status_code<void>` as `status_code_untyped`
 - [x] `status_code_generic`
-- [] `status_code(T)` has some functions implemented, but some remain to do.
-- [] `status_code_posix`
-- [] `status_code_system`
-- [] `stdc_result(T)`
-- [] `TRY` macros
+- [x] `status_code(T)`
+- [x] `status_code_posix`
+- [ ] `status_code_system`
+- [ ] `stdc_result(T)`
+- [ ] `TRY` macros
 
-- [] `status_code_nested`
-- [] `status_code_getaddrinfo`
-- [] `status_code_http`
-- [] `status_code_win32`
-- [] `status_code_nt`
-- [] `status_code_com`
+- [ ] `status_code_nested`
+- [ ] `status_code_getaddrinfo`
+- [ ] `status_code_http`
+- [ ] `status_code_win32`
+- [ ] `status_code_nt`
+- [ ] `status_code_com`
 
-- [] `status_code_cxx_error_code`
-- [] `status_code_boost_error_code`
+- [ ] `status_code_cxx_error_code`
+- [ ] `status_code_boost_error_code`

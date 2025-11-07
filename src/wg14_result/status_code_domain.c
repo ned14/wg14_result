@@ -106,7 +106,7 @@ extern "C"
       "failed to get message from system");
     }
     WG14_RESULT_ATOMIC_PREFIX atomic_store_explicit(
-    &p->count, 0, WG14_RESULT_ATOMIC_PREFIX memory_order_release);
+    &p->count, 1, WG14_RESULT_ATOMIC_PREFIX memory_order_release);
     memcpy(p->msg, s, len);
     p->msg[len] = 0;
     const WG14_RESULT_PREFIX(status_code_domain_string_ref)
