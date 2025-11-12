@@ -20,7 +20,7 @@ limitations under the License.
 #ifndef WG14_RESULT_STATUS_CODE_POSIX_H
 #define WG14_RESULT_STATUS_CODE_POSIX_H
 
-#include "status_code_domain.h"
+#include "status_code_system.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -38,6 +38,15 @@ extern "C"
     WG14_RESULT_PREFIX(status_code_untyped) base;
     int value;
   } WG14_RESULT_PREFIX(status_code_posix);
+#if __STDC_VERSION__ >= 201100L
+  _Static_assert(sizeof(WG14_RESULT_PREFIX(status_code_posix)) <=
+                 sizeof(WG14_RESULT_PREFIX(status_code_system)),
+                 "A POSIX status code is too large for status_code_system!");
+  _Static_assert(
+  __alignof(WG14_RESULT_PREFIX(status_code_posix)) <=
+  __alignof(WG14_RESULT_PREFIX(status_code_system)),
+  "A POSIX status code is too over aligned for status_code_system!");
+#endif
 
   //! \brief Make a `status_code_posix`
   WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_posix)

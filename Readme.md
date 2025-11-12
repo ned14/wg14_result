@@ -95,7 +95,7 @@ todo
 - [x] `status_code_generic`
 - [x] `status_code(T)`
 - [x] `status_code_posix`
-- [ ] `status_code_system`
+- [x] `status_code_system`
 - [ ] `stdc_result(T)`
 - [ ] `TRY` macros
 

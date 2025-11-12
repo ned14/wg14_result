@@ -32,23 +32,32 @@ extern "C"
 #pragma warning(disable : 4996)  // use strerror_s instead
 #endif
 
-#define STATUS_CODE_WITH_PAYLOAD(T)                                            \
-  struct WG14_RESULT_PREFIX(status_code_with_payload_##T)
-#define STATUS_CODE_WITH_PAYLOAD_DECLARE(T, I)                                 \
-  struct WG14_RESULT_PREFIX(status_code_with_payload_##I)                      \
+//! \brief The type of a status code with named payload. You must call
+//! `STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)` first.
+#define STATUS_CODE_WITH_PAYLOAD(name)                                         \
+  struct WG14_RESULT_PREFIX(status_code_with_payload_##name)
+  /* \brief Declare a status code with payload of type `T` named `name`.
+
+  Before you do this there needs to be a `static constexpr` variable declared
+  called `name_domain`, otherwise the code emitted by this macro won't compile.
+  */
+#define STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)                              \
+  struct WG14_RESULT_PREFIX(status_code_with_payload_##name)                   \
   {                                                                            \
     WG14_RESULT_PREFIX(status_code_untyped) base;                              \
     T value;                                                                   \
   };                                                                           \
-  WG14_RESULT_INLINE struct WG14_RESULT_PREFIX(status_code_with_payload_##I)   \
-  WG14_RESULT_PREFIX(status_code_with_payload_##I##_make)(T val)               \
+  WG14_RESULT_INLINE struct WG14_RESULT_PREFIX(                                \
+  status_code_with_payload_##name)                                             \
+  WG14_RESULT_PREFIX(status_code_with_payload_##name##_make)(T val)            \
   {                                                                            \
-    struct WG14_RESULT_PREFIX(status_code_with_payload_##I)                    \
-    ret = {{&I##_domain}, val};                                                \
+    struct WG14_RESULT_PREFIX(status_code_with_payload_##name)                 \
+    ret = {{&name##_domain}, val};                                             \
     return ret;                                                                \
   }
-#define STATUS_CODE_WITH_PAYLOAD_MAKE(T)                                       \
-  WG14_RESULT_PREFIX(status_code_with_payload_##T##_make)
+//! \brief Make a named status code previously declared.
+#define STATUS_CODE_WITH_PAYLOAD_MAKE(name, ...)                               \
+  WG14_RESULT_PREFIX(status_code_with_payload_##name##_make)(__VA_ARGS__)
 
   //! \brief True if the status code is empty (implementation)
   WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_empty)(

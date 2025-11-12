@@ -2,6 +2,7 @@
 
 #include "wg14_result/status_code.h"
 #include "wg14_result/status_code_generic.h"
+#include "wg14_result/status_code_system.h"
 
 #if WG14_RESULT_HAVE_POSIX_SUPPORT
 #include "wg14_result/status_code_posix.h"
@@ -231,8 +232,8 @@ int main(void)
 
   WG14_RESULT_CONSTEXPR_OR_CONST StatusCode
   empty2 = {{WG14_RESULT_NULLPTR}, Code_success1},
-  success2 = STATUS_CODE_WITH_PAYLOAD_MAKE(Code)(Code_success1),
-  failure2 = STATUS_CODE_WITH_PAYLOAD_MAKE(Code)(Code_goaway);
+  success2 = STATUS_CODE_WITH_PAYLOAD_MAKE(Code, Code_success1),
+  failure2 = STATUS_CODE_WITH_PAYLOAD_MAKE(Code, Code_goaway);
   CHECK(status_code_is_success(success2));
   CHECK(status_code_is_failure(failure2));
   printf("\nStatusCode empty has value %d (%s) is success %d is failure %d\n",
@@ -333,13 +334,17 @@ int main(void)
   failure9, WG14_RESULT_PREFIX(status_code_errc_permission_denied)));
   CHECK(status_code_equivalent(failure9, failure1));
   CHECK(status_code_equivalent(failure9, failure2));
-#if 0
-  system_code success10(success9), failure10(failure9);
-  CHECK(success10 == errc::success);
-  CHECK(failure10 == errc::permission_denied);
-  CHECK(failure10 == failure1);
-  CHECK(failure10 == failure2);
-#endif
+
+  WG14_RESULT_PREFIX(status_code_system)
+  success10 = STATUS_CODE_SYSTEM_MAKE(success9),
+  failure10 = STATUS_CODE_SYSTEM_MAKE(failure9);
+  CHECK(status_code_equivalent_errc(
+  success10, WG14_RESULT_PREFIX(status_code_errc_success)));
+  CHECK(status_code_equivalent_errc(
+  failure10, WG14_RESULT_PREFIX(status_code_errc_permission_denied)));
+  CHECK(status_code_equivalent(failure10, failure1));
+  CHECK(status_code_equivalent(failure10, failure2));
+
   WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(&success9msg);
   WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(&failure9msg);
 #endif

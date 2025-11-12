@@ -122,6 +122,14 @@ limitations under the License.
 #endif
 #endif
 
+#ifndef WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR
+#define WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR(pred, msg, ...)                  \
+  ((__VA_ARGS__) + 0 * sizeof(struct {                                         \
+                     _Static_assert((pred), msg);                              \
+                     int x;                                                    \
+                   }))
+#endif
+
 
 #ifndef WG14_RESULT_STDERR_PRINTF
 #include <stdio.h>
@@ -132,16 +140,20 @@ limitations under the License.
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-WG14_RESULT_INLINE unsigned WG14_RESULT_PREFIX(abortf_impl)(const char *msg,
-                                                            ...)
+WG14_RESULT_INLINE unsigned
+#ifndef _MSC_VER
+__attribute__((noreturn))
+#endif
+WG14_RESULT_PREFIX(abortf_impl)(const char *msg, ...)
 {
   va_list args;
   va_start(args, msg);
   vfprintf(stderr, msg, args);
   abort();
-#ifndef _MSC_VER
-  va_end(args);
+#ifdef _MSC_VER
   return 0;
+#else
+  va_end(args);
 #endif
 }
 #if defined(_MSC_VER) && !defined(__clang__)

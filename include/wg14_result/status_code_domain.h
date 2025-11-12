@@ -213,13 +213,30 @@ extern "C"
     size_t total_alignment;  //!< The total status code alignment in bytes
   } WG14_RESULT_PREFIX(status_code_domain_payload_info_t);
 
-//! \brief A default initialiser for a `status_code_domain_payload_info_t` for
+#define STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT_INNARDS(T)                        \
+  sizeof(T), sizeof(WG14_RESULT_PREFIX(status_code_domain) *) + sizeof(T),     \
+  (__alignof(T) > __alignof(WG14_RESULT_PREFIX(status_code_domain) *)) ?       \
+  __alignof(T) :                                                               \
+  __alignof(WG14_RESULT_PREFIX(status_code_domain) *)
+
+  //! \brief A default initialiser for a `status_code_domain_payload_info_t` for
 //! most types
 #define STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT(T)                                \
-  {sizeof(T), sizeof(WG14_RESULT_PREFIX(status_code_domain) *) + sizeof(T),    \
-   (__alignof(T) > __alignof(WG14_RESULT_PREFIX(status_code_domain) *)) ?      \
-   __alignof(T) :                                                              \
-   __alignof(WG14_RESULT_PREFIX(status_code_domain) *)}
+  {STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT_INNARDS(T)}
+
+  //! \brief Make a `status_code_domain_payload_info_t`
+  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
+  WG14_RESULT_PREFIX(status_code_domain_payload_info_make)(
+  size_t payload_size, size_t total_size, size_t total_alignment)
+  {
+    const WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
+    ret = {payload_size, total_size, total_alignment};
+    return ret;
+  }
+//! \brief Make a default `status_code_domain_payload_info_t` for most types
+#define STATUS_CODE_DOMAIN_PAYLOAD_INFO_MAKE(T)                                \
+  WG14_RESULT_PREFIX(status_code_domain_payload_info_make)                     \
+  (STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT_INNARDS(T))
 
   //! \brief Type of an untyped status code
   typedef struct WG14_RESULT_PREFIX(status_code_untyped)
@@ -627,6 +644,40 @@ extern "C"
    ((STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_PARSE_HEX_BYTE(uuid[17]) ^         \
      STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_PARSE_HEX_BYTE(uuid[35]))          \
     << 60))
+
+
+  //! \brief Retrieves the name of the status code domain (implementation). Make
+  //! sure you call `status_code_domain_string_ref_destroy()` when you are done
+  //! with the returned string reference.
+  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
+  WG14_RESULT_PREFIX(status_code_domain_name)(
+  WG14_RESULT_PREFIX(status_code_domain) * domain)
+  {
+    struct WG14_RESULT_PREFIX(status_code_domain_vtable_name_args) args;
+    memset(&args, 0, sizeof(args));
+    args.domain = domain;
+    const int errcode = WG14_RESULT_VTABLE_INVOKE_API(domain, name, &args);
+    if(errcode == 0)
+    {
+      return args.ret;
+    }
+    WG14_RESULT_ABORTF("status_code_domain_name failed with %d (%s)", errcode,
+                       strerror(errcode));
+  }
+
+  //! \brief Retrieves the payload info of the status code domain
+  //! (implementation).
+  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
+  WG14_RESULT_PREFIX(status_code_domain_payload_info)(
+  WG14_RESULT_PREFIX(status_code_domain) * domain)
+  {
+    struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args) args;
+    memset(&args, 0, sizeof(args));
+    args.domain = domain;
+    WG14_RESULT_VTABLE_INVOKE_API(domain, payload_info, &args);
+    return args.ret;
+  }
+
 
 #ifdef _MSC_VER
 #pragma warning(pop)
