@@ -1,0 +1,6 @@
+<map id="status_code_domain_string_ref_s" name="status_code_domain_string_ref_s">
+<area shape="rect" id="Node000001" title="Type of a string ref of a domain." alt="" coords="19,5,175,45"/>
+<area shape="rect" id="Node000002" href="$structstatus__code__domain__string__ref__thunk__args__s.html" title="Type of the arguments to a string ref thunk function." alt="" coords="5,123,189,163"/>
+<area shape="poly" id="edge2_Node000002_Node000001" title=" " alt="" coords="70,58,64,70,61,84,64,98,79,121,74,124,59,100,55,84,59,68,66,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,109,97,99,97,69,96,45,101,45,103,69,103,99,102,109"/>
+</map>

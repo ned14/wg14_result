@@ -1,0 +1,38 @@
+var status__code__domain_8h =
+[
+    [ "status_code_domain_string_ref_thunk_args_s", "structstatus__code__domain__string__ref__thunk__args__s.html", "structstatus__code__domain__string__ref__thunk__args__s" ],
+    [ "status_code_domain_string_ref_s", "structstatus__code__domain__string__ref__s.html", "structstatus__code__domain__string__ref__s" ],
+    [ "status_code_domain_payload_info", "structstatus__code__domain__payload__info.html", "structstatus__code__domain__payload__info" ],
+    [ "status_code_untyped", "structstatus__code__untyped.html", "structstatus__code__untyped" ],
+    [ "status_code_domain_vtable_name_args", "structstatus__code__domain__vtable__name__args.html", "structstatus__code__domain__vtable__name__args" ],
+    [ "status_code_domain_vtable_payload_info_args", "structstatus__code__domain__vtable__payload__info__args.html", "structstatus__code__domain__vtable__payload__info__args" ],
+    [ "status_code_domain_vtable_message_args", "structstatus__code__domain__vtable__message__args.html", "structstatus__code__domain__vtable__message__args" ],
+    [ "status_code_domain_vtable_s", "structstatus__code__domain__vtable__s.html", "structstatus__code__domain__vtable__s" ],
+    [ "status_code_domain_s", "structstatus__code__domain__s.html", "structstatus__code__domain__s" ],
+    [ "STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT", "status__code__domain_8h.html#a65261dfd431f44d41e610530c24425fc", null ],
+    [ "STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID", "status__code__domain_8h.html#ac9faa77aa941219871355741a7551805", null ],
+    [ "STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_ABORT", "status__code__domain_8h.html#a83fecd498fe81dd0515353841e32dcd3", null ],
+    [ "STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_PARSE_HEX_BYTE", "status__code__domain_8h.html#a384709caa3d37b17d1cba33759685dde", null ],
+    [ "WG14_RESULT_VTABLE_API", "status__code__domain_8h.html#a5b2aafcf3227fa3dc553bed774cf7082", null ],
+    [ "WG14_RESULT_VTABLE_API_GLUE", "status__code__domain_8h.html#a8a82f2062920e92a0d0a3ee7cfe08a6a", null ],
+    [ "WG14_RESULT_VTABLE_API_GLUE2", "status__code__domain_8h.html#a98b2c8d34e99fc60e8a9e67ac441458a", null ],
+    [ "WG14_RESULT_VTABLE_API_UNIQUE_NAME", "status__code__domain_8h.html#a7cd928373ceb5b924096cb5459b62ce4", null ],
+    [ "WG14_RESULT_VTABLE_DECL", "status__code__domain_8h.html#aeec4b555a8301a2d5a6a5b0b829eb2a8", null ],
+    [ "WG14_RESULT_VTABLE_INVOKE_API", "status__code__domain_8h.html#a5d2eaf9f5000d5fa5b92fa42a2e41bb9", null ],
+    [ "status_code_domain", "status__code__domain_8h.html#aa6dab0ca6ea05fa64c5907cd7c7ca6c7", null ],
+    [ "status_code_domain_payload_info_t", "status__code__domain_8h.html#afdf60e0ee7ee3339f6f03794c13e9e8d", null ],
+    [ "status_code_domain_string_ref", "status__code__domain_8h.html#a7c06489ff015270eee8d857a9ae8050d", null ],
+    [ "status_code_domain_string_ref_thunk_args", "status__code__domain_8h.html#a63fceed3abe811ff6184ec4f96040459", null ],
+    [ "status_code_domain_string_ref_thunk_spec", "status__code__domain_8h.html#ad416e30b5b944b6cc197f62b982c1f25", null ],
+    [ "status_code_domain_unique_id_type", "status__code__domain_8h.html#aa26c07183bd675295febb90ac2fa9cef", null ],
+    [ "status_code_domain_vtable", "status__code__domain_8h.html#ae030f69e831a4ed2b245b396b644f10d", null ],
+    [ "status_code_generic", "status__code__domain_8h.html#a2f81212cafb08d2b17084aa753a7831d", null ],
+    [ "status_code_untyped", "status__code__domain_8h.html#ab2d724705556b513aef3f6adcd1e9a8e", null ],
+    [ "status_code_domain_string_ref_thunk_op", "status__code__domain_8h.html#ae0327411ed74ac2d8b5677d060c8f820", [
+      [ "status_code_domain_string_ref_thunk_op_copy", "status__code__domain_8h.html#ae0327411ed74ac2d8b5677d060c8f820a65f3741e6f0702506906f984e8545227", null ],
+      [ "status_code_domain_string_ref_thunk_op_move", "status__code__domain_8h.html#ae0327411ed74ac2d8b5677d060c8f820a0e4b6123bbf39ba43a05f5350da396bc", null ],
+      [ "status_code_domain_string_ref_thunk_op_destruct", "status__code__domain_8h.html#ae0327411ed74ac2d8b5677d060c8f820afeb16d83457de3c7a8d7d1be07d17f11", null ]
+    ] ],
+    [ "status_code_domain_string_ref_atomic_refcounted_from_buffer", "status__code__domain_8h.html#a292cb10cc3c14bfdeab3ce225ffaeefa", null ],
+    [ "status_code_domain_unique_id_from_uuid", "status__code__domain_8h.html#a03feb6c378a242f0dbde1ee4e61c59dc", null ]
+];

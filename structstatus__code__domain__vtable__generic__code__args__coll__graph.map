@@ -1,0 +1,12 @@
+<map id="status_code_domain_vtable_generic_code_args" name="status_code_domain_vtable_generic_code_args">
+<area shape="rect" id="Node000001" title="The arguments for status_code_domain_vtable.generic_code" alt="" coords="5,372,204,412"/>
+<area shape="rect" id="Node000002" href="$structstatus__code__generic__s.html" title="A generic status code." alt="" coords="144,284,313,309"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,320,131,374,128,370,201,315"/>
+<area shape="rect" id="Node000003" href="$structstatus__code__untyped.html" title="Type of an untyped status code." alt="" coords="25,196,185,221"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="103,235,98,284,99,331,104,371,99,372,94,332,93,284,98,234"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="134,227,213,282,210,286,131,231"/>
+<area shape="rect" id="Node000004" href="$structstatus__code__domain__s.html" title="The functions defined by a status code domain, kept ABI compatible with a C++ vtable." alt="" coords="19,108,190,133"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="107,147,107,195,102,195,102,147"/>
+<area shape="rect" id="Node000005" href="$structstatus__code__domain__vtable__s.html" title="The functions defined by a status code domain, kept ABI compatible with a C++ vtable." alt="" coords="27,5,183,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="107,59,107,108,102,108,102,59"/>
+</map>

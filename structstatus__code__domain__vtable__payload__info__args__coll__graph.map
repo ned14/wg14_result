@@ -1,0 +1,9 @@
+<map id="status_code_domain_vtable_payload_info_args" name="status_code_domain_vtable_payload_info_args">
+<area shape="rect" id="Node000001" title="The arguments for status_code_domain_vtable.payload_info" alt="" coords="12,211,208,251"/>
+<area shape="rect" id="Node000002" href="$structstatus__code__domain__payload__info.html" title="Type of a payload info of a domain." alt="" coords="5,108,161,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,161,108,210,102,211,89,162"/>
+<area shape="rect" id="Node000003" href="$structstatus__code__domain__s.html" title="The functions defined by a status code domain, kept ABI compatible with a C++ vtable." alt="" coords="186,115,357,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="243,150,142,213,139,208,240,146"/>
+<area shape="rect" id="Node000004" href="$structstatus__code__domain__vtable__s.html" title="The functions defined by a status code domain, kept ABI compatible with a C++ vtable." alt="" coords="193,5,349,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="274,59,274,115,269,115,269,59"/>
+</map>

@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['status_5fcode_5fclone_0',['status_code_clone',['../status__code_8h.html#a58749698269315a9c54f584a670b5db8',1,'status_code.h']]],
+  ['status_5fcode_5fdestroy_1',['status_code_destroy',['../status__code_8h.html#a62f4035b2db3ca888fafdf78448714d9',1,'status_code.h']]],
+  ['status_5fcode_5fdomain_5fpayload_5finfo_5finit_2',['STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT',['../status__code__domain_8h.html#a65261dfd431f44d41e610530c24425fc',1,'status_code_domain.h']]],
+  ['status_5fcode_5fdomain_5funique_5fid_5ffrom_5fuuid_3',['STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID',['../status__code__domain_8h.html#ac9faa77aa941219871355741a7551805',1,'status_code_domain.h']]],
+  ['status_5fcode_5fdomain_5funique_5fid_5ffrom_5fuuid_5fabort_4',['STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_ABORT',['../status__code__domain_8h.html#a83fecd498fe81dd0515353841e32dcd3',1,'status_code_domain.h']]],
+  ['status_5fcode_5fdomain_5funique_5fid_5ffrom_5fuuid_5fparse_5fhex_5fbyte_5',['STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_PARSE_HEX_BYTE',['../status__code__domain_8h.html#a384709caa3d37b17d1cba33759685dde',1,'status_code_domain.h']]],
+  ['status_5fcode_5fequivalent_6',['status_code_equivalent',['../status__code__generic_8h.html#a12238e1b3ffa0b5abf2600b82816dc85',1,'status_code_generic.h']]],
+  ['status_5fcode_5fequivalent_5ferrc_7',['status_code_equivalent_errc',['../status__code__generic_8h.html#a7b041d45197a6b56358673101cbeca30',1,'status_code_generic.h']]],
+  ['status_5fcode_5fis_5fempty_8',['status_code_is_empty',['../status__code_8h.html#a45638889da44765d1954a8b80c0e7a73',1,'status_code.h']]],
+  ['status_5fcode_5fis_5ffailure_9',['status_code_is_failure',['../status__code_8h.html#a997cb10324e10172e7d815aa59398eb2',1,'status_code.h']]],
+  ['status_5fcode_5fis_5fsuccess_10',['status_code_is_success',['../status__code_8h.html#abba26b46c2cdde1a706266bcac1396c2',1,'status_code.h']]],
+  ['status_5fcode_5fmessage_11',['status_code_message',['../status__code_8h.html#a9bde8d795d0c37ad39781208d4154541',1,'status_code.h']]],
+  ['status_5fcode_5fstrictly_5fequivalent_12',['status_code_strictly_equivalent',['../status__code_8h.html#acc6440f2c46a681d93553bb161a2bf24',1,'status_code.h']]],
+  ['status_5fcode_5fwith_5fpayload_13',['STATUS_CODE_WITH_PAYLOAD',['../status__code_8h.html#aecd8653089b5565879769b278dce1be5',1,'status_code.h']]],
+  ['status_5fcode_5fwith_5fpayload_5fdeclare_14',['STATUS_CODE_WITH_PAYLOAD_DECLARE',['../status__code_8h.html#a970c4ed39f634d786d9a649ad1ae92d6',1,'status_code.h']]],
+  ['status_5fcode_5fwith_5fpayload_5fmake_15',['STATUS_CODE_WITH_PAYLOAD_MAKE',['../status__code_8h.html#ad2ee74e175713d04989712237e4f6233',1,'status_code.h']]]
+];
