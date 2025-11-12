@@ -96,8 +96,8 @@ todo
 - [x] `status_code(T)`
 - [x] `status_code_posix`
 - [x] `status_code_system`
-- [ ] `stdc_result(T)`
-- [ ] `TRY` macros
+- [x] `result(T)`
+- [x] `TRY` macros
 
 ### After next WG14 meeting review
 

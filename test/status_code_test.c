@@ -336,8 +336,8 @@ int main(void)
   CHECK(status_code_equivalent(failure9, failure2));
 
   WG14_RESULT_PREFIX(status_code_system)
-  success10 = STATUS_CODE_SYSTEM_MAKE(success9),
-  failure10 = STATUS_CODE_SYSTEM_MAKE(failure9);
+  success10 = status_code_system_make(success9),
+  failure10 = status_code_system_make(failure9);
   CHECK(status_code_equivalent_errc(
   success10, WG14_RESULT_PREFIX(status_code_errc_success)));
   CHECK(status_code_equivalent_errc(

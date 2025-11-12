@@ -20,7 +20,7 @@ limitations under the License.
 #ifndef WG14_RESULT_STATUS_CODE_SYSTEM_H
 #define WG14_RESULT_STATUS_CODE_SYSTEM_H
 
-#include "status_code_domain.h"
+#include "status_code_generic.h"
 
 #include <stdint.h>  // for intptr_t
 
@@ -37,6 +37,9 @@ extern "C"
     intptr_t value;
   } WG14_RESULT_PREFIX(status_code_system);
 
+  //| \brief An empty `status_code_system`
+  static WG14_RESULT_CONSTEXPR_OR_CONST WG14_RESULT_PREFIX(status_code_system)
+  WG14_RESULT_PREFIX(status_code_system_empty);
 
   //! \brief Make a system code from an untyped input status code, this will
   //! fail if the input status cannot fit into a system code or if alignment
@@ -66,6 +69,19 @@ extern "C"
     return ret;
   }
 
+  //! \brief Make a system code from an `enum status_code_errc`
+  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_system)
+  WG14_RESULT_PREFIX(status_code_system_make_from_errc)(
+  enum WG14_RESULT_PREFIX(status_code_errc) errc)
+  {
+    const union
+    {
+      WG14_RESULT_PREFIX(status_code_generic) gen;
+      WG14_RESULT_PREFIX(status_code_system) sys;
+    } ret = {WG14_RESULT_PREFIX(status_code_generic_make)(errc)};
+    return ret.sys;
+  }
+
 #define STATUS_CODE_SYSTEM_MAKE_IMPL2(src, payload_size, total_size,           \
                                       total_alignment)                         \
   WG14_RESULT_PREFIX(status_code_system_make)                                  \
@@ -83,7 +99,7 @@ extern "C"
   //! \brief Make a system code from a typed input status code, this will
   //! fail if the input status cannot fit into a system code or if alignment
   //! requirements are not met.
-#define STATUS_CODE_SYSTEM_MAKE(...)                                           \
+#define status_code_system_make(...)                                           \
   STATUS_CODE_SYSTEM_MAKE_IMPL(                                                \
   &(__VA_ARGS__).base, STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT_INNARDS(           \
                        WG14_RESULT_TYPEOF_UNQUAL((__VA_ARGS__).value)))
