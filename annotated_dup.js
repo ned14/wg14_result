@@ -1,5 +1,7 @@
 var annotated_dup =
 [
+    [ "result_flags", "unionresult__flags.html", "unionresult__flags" ],
+    [ "result_with_void", "structresult__with__void.html", "structresult__with__void" ],
     [ "status_code_domain_payload_info", "structstatus__code__domain__payload__info.html", "structstatus__code__domain__payload__info" ],
     [ "status_code_domain_s", "structstatus__code__domain__s.html", "structstatus__code__domain__s" ],
     [ "status_code_domain_string_ref_s", "structstatus__code__domain__string__ref__s.html", "structstatus__code__domain__string__ref__s" ],
@@ -11,5 +13,6 @@ var annotated_dup =
     [ "status_code_domain_vtable_s", "structstatus__code__domain__vtable__s.html", "structstatus__code__domain__vtable__s" ],
     [ "status_code_generic_s", "structstatus__code__generic__s.html", "structstatus__code__generic__s" ],
     [ "status_code_posix_s", "structstatus__code__posix__s.html", "structstatus__code__posix__s" ],
+    [ "status_code_system_s", "structstatus__code__system__s.html", "structstatus__code__system__s" ],
     [ "status_code_untyped", "structstatus__code__untyped.html", "structstatus__code__untyped" ]
 ];

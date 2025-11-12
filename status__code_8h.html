@@ -128,12 +128,14 @@ Include dependency graph for status_code.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aecd8653089b5565879769b278dce1be5" id="r_aecd8653089b5565879769b278dce1be5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="status__code_8h.html#aecd8653089b5565879769b278dce1be5">STATUS_CODE_WITH_PAYLOAD</a>(T)&#160;&#160;&#160;  struct WG14_RESULT_PREFIX(status_code_with_payload_##T)</td></tr>
-<tr class="separator:aecd8653089b5565879769b278dce1be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a970c4ed39f634d786d9a649ad1ae92d6" id="r_a970c4ed39f634d786d9a649ad1ae92d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="status__code_8h.html#a970c4ed39f634d786d9a649ad1ae92d6">STATUS_CODE_WITH_PAYLOAD_DECLARE</a>(T,  I)</td></tr>
-<tr class="separator:a970c4ed39f634d786d9a649ad1ae92d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2ee74e175713d04989712237e4f6233" id="r_ad2ee74e175713d04989712237e4f6233"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="status__code_8h.html#ad2ee74e175713d04989712237e4f6233">STATUS_CODE_WITH_PAYLOAD_MAKE</a>(T)&#160;&#160;&#160;  WG14_RESULT_PREFIX(status_code_with_payload_##T##_make)</td></tr>
-<tr class="separator:ad2ee74e175713d04989712237e4f6233"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9bf26fe18614c92a900cb7352cf1b5c" id="r_ab9bf26fe18614c92a900cb7352cf1b5c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="status__code_8h.html#ab9bf26fe18614c92a900cb7352cf1b5c">STATUS_CODE_WITH_PAYLOAD</a>(name)&#160;&#160;&#160;  struct WG14_RESULT_PREFIX(status_code_with_payload_##name)</td></tr>
+<tr class="memdesc:ab9bf26fe18614c92a900cb7352cf1b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of a status code with named payload. You must call <code><a class="el" href="status__code_8h.html#afe422f878299ef49a459fb253097aac4">STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)</a></code> first.  <br /></td></tr>
+<tr class="separator:ab9bf26fe18614c92a900cb7352cf1b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe422f878299ef49a459fb253097aac4" id="r_afe422f878299ef49a459fb253097aac4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="status__code_8h.html#afe422f878299ef49a459fb253097aac4">STATUS_CODE_WITH_PAYLOAD_DECLARE</a>(T,  name)</td></tr>
+<tr class="separator:afe422f878299ef49a459fb253097aac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeefc2706e385df7fa9f2bd9923e25f3" id="r_abeefc2706e385df7fa9f2bd9923e25f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="status__code_8h.html#abeefc2706e385df7fa9f2bd9923e25f3">STATUS_CODE_WITH_PAYLOAD_MAKE</a>(name, ...)&#160;&#160;&#160;  WG14_RESULT_PREFIX(status_code_with_payload_##name##_make)(__VA_ARGS__)</td></tr>
+<tr class="memdesc:abeefc2706e385df7fa9f2bd9923e25f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a named status code previously declared.  <br /></td></tr>
+<tr class="separator:abeefc2706e385df7fa9f2bd9923e25f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45638889da44765d1954a8b80c0e7a73" id="r_a45638889da44765d1954a8b80c0e7a73"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="status__code_8h.html#a45638889da44765d1954a8b80c0e7a73">status_code_is_empty</a>(...)&#160;&#160;&#160;  WG14_RESULT_PREFIX(status_code_is_empty)(&amp;(__VA_ARGS__).base)</td></tr>
 <tr class="memdesc:a45638889da44765d1954a8b80c0e7a73"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the status code is empty (convenience macro)  <br /></td></tr>
 <tr class="separator:a45638889da44765d1954a8b80c0e7a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -208,13 +210,13 @@ Macros</h2></td></tr>
 <div class="line">  })</div>
 <div class="ttc" id="aconfig_8h_html_a3178adcb899369064d4ed6c29cfeb866"><div class="ttname"><a href="config_8h.html#a3178adcb899369064d4ed6c29cfeb866">WG14_RESULT_NULLPTR</a></div><div class="ttdeci">#define WG14_RESULT_NULLPTR</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00047">config.h:47</a></div></div>
 <div class="ttc" id="aconfig_8h_html_aca472b07b2066bae3ae5cc197b615a70"><div class="ttname"><a href="config_8h.html#aca472b07b2066bae3ae5cc197b615a70">WG14_RESULT_TYPEOF</a></div><div class="ttdeci">#define WG14_RESULT_TYPEOF(...)</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00071">config.h:71</a></div></div>
-<div class="ttc" id="astatus__code__domain_8h_html_a5d2eaf9f5000d5fa5b92fa42a2e41bb9"><div class="ttname"><a href="status__code__domain_8h.html#a5d2eaf9f5000d5fa5b92fa42a2e41bb9">WG14_RESULT_VTABLE_INVOKE_API</a></div><div class="ttdeci">#define WG14_RESULT_VTABLE_INVOKE_API(domain, name,...)</div><div class="ttdef"><b>Definition</b> <a href="status__code__domain_8h_source.html#l00428">status_code_domain.h:428</a></div></div>
-<div class="ttc" id="astatus__code__domain_8h_html_a65261dfd431f44d41e610530c24425fc"><div class="ttname"><a href="status__code__domain_8h.html#a65261dfd431f44d41e610530c24425fc">STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT</a></div><div class="ttdeci">#define STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT(T)</div><div class="ttdoc">A default initialiser for a status_code_domain_payload_info_t for most types.</div><div class="ttdef"><b>Definition</b> <a href="status__code__domain_8h_source.html#l00218">status_code_domain.h:218</a></div></div>
+<div class="ttc" id="astatus__code__domain_8h_html_a5d2eaf9f5000d5fa5b92fa42a2e41bb9"><div class="ttname"><a href="status__code__domain_8h.html#a5d2eaf9f5000d5fa5b92fa42a2e41bb9">WG14_RESULT_VTABLE_INVOKE_API</a></div><div class="ttdeci">#define WG14_RESULT_VTABLE_INVOKE_API(domain, name,...)</div><div class="ttdef"><b>Definition</b> <a href="status__code__domain_8h_source.html#l00445">status_code_domain.h:445</a></div></div>
+<div class="ttc" id="astatus__code__domain_8h_html_a65261dfd431f44d41e610530c24425fc"><div class="ttname"><a href="status__code__domain_8h.html#a65261dfd431f44d41e610530c24425fc">STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT</a></div><div class="ttdeci">#define STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT(T)</div><div class="ttdoc">A default initialiser for a status_code_domain_payload_info_t for.</div><div class="ttdef"><b>Definition</b> <a href="status__code__domain_8h_source.html#l00224">status_code_domain.h:224</a></div></div>
 <div class="ttc" id="astructstatus__code__domain__payload__info_html"><div class="ttname"><a href="structstatus__code__domain__payload__info.html">status_code_domain_payload_info</a></div><div class="ttdoc">Type of a payload info of a domain.</div><div class="ttdef"><b>Definition</b> <a href="status__code__domain_8h_source.html#l00208">status_code_domain.h:209</a></div></div>
 </div><!-- fragment -->
 <p>Clones the status code (type aware) </p>
 
-<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00212">212</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00221">221</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
 
 </div>
 </div>
@@ -257,7 +259,7 @@ Macros</h2></td></tr>
 </div><!-- fragment -->
 <p>Destroys the status code (type aware) </p>
 
-<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00185">185</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00194">194</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
 
 </div>
 </div>
@@ -279,7 +281,7 @@ Macros</h2></td></tr>
 
 <p>True if the status code is empty (convenience macro) </p>
 
-<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00163">163</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00172">172</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
 
 </div>
 </div>
@@ -301,7 +303,7 @@ Macros</h2></td></tr>
 
 <p>True if the status code is a failure (convenience macro) </p>
 
-<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00169">169</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00178">178</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
 
 </div>
 </div>
@@ -323,7 +325,7 @@ Macros</h2></td></tr>
 
 <p>True if the status code is a success (convenience macro) </p>
 
-<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00166">166</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00175">175</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
 
 </div>
 </div>
@@ -345,7 +347,7 @@ Macros</h2></td></tr>
 
 <p>Retrieves the message of the status code (convenience macro). Make sure you call <code>status_code_domain_string_ref_destroy()</code> when you are done with the returned string reference. </p>
 
-<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00174">174</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00183">183</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
 
 </div>
 </div>
@@ -376,16 +378,16 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">  WG14_RESULT_PREFIX(<a class="code hl_define" href="status__code_8h.html#acc6440f2c46a681d93553bb161a2bf24">status_code_strictly_equivalent</a>)                          \</div>
 <div class="line">  (&amp;(primary).base, &amp;(secondary).base)</div>
-<div class="ttc" id="astatus__code_8h_html_acc6440f2c46a681d93553bb161a2bf24"><div class="ttname"><a href="status__code_8h.html#acc6440f2c46a681d93553bb161a2bf24">status_code_strictly_equivalent</a></div><div class="ttdeci">#define status_code_strictly_equivalent(primary, secondary)</div><div class="ttdoc">True if the status codes are strictly semantically equivalent (convenience macro)....</div><div class="ttdef"><b>Definition</b> <a href="status__code_8h_source.html#l00181">status_code.h:181</a></div></div>
+<div class="ttc" id="astatus__code_8h_html_acc6440f2c46a681d93553bb161a2bf24"><div class="ttname"><a href="status__code_8h.html#acc6440f2c46a681d93553bb161a2bf24">status_code_strictly_equivalent</a></div><div class="ttdeci">#define status_code_strictly_equivalent(primary, secondary)</div><div class="ttdoc">True if the status codes are strictly semantically equivalent (convenience macro)....</div><div class="ttdef"><b>Definition</b> <a href="status__code_8h_source.html#l00190">status_code.h:190</a></div></div>
 </div><!-- fragment -->
 <p>True if the status codes are strictly semantically equivalent (convenience macro). <code>primary</code>'s domain's equivalence function decides if <code>secondary</code> is semantically equivalent to it. Note that for most status codes, if the codes have the same domain, a pure value equality is performed. This operation may not be transitive. </p>
 
-<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00181">181</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00190">190</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
 
 </div>
 </div>
-<a id="aecd8653089b5565879769b278dce1be5" name="aecd8653089b5565879769b278dce1be5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecd8653089b5565879769b278dce1be5">&#9670;&#160;</a></span>STATUS_CODE_WITH_PAYLOAD</h2>
+<a id="ab9bf26fe18614c92a900cb7352cf1b5c" name="ab9bf26fe18614c92a900cb7352cf1b5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9bf26fe18614c92a900cb7352cf1b5c">&#9670;&#160;</a></span>STATUS_CODE_WITH_PAYLOAD</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -394,18 +396,20 @@ Macros</h2></td></tr>
           <td class="memname">#define STATUS_CODE_WITH_PAYLOAD</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">T</td><td>)</td>
-          <td>&#160;&#160;&#160;  struct WG14_RESULT_PREFIX(status_code_with_payload_##T)</td>
+          <td class="paramname">name</td><td>)</td>
+          <td>&#160;&#160;&#160;  struct WG14_RESULT_PREFIX(status_code_with_payload_##name)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00035">35</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
+<p>The type of a status code with named payload. You must call <code><a class="el" href="status__code_8h.html#afe422f878299ef49a459fb253097aac4">STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)</a></code> first. </p>
+
+<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00037">37</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
 
 </div>
 </div>
-<a id="a970c4ed39f634d786d9a649ad1ae92d6" name="a970c4ed39f634d786d9a649ad1ae92d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a970c4ed39f634d786d9a649ad1ae92d6">&#9670;&#160;</a></span>STATUS_CODE_WITH_PAYLOAD_DECLARE</h2>
+<a id="afe422f878299ef49a459fb253097aac4" name="afe422f878299ef49a459fb253097aac4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe422f878299ef49a459fb253097aac4">&#9670;&#160;</a></span>STATUS_CODE_WITH_PAYLOAD_DECLARE</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -420,7 +424,7 @@ Macros</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">I&#160;</td>
+          <td class="paramname">name&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -429,27 +433,28 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">struct </span>WG14_RESULT_PREFIX(status_code_with_payload_##I)                      \</div>
+<b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">struct </span>WG14_RESULT_PREFIX(status_code_with_payload_##name)                   \</div>
 <div class="line">  {                                                                            \</div>
 <div class="line">    WG14_RESULT_PREFIX(<a class="code hl_struct" href="structstatus__code__untyped.html">status_code_untyped</a>) base;                              \</div>
 <div class="line">    T value;                                                                   \</div>
 <div class="line">  };                                                                           \</div>
-<div class="line">  <a class="code hl_define" href="config_8h.html#aa04b49248f99a0f596f58ac1b893335e">WG14_RESULT_INLINE</a> <span class="keyword">struct </span>WG14_RESULT_PREFIX(status_code_with_payload_##I)   \</div>
-<div class="line">  WG14_RESULT_PREFIX(status_code_with_payload_##I##_make)(T val)               \</div>
+<div class="line">  <a class="code hl_define" href="config_8h.html#aa04b49248f99a0f596f58ac1b893335e">WG14_RESULT_INLINE</a> <span class="keyword">struct </span>WG14_RESULT_PREFIX(                                \</div>
+<div class="line">  status_code_with_payload_##name)                                             \</div>
+<div class="line">  WG14_RESULT_PREFIX(status_code_with_payload_##name##_make)(T val)            \</div>
 <div class="line">  {                                                                            \</div>
-<div class="line">    <span class="keyword">struct </span>WG14_RESULT_PREFIX(status_code_with_payload_##I)                    \</div>
-<div class="line">    ret = {{&amp;I##_domain}, val};                                                \</div>
+<div class="line">    <span class="keyword">struct </span>WG14_RESULT_PREFIX(status_code_with_payload_##name)                 \</div>
+<div class="line">    ret = {{&amp;name##_domain}, val};                                             \</div>
 <div class="line">    <span class="keywordflow">return</span> ret;                                                                \</div>
 <div class="line">  }</div>
 <div class="ttc" id="aconfig_8h_html_aa04b49248f99a0f596f58ac1b893335e"><div class="ttname"><a href="config_8h.html#aa04b49248f99a0f596f58ac1b893335e">WG14_RESULT_INLINE</a></div><div class="ttdeci">#define WG14_RESULT_INLINE</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00063">config.h:63</a></div></div>
-<div class="ttc" id="astructstatus__code__untyped_html"><div class="ttname"><a href="structstatus__code__untyped.html">status_code_untyped</a></div><div class="ttdoc">Type of an untyped status code.</div><div class="ttdef"><b>Definition</b> <a href="status__code__domain_8h_source.html#l00225">status_code_domain.h:226</a></div></div>
+<div class="ttc" id="astructstatus__code__untyped_html"><div class="ttname"><a href="structstatus__code__untyped.html">status_code_untyped</a></div><div class="ttdoc">Type of an untyped status code.</div><div class="ttdef"><b>Definition</b> <a href="status__code__domain_8h_source.html#l00242">status_code_domain.h:243</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00037">37</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00044">44</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
 
 </div>
 </div>
-<a id="ad2ee74e175713d04989712237e4f6233" name="ad2ee74e175713d04989712237e4f6233"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2ee74e175713d04989712237e4f6233">&#9670;&#160;</a></span>STATUS_CODE_WITH_PAYLOAD_MAKE</h2>
+<a id="abeefc2706e385df7fa9f2bd9923e25f3" name="abeefc2706e385df7fa9f2bd9923e25f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abeefc2706e385df7fa9f2bd9923e25f3">&#9670;&#160;</a></span>STATUS_CODE_WITH_PAYLOAD_MAKE</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -458,13 +463,25 @@ Macros</h2></td></tr>
           <td class="memname">#define STATUS_CODE_WITH_PAYLOAD_MAKE</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">T</td><td>)</td>
-          <td>&#160;&#160;&#160;  WG14_RESULT_PREFIX(status_code_with_payload_##T##_make)</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;  WG14_RESULT_PREFIX(status_code_with_payload_##name##_make)(__VA_ARGS__)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00050">50</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
+<p>Make a named status code previously declared. </p>
+
+<p class="definition">Definition at line <a class="el" href="status__code_8h_source.html#l00059">59</a> of file <a class="el" href="status__code_8h_source.html">status_code.h</a>.</p>
 
 </div>
 </div>

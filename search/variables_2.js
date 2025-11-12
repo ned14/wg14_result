@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['dest_0',['dest',['../structstatus__code__domain__string__ref__thunk__args__s.html#a7ba07b4b2c09a483e930cf6e0560b40d',1,'status_code_domain_string_ref_thunk_args_s']]],
-  ['domain_1',['domain',['../structstatus__code__untyped.html#ae148c0895c07d4fbea528e9388de4f73',1,'status_code_untyped::domain'],['../structstatus__code__domain__vtable__name__args.html#aad50ab488082c56d52992b1a08842db0',1,'status_code_domain_vtable_name_args::domain'],['../structstatus__code__domain__vtable__payload__info__args.html#a2dfceb0f727967a7015b96641217fefa',1,'status_code_domain_vtable_payload_info_args::domain']]]
+  ['c_5fstr_0',['c_str',['../structstatus__code__domain__string__ref__s.html#a5308276a897c5edc53164002f4e74288',1,'status_code_domain_string_ref_s']]],
+  ['code_1',['code',['../structstatus__code__domain__vtable__message__args.html#a7da913a51c04b644486f12fd772a45a0',1,'status_code_domain_vtable_message_args::code'],['../structstatus__code__domain__vtable__generic__code__args.html#a0a156a323572505bb0325296927f1876',1,'status_code_domain_vtable_generic_code_args::code']]]
 ];

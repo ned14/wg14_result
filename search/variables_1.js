@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['c_5fstr_0',['c_str',['../structstatus__code__domain__string__ref__s.html#a5308276a897c5edc53164002f4e74288',1,'status_code_domain_string_ref_s']]],
-  ['code_1',['code',['../structstatus__code__domain__vtable__message__args.html#a7da913a51c04b644486f12fd772a45a0',1,'status_code_domain_vtable_message_args::code'],['../structstatus__code__domain__vtable__generic__code__args.html#a0a156a323572505bb0325296927f1876',1,'status_code_domain_vtable_generic_code_args::code']]]
+  ['base_0',['base',['../structstatus__code__generic__s.html#ad105d8eddae0fc4497b7f6862d838f5a',1,'status_code_generic_s::base'],['../structstatus__code__posix__s.html#a28704607a497f786b4a1a8fb9ec1acf8',1,'status_code_posix_s::base'],['../structstatus__code__system__s.html#a73647ce86509bbfecb50b8a7c0e5c270',1,'status_code_system_s::base']]]
 ];

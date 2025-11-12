@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['op_0',['op',['../structstatus__code__domain__string__ref__thunk__args__s.html#a5a69e10fad9219e72d4e30659ef21630',1,'status_code_domain_string_ref_thunk_args_s']]]
+  ['name_0',['name',['../structstatus__code__domain__vtable__s.html#a88ed2e1ea94fb9c35799570b5de0604a',1,'status_code_domain_vtable_s']]]
 ];

@@ -119,7 +119,7 @@ $(document).ready(function(){initNavTree('status__code__posix_8h_source.html',''
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifndef WG14_RESULT_STATUS_CODE_POSIX_H</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#define WG14_RESULT_STATUS_CODE_POSIX_H</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;<a class="code" href="status__code__domain_8h.html">status_code_domain.h</a>&quot;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;<a class="code" href="status__code__system_8h.html">status_code_system.h</a>&quot;</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#ifdef __cplusplus</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span></div>
@@ -137,34 +137,44 @@ $(document).ready(function(){initNavTree('status__code__posix_8h_source.html',''
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="structstatus__code__posix__s.html#a3cf9acf4fc4f3117aeff9963f90d1b27">   39</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structstatus__code__posix__s.html#a3cf9acf4fc4f3117aeff9963f90d1b27">value</a>;</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="status__code__posix_8h.html#a34458085dffb2f9490d4fe012e01d41a">   40</a></span>  } WG14_RESULT_PREFIX(<a class="code hl_struct" href="structstatus__code__posix__s.html">status_code_posix</a>);</div>
 </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <a class="code hl_define" href="config_8h.html#aa04b49248f99a0f596f58ac1b893335e">WG14_RESULT_INLINE</a> WG14_RESULT_PREFIX(<a class="code hl_struct" href="structstatus__code__posix__s.html">status_code_posix</a>)</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  WG14_RESULT_PREFIX(status_code_posix_make)(<span class="keywordtype">int</span> val)</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  {</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keyword">const</span> WG14_RESULT_PREFIX(<a class="code hl_struct" href="structstatus__code__posix__s.html">status_code_posix</a>)</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    ret = {{WG14_RESULT_PREFIX(<a class="code hl_function" href="status__code__posix_8h.html#a70bf8641c76ec6a9afec47a4f5136d0d">status_code_posix_domain</a>)()}, val};</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  }</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#if __STDC_VERSION__ &gt;= 201100L</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <span class="keyword">_Static_assert</span>(<span class="keyword">sizeof</span>(WG14_RESULT_PREFIX(<a class="code hl_struct" href="structstatus__code__posix__s.html">status_code_posix</a>)) &lt;=</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                 <span class="keyword">sizeof</span>(WG14_RESULT_PREFIX(<a class="code hl_struct" href="structstatus__code__system__s.html">status_code_system</a>)),</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                 <span class="stringliteral">&quot;A POSIX status code is too large for status_code_system!&quot;</span>);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <span class="keyword">_Static_assert</span>(</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  __alignof(WG14_RESULT_PREFIX(<a class="code hl_struct" href="structstatus__code__posix__s.html">status_code_posix</a>)) &lt;=</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  __alignof(WG14_RESULT_PREFIX(<a class="code hl_struct" href="structstatus__code__system__s.html">status_code_system</a>)),</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="stringliteral">&quot;A POSIX status code is too over aligned for status_code_system!&quot;</span>);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#if WG14_RESULT_ENABLE_HEADER_ONLY</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#include &quot;../../src/wg14_result/status_code_posix.c&quot;</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  <a class="code hl_define" href="config_8h.html#aa04b49248f99a0f596f58ac1b893335e">WG14_RESULT_INLINE</a> WG14_RESULT_PREFIX(<a class="code hl_struct" href="structstatus__code__posix__s.html">status_code_posix</a>)</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  WG14_RESULT_PREFIX(status_code_posix_make)(<span class="keywordtype">int</span> val)</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">const</span> WG14_RESULT_PREFIX(<a class="code hl_struct" href="structstatus__code__posix__s.html">status_code_posix</a>)</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    ret = {{WG14_RESULT_PREFIX(<a class="code hl_function" href="status__code__posix_8h.html#a70bf8641c76ec6a9afec47a4f5136d0d">status_code_posix_domain</a>)()}, val};</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  }</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>}</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#if WG14_RESULT_ENABLE_HEADER_ONLY</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#include &quot;../../src/wg14_result/status_code_posix.c&quot;</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aconfig_8h_html_aa04b49248f99a0f596f58ac1b893335e"><div class="ttname"><a href="config_8h.html#aa04b49248f99a0f596f58ac1b893335e">WG14_RESULT_INLINE</a></div><div class="ttdeci">#define WG14_RESULT_INLINE</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00063">config.h:63</a></div></div>
 <div class="ttc" id="aconfig_8h_html_ad0060aaab68eba9975abb946f552e9cf"><div class="ttname"><a href="config_8h.html#ad0060aaab68eba9975abb946f552e9cf">WG14_RESULT_EXTERN</a></div><div class="ttdeci">#define WG14_RESULT_EXTERN</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00113">config.h:113</a></div></div>
 <div class="ttc" id="aconfig_8h_html_ad7f8482f3cefad893be9aabb23812bfa"><div class="ttname"><a href="config_8h.html#ad7f8482f3cefad893be9aabb23812bfa">WG14_RESULT_SINGLETON</a></div><div class="ttdeci">#define WG14_RESULT_SINGLETON</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00121">config.h:121</a></div></div>
-<div class="ttc" id="astatus__code__domain_8h_html"><div class="ttname"><a href="status__code__domain_8h.html">status_code_domain.h</a></div></div>
 <div class="ttc" id="astatus__code__posix_8h_html_a70bf8641c76ec6a9afec47a4f5136d0d"><div class="ttname"><a href="status__code__posix_8h.html#a70bf8641c76ec6a9afec47a4f5136d0d">status_code_posix_domain</a></div><div class="ttdeci">status_code_domain * status_code_posix_domain(void)</div><div class="ttdoc">Retrieve the domain for status_code_posix</div></div>
-<div class="ttc" id="astructstatus__code__domain__s_html"><div class="ttname"><a href="structstatus__code__domain__s.html">status_code_domain_s</a></div><div class="ttdoc">The functions defined by a status code domain, kept ABI compatible with a C++ vtable.</div><div class="ttdef"><b>Definition</b> <a href="status__code__domain_8h_source.html#l00515">status_code_domain.h:516</a></div></div>
+<div class="ttc" id="astatus__code__system_8h_html"><div class="ttname"><a href="status__code__system_8h.html">status_code_system.h</a></div></div>
+<div class="ttc" id="astructstatus__code__domain__s_html"><div class="ttname"><a href="structstatus__code__domain__s.html">status_code_domain_s</a></div><div class="ttdoc">The functions defined by a status code domain, kept ABI compatible with a C++ vtable.</div><div class="ttdef"><b>Definition</b> <a href="status__code__domain_8h_source.html#l00532">status_code_domain.h:533</a></div></div>
 <div class="ttc" id="astructstatus__code__posix__s_html"><div class="ttname"><a href="structstatus__code__posix__s.html">status_code_posix_s</a></div><div class="ttdoc">A POSIX status code.</div><div class="ttdef"><b>Definition</b> <a href="status__code__posix_8h_source.html#l00036">status_code_posix.h:37</a></div></div>
 <div class="ttc" id="astructstatus__code__posix__s_html_a28704607a497f786b4a1a8fb9ec1acf8"><div class="ttname"><a href="structstatus__code__posix__s.html#a28704607a497f786b4a1a8fb9ec1acf8">status_code_posix_s::base</a></div><div class="ttdeci">status_code_untyped base</div><div class="ttdef"><b>Definition</b> <a href="status__code__posix_8h_source.html#l00038">status_code_posix.h:38</a></div></div>
 <div class="ttc" id="astructstatus__code__posix__s_html_a3cf9acf4fc4f3117aeff9963f90d1b27"><div class="ttname"><a href="structstatus__code__posix__s.html#a3cf9acf4fc4f3117aeff9963f90d1b27">status_code_posix_s::value</a></div><div class="ttdeci">int value</div><div class="ttdef"><b>Definition</b> <a href="status__code__posix_8h_source.html#l00039">status_code_posix.h:39</a></div></div>
-<div class="ttc" id="astructstatus__code__untyped_html"><div class="ttname"><a href="structstatus__code__untyped.html">status_code_untyped</a></div><div class="ttdoc">Type of an untyped status code.</div><div class="ttdef"><b>Definition</b> <a href="status__code__domain_8h_source.html#l00225">status_code_domain.h:226</a></div></div>
+<div class="ttc" id="astructstatus__code__system__s_html"><div class="ttname"><a href="structstatus__code__system__s.html">status_code_system_s</a></div><div class="ttdoc">A status_code guaranteed to be able to hold any system error code in full. The payload is always an i...</div><div class="ttdef"><b>Definition</b> <a href="status__code__system_8h_source.html#l00034">status_code_system.h:35</a></div></div>
+<div class="ttc" id="astructstatus__code__untyped_html"><div class="ttname"><a href="structstatus__code__untyped.html">status_code_untyped</a></div><div class="ttdoc">Type of an untyped status code.</div><div class="ttdef"><b>Definition</b> <a href="status__code__domain_8h_source.html#l00242">status_code_domain.h:243</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

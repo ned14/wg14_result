@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['base_0',['base',['../structstatus__code__generic__s.html#ad105d8eddae0fc4497b7f6862d838f5a',1,'status_code_generic_s::base'],['../structstatus__code__posix__s.html#a28704607a497f786b4a1a8fb9ec1acf8',1,'status_code_posix_s::base']]],
-  ['bursting_20to_204_205ghz_20on_20linux_3a_1',['On my Threadripper 5975WX which is a 3.6Ghz processor bursting to 4.5Ghz on Linux:',['../index.html#autotoc_md6',1,'']]]
+  ['a_203_206ghz_20processor_20bursting_20to_204_205ghz_20on_20linux_3a_0',['On my Threadripper 5975WX which is a 3.6Ghz processor bursting to 4.5Ghz on Linux:',['../index.html#autotoc_md6',1,'']]],
+  ['a_20macbook_20pro_20m3_20running_20arm64_1',['On a MacBook Pro M3 running ARM64',['../index.html#autotoc_md7',1,'']]],
+  ['a_20macbook_20pro_20m3_20running_20arm64_20windows_20within_20a_20vm_2',['On a MacBook Pro M3 running ARM64 Windows within a VM',['../index.html#autotoc_md8',1,'']]],
+  ['abort_3',['abort',['../config_8h.html#a0b3225a00a2350b06234860096d5178a',1,'config.h']]],
+  ['after_20next_20wg14_20meeting_20review_4',['After next WG14 meeting review',['../index.html#autotoc_md11',1,'']]],
+  ['arm64_5',['On a MacBook Pro M3 running ARM64',['../index.html#autotoc_md7',1,'']]],
+  ['arm64_20windows_20within_20a_20vm_6',['On a MacBook Pro M3 running ARM64 Windows within a VM',['../index.html#autotoc_md8',1,'']]]
 ];

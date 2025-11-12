@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['a_203_206ghz_20processor_20bursting_20to_204_205ghz_20on_20linux_3a_0',['On my Threadripper 5975WX which is a 3.6Ghz processor bursting to 4.5Ghz on Linux:',['../index.html#autotoc_md6',1,'']]],
-  ['a_20macbook_20pro_20m3_20running_20arm64_1',['On a MacBook Pro M3 running ARM64',['../index.html#autotoc_md7',1,'']]],
-  ['a_20macbook_20pro_20m3_20running_20arm64_20windows_20within_20a_20vm_2',['On a MacBook Pro M3 running ARM64 Windows within a VM',['../index.html#autotoc_md8',1,'']]],
-  ['after_20next_20wg14_20meeting_20review_3',['After next WG14 meeting review',['../index.html#autotoc_md11',1,'']]],
-  ['arm64_4',['On a MacBook Pro M3 running ARM64',['../index.html#autotoc_md7',1,'']]],
-  ['arm64_20windows_20within_20a_20vm_5',['On a MacBook Pro M3 running ARM64 Windows within a VM',['../index.html#autotoc_md8',1,'']]]
+  ['_5fflags_5f_0',['_flags_',['../structresult__with__void.html#a44773341cbec5e3d0064cc8253ad4d8b',1,'result_with_void']]],
+  ['_5foutcome_5ftry_5fcall_5foverload_1',['_OUTCOME_TRY_CALL_OVERLOAD',['../try_8h.html#a05171b03d7173d489f0cb334ba7a9847',1,'try.h']]],
+  ['_5foutcome_5ftry_5fcount_5fargs_5fmax8_2',['_OUTCOME_TRY_COUNT_ARGS_MAX8',['../try_8h.html#a3bd11c4809293ed24216b4e4cc5881b9',1,'try.h']]],
+  ['_5foutcome_5ftry_5fexpand_5fargs_3',['_OUTCOME_TRY_EXPAND_ARGS',['../try_8h.html#a3c8785f192a9e587c300be5242160b7b',1,'try.h']]],
+  ['_5foutcome_5ftry_5foverload_5fglue_4',['_OUTCOME_TRY_OVERLOAD_GLUE',['../try_8h.html#ae684da239e5cde8128727be2a82667bd',1,'try.h']]],
+  ['_5foutcome_5ftry_5foverload_5fmacro_5',['_OUTCOME_TRY_OVERLOAD_MACRO',['../try_8h.html#a1f8b5d4b75fc48935e7b2fa6d38eb29f',1,'try.h']]],
+  ['_5foutcome_5ftry_5foverload_5fmacro1_6',['_OUTCOME_TRY_OVERLOAD_MACRO1',['../try_8h.html#a5a547dbf8a9f8efb49a57440dbe94235',1,'try.h']]],
+  ['_5foutcome_5ftry_5foverload_5fmacro2_7',['_OUTCOME_TRY_OVERLOAD_MACRO2',['../try_8h.html#ad9822593465076eca502223ba7d15a20',1,'try.h']]],
+  ['_5foutcome_5ftry_5freturn_5farg_5fcount_8',['_OUTCOME_TRY_RETURN_ARG_COUNT',['../try_8h.html#a6060d0495395a18dfd57f626ab0880d9',1,'try.h']]]
 ];

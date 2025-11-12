@@ -1,9 +1,13 @@
 <map id="include/wg14_result/status_code_domain.h" name="include/wg14_result/status_code_domain.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="181,5,353,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="87,5,259,45"/>
 <area shape="rect" id="Node000002" href="$status__code_8h.html" title=" " alt="" coords="5,93,157,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="215,54,123,96,121,91,212,49"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,57,104,95,100,91,141,53"/>
 <area shape="rect" id="Node000003" href="$status__code__generic_8h.html" title=" " alt="" coords="181,93,352,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="269,59,269,93,264,93,264,59"/>
-<area shape="rect" id="Node000004" href="$status__code__posix_8h.html" title=" " alt="" coords="377,93,535,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="322,49,416,91,413,96,319,53"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,53,248,91,244,95,202,57"/>
+<area shape="rect" id="Node000004" href="$status__code__system_8h.html" title=" " alt="" coords="181,181,352,221"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="269,147,269,181,264,181,264,147"/>
+<area shape="rect" id="Node000005" href="$result_8h.html" title=" " alt="" coords="101,269,253,309"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="239,233,199,271,195,267,235,229"/>
+<area shape="rect" id="Node000006" href="$status__code__posix_8h.html" title=" " alt="" coords="278,269,437,309"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="298,229,339,267,335,271,295,233"/>
 </map>

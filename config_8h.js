@@ -14,7 +14,12 @@ var config_8h =
     [ "WG14_RESULT_INLINE", "config_8h.html#aa04b49248f99a0f596f58ac1b893335e", null ],
     [ "WG14_RESULT_NULLPTR", "config_8h.html#a3178adcb899369064d4ed6c29cfeb866", null ],
     [ "WG14_RESULT_SINGLETON", "config_8h.html#ad7f8482f3cefad893be9aabb23812bfa", null ],
+    [ "WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR", "config_8h.html#aa8f9e3db5c1421f6dedf059026e52126", null ],
     [ "WG14_RESULT_STDERR_PRINTF", "config_8h.html#a712c2e9fafb950ecd7011a4fd8f14e40", null ],
     [ "WG14_RESULT_TYPEOF", "config_8h.html#aca472b07b2066bae3ae5cc197b615a70", null ],
-    [ "WG14_RESULT_TYPEOF_UNQUAL", "config_8h.html#a13ae287b48d0e0179b0bfee41ea33b67", null ]
+    [ "WG14_RESULT_TYPEOF_UNQUAL", "config_8h.html#a13ae287b48d0e0179b0bfee41ea33b67", null ],
+    [ "abort", "config_8h.html#a0b3225a00a2350b06234860096d5178a", null ],
+    [ "va_end", "config_8h.html#a36af1f79dd6adf0809c21e76535034d5", null ],
+    [ "va_start", "config_8h.html#add7328e2ada978d602d8584a9bfd9249", null ],
+    [ "vfprintf", "config_8h.html#a95e8a85779afd6d87e868f012efe25b6", null ]
 ];

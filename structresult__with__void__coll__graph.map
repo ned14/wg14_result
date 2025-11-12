@@ -1,0 +1,13 @@
+<map id="result_with_void" name="result_with_void">
+<area shape="rect" id="Node000001" title="A Result for type void." alt="" coords="48,372,177,397"/>
+<area shape="rect" id="Node000002" href="$unionresult__flags.html" title="The flags type within a Result." alt="" coords="5,284,103,309"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,319,107,370,102,373,67,322"/>
+<area shape="rect" id="Node000003" href="$structstatus__code__system__s.html" title="A status_code guaranteed to be able to hold any system error code in full. The payload is always an i..." alt="" coords="127,284,296,309"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="189,320,128,373,125,369,186,316"/>
+<area shape="rect" id="Node000004" href="$structstatus__code__untyped.html" title="Type of an untyped status code." alt="" coords="131,196,291,221"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="214,235,214,283,209,283,209,235"/>
+<area shape="rect" id="Node000005" href="$structstatus__code__domain__s.html" title="The functions defined by a status code domain, kept ABI compatible with a C++ vtable." alt="" coords="126,108,297,133"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="214,147,214,195,209,195,209,147"/>
+<area shape="rect" id="Node000006" href="$structstatus__code__domain__vtable__s.html" title="The functions defined by a status code domain, kept ABI compatible with a C++ vtable." alt="" coords="133,5,289,45"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="214,59,214,108,209,108,209,59"/>
+</map>

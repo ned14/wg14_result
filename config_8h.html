@@ -90,7 +90,8 @@ $(document).ready(function(){initNavTree('config_8h.html',''); initResizable(); 
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">config.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -116,16 +117,22 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="config_8h__dep__incl.png" border="0" usemap="#ainclude_2wg14__result_2config_8hdep" alt=""/></div>
 <map name="ainclude_2wg14__result_2config_8hdep" id="ainclude_2wg14__result_2config_8hdep">
-<area shape="rect" title=" " alt="" coords="97,5,249,45"/>
+<area shape="rect" title=" " alt="" coords="129,5,281,45"/>
 <area shape="rect" href="status__code_8h.html" title=" " alt="" coords="5,181,157,221"/>
-<area shape="poly" title=" " alt="" coords="159,59,94,182,89,180,155,56"/>
-<area shape="rect" href="status__code__domain_8h.html" title=" " alt="" coords="165,93,337,133"/>
-<area shape="poly" title=" " alt="" coords="201,54,236,91,232,95,197,57"/>
-<area shape="poly" title=" " alt="" coords="203,142,120,184,117,179,200,137"/>
+<area shape="poly" title=" " alt="" coords="154,55,129,73,109,95,98,116,90,139,84,181,79,181,85,138,93,114,104,92,126,69,151,50"/>
+<area shape="rect" href="status__code__domain_8h.html" title=" " alt="" coords="119,93,291,133"/>
+<area shape="poly" title=" " alt="" coords="208,59,208,93,203,93,203,59"/>
+<area shape="rect" href="try_8h.html" title=" " alt="" coords="316,93,468,133"/>
+<area shape="poly" title=" " alt="" coords="260,49,352,91,350,96,257,53"/>
+<area shape="poly" title=" " alt="" coords="168,143,110,183,107,179,165,139"/>
 <area shape="rect" href="status__code__generic_8h.html" title=" " alt="" coords="181,181,352,221"/>
-<area shape="poly" title=" " alt="" coords="259,146,266,181,261,182,254,147"/>
-<area shape="rect" href="status__code__posix_8h.html" title=" " alt="" coords="377,181,535,221"/>
-<area shape="poly" title=" " alt="" coords="309,136,412,179,410,184,307,141"/>
+<area shape="poly" title=" " alt="" coords="229,143,255,180,251,183,225,146"/>
+<area shape="rect" href="status__code__system_8h.html" title=" " alt="" coords="181,269,352,309"/>
+<area shape="poly" title=" " alt="" coords="269,235,269,269,264,269,264,235"/>
+<area shape="rect" href="result_8h.html" title=" " alt="" coords="101,357,253,397"/>
+<area shape="poly" title=" " alt="" coords="239,321,199,359,195,355,235,317"/>
+<area shape="rect" href="status__code__posix_8h.html" title=" " alt="" coords="278,357,437,397"/>
+<area shape="poly" title=" " alt="" coords="298,317,339,355,335,359,295,321"/>
 </map>
 </div>
 </div>
@@ -151,6 +158,8 @@ Macros</h2></td></tr>
 <tr class="separator:ad0060aaab68eba9975abb946f552e9cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7f8482f3cefad893be9aabb23812bfa" id="r_ad7f8482f3cefad893be9aabb23812bfa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#ad7f8482f3cefad893be9aabb23812bfa">WG14_RESULT_SINGLETON</a></td></tr>
 <tr class="separator:ad7f8482f3cefad893be9aabb23812bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8f9e3db5c1421f6dedf059026e52126" id="r_aa8f9e3db5c1421f6dedf059026e52126"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#aa8f9e3db5c1421f6dedf059026e52126">WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR</a>(pred,  msg, ...)</td></tr>
+<tr class="separator:aa8f9e3db5c1421f6dedf059026e52126"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a712c2e9fafb950ecd7011a4fd8f14e40" id="r_a712c2e9fafb950ecd7011a4fd8f14e40"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a712c2e9fafb950ecd7011a4fd8f14e40">WG14_RESULT_STDERR_PRINTF</a>(...)&#160;&#160;&#160;fprintf(stderr, __VA_ARGS__)</td></tr>
 <tr class="separator:a712c2e9fafb950ecd7011a4fd8f14e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf5c138b9a6d1ce09c7b7860db035d92" id="r_aaf5c138b9a6d1ce09c7b7860db035d92"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#aaf5c138b9a6d1ce09c7b7860db035d92">WG14_RESULT_ABORTF_HAS_COMMA</a>(...)</td></tr>
@@ -167,6 +176,17 @@ Macros</h2></td></tr>
 <tr class="separator:afc4454702c50609629ee4b8a91ba9975"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea7d720b7d73abb2bf40b754938ddf12" id="r_aea7d720b7d73abb2bf40b754938ddf12"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#aea7d720b7d73abb2bf40b754938ddf12">WG14_RESULT_ABORTF</a>(...)</td></tr>
 <tr class="separator:aea7d720b7d73abb2bf40b754938ddf12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:add7328e2ada978d602d8584a9bfd9249" id="r_add7328e2ada978d602d8584a9bfd9249"><td class="memItemLeft" align="right" valign="top">static unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#add7328e2ada978d602d8584a9bfd9249">va_start</a> (args, msg)</td></tr>
+<tr class="separator:add7328e2ada978d602d8584a9bfd9249"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95e8a85779afd6d87e868f012efe25b6" id="r_a95e8a85779afd6d87e868f012efe25b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a95e8a85779afd6d87e868f012efe25b6">vfprintf</a> (stderr, msg, args)</td></tr>
+<tr class="separator:a95e8a85779afd6d87e868f012efe25b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b3225a00a2350b06234860096d5178a" id="r_a0b3225a00a2350b06234860096d5178a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a0b3225a00a2350b06234860096d5178a">abort</a> ()</td></tr>
+<tr class="separator:a0b3225a00a2350b06234860096d5178a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36af1f79dd6adf0809c21e76535034d5" id="r_a36af1f79dd6adf0809c21e76535034d5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a36af1f79dd6adf0809c21e76535034d5">va_end</a> (args)</td></tr>
+<tr class="separator:a36af1f79dd6adf0809c21e76535034d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="aea7d720b7d73abb2bf40b754938ddf12" name="aea7d720b7d73abb2bf40b754938ddf12"></a>
@@ -187,10 +207,10 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="config_8h.html#aad625467666fcf1f0c0dd3b4a442e43d">WG14_RESULT_ABORTF_CAT</a>(WG14_RESULT_ABORTF_INVOKE,                            \</div>
 <div class="line">                         <a class="code hl_define" href="config_8h.html#aaf5c138b9a6d1ce09c7b7860db035d92">WG14_RESULT_ABORTF_HAS_COMMA</a>(__VA_ARGS__))            \</div>
 <div class="line">  (__VA_ARGS__)</div>
-<div class="ttc" id="aconfig_8h_html_aad625467666fcf1f0c0dd3b4a442e43d"><div class="ttname"><a href="config_8h.html#aad625467666fcf1f0c0dd3b4a442e43d">WG14_RESULT_ABORTF_CAT</a></div><div class="ttdeci">#define WG14_RESULT_ABORTF_CAT(X, Y)</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00161">config.h:161</a></div></div>
-<div class="ttc" id="aconfig_8h_html_aaf5c138b9a6d1ce09c7b7860db035d92"><div class="ttname"><a href="config_8h.html#aaf5c138b9a6d1ce09c7b7860db035d92">WG14_RESULT_ABORTF_HAS_COMMA</a></div><div class="ttdeci">#define WG14_RESULT_ABORTF_HAS_COMMA(...)</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00154">config.h:154</a></div></div>
+<div class="ttc" id="aconfig_8h_html_aad625467666fcf1f0c0dd3b4a442e43d"><div class="ttname"><a href="config_8h.html#aad625467666fcf1f0c0dd3b4a442e43d">WG14_RESULT_ABORTF_CAT</a></div><div class="ttdeci">#define WG14_RESULT_ABORTF_CAT(X, Y)</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00173">config.h:173</a></div></div>
+<div class="ttc" id="aconfig_8h_html_aaf5c138b9a6d1ce09c7b7860db035d92"><div class="ttname"><a href="config_8h.html#aaf5c138b9a6d1ce09c7b7860db035d92">WG14_RESULT_ABORTF_HAS_COMMA</a></div><div class="ttdeci">#define WG14_RESULT_ABORTF_HAS_COMMA(...)</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00166">config.h:166</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00167">167</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00179">179</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -220,7 +240,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00161">161</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00173">173</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -250,7 +270,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00160">160</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00172">172</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -271,9 +291,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="config_8h.html#a101a5070250a87f1a04fe3252f07a289">WG14_RESULT_ABORTF_HAS_COMMA_16__</a>(__VA_ARGS__, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, \</div>
 <div class="line">                                    1, 1, 1, 1, 0, 0)</div>
-<div class="ttc" id="aconfig_8h_html_a101a5070250a87f1a04fe3252f07a289"><div class="ttname"><a href="config_8h.html#a101a5070250a87f1a04fe3252f07a289">WG14_RESULT_ABORTF_HAS_COMMA_16__</a></div><div class="ttdeci">#define WG14_RESULT_ABORTF_HAS_COMMA_16__( _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15,...)</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00157">config.h:157</a></div></div>
+<div class="ttc" id="aconfig_8h_html_a101a5070250a87f1a04fe3252f07a289"><div class="ttname"><a href="config_8h.html#a101a5070250a87f1a04fe3252f07a289">WG14_RESULT_ABORTF_HAS_COMMA_16__</a></div><div class="ttdeci">#define WG14_RESULT_ABORTF_HAS_COMMA_16__( _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15,...)</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00169">config.h:169</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00154">154</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00166">166</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -393,7 +413,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00157">157</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00169">169</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -413,7 +433,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00162">162</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00174">174</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -443,7 +463,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00164">164</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00176">176</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -559,6 +579,46 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a id="aa8f9e3db5c1421f6dedf059026e52126" name="aa8f9e3db5c1421f6dedf059026e52126"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8f9e3db5c1421f6dedf059026e52126">&#9670;&#160;</a></span>WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">pred, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">msg, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  ((__VA_ARGS__) + 0 * <span class="keyword">sizeof</span>(<span class="keyword">struct</span> {                                         \</div>
+<div class="line">                     _Static_assert((pred), msg);                              \</div>
+<div class="line">                     <span class="keywordtype">int</span> x;                                                    \</div>
+<div class="line">                   }))</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00126">126</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+
+</div>
+</div>
 <a id="a712c2e9fafb950ecd7011a4fd8f14e40" name="a712c2e9fafb950ecd7011a4fd8f14e40"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a712c2e9fafb950ecd7011a4fd8f14e40">&#9670;&#160;</a></span>WG14_RESULT_STDERR_PRINTF</h2>
 
@@ -575,7 +635,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00128">128</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00136">136</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -616,6 +676,104 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="config_8h_source.html#l00083">83</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a0b3225a00a2350b06234860096d5178a" name="a0b3225a00a2350b06234860096d5178a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b3225a00a2350b06234860096d5178a">&#9670;&#160;</a></span>abort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">abort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a36af1f79dd6adf0809c21e76535034d5" name="a36af1f79dd6adf0809c21e76535034d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36af1f79dd6adf0809c21e76535034d5">&#9670;&#160;</a></span>va_end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">va_end </td>
+          <td>(</td>
+          <td class="paramtype">args&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="add7328e2ada978d602d8584a9bfd9249" name="add7328e2ada978d602d8584a9bfd9249"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add7328e2ada978d602d8584a9bfd9249">&#9670;&#160;</a></span>va_start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static unsigned va_start </td>
+          <td>(</td>
+          <td class="paramtype">args&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">msg&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a95e8a85779afd6d87e868f012efe25b6" name="a95e8a85779afd6d87e868f012efe25b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95e8a85779afd6d87e868f012efe25b6">&#9670;&#160;</a></span>vfprintf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vfprintf </td>
+          <td>(</td>
+          <td class="paramtype">stderr&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">msg&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">args&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

@@ -221,77 +221,95 @@ $(document).ready(function(){initNavTree('config_8h_source.html',''); initResiza
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="preprocessor">#ifndef WG14_RESULT_STDERR_PRINTF</span></div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="config_8h.html#a712c2e9fafb950ecd7011a4fd8f14e40">  128</a></span><span class="preprocessor">#define WG14_RESULT_STDERR_PRINTF(...) fprintf(stderr, __VA_ARGS__)</span></div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="preprocessor">#ifndef WG14_RESULT_ABORTF</span></div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="preprocessor">#include &lt;stdarg.h&gt;</span></div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><a class="code hl_define" href="config_8h.html#aa04b49248f99a0f596f58ac1b893335e">WG14_RESULT_INLINE</a> <span class="keywordtype">unsigned</span> WG14_RESULT_PREFIX(abortf_impl)(<span class="keyword">const</span> <span class="keywordtype">char</span> *msg,</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                                                            ...)</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>{</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>  va_list args;</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>  va_start(args, msg);</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>  vfprintf(stderr, msg, args);</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  abort();</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="preprocessor">#ifndef _MSC_VER</span></div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  va_end(args);</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>}</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="preprocessor">#if defined(_MSC_VER) &amp;&amp; !defined(__clang__)</span></div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="preprocessor">#define WG14_RESULT_ABORTF(X, ...)                                             \</span></div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="preprocessor">  WG14_RESULT_PREFIX(abortf_impl)(&quot;FATAL: &quot; X &quot;\n&quot;, ##__VA_ARGS__)</span></div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="preprocessor">#elif __STDC_VERSION__ &gt;= 202300L &amp;&amp; !defined(__clang__)</span></div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="preprocessor">#define WG14_RESULT_ABORTF(X, ...)                                             \</span></div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="preprocessor">  WG14_RESULT_PREFIX(abortf_impl)(&quot;FATAL: &quot; X &quot;\n&quot; __VA_OPT(, ) __VA_ARGS__)</span></div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="preprocessor">#else</span></div>
-<div class="foldopen" id="foldopen00154" data-start="" data-end="">
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno"><a class="line" href="config_8h.html#aaf5c138b9a6d1ce09c7b7860db035d92">  154</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_HAS_COMMA(...)                                      \</span></div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="preprocessor">  WG14_RESULT_ABORTF_HAS_COMMA_16__(__VA_ARGS__, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, \</span></div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="preprocessor">                                    1, 1, 1, 1, 0, 0)</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="preprocessor">#ifndef WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR</span></div>
+<div class="foldopen" id="foldopen00126" data-start="" data-end="">
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="config_8h.html#aa8f9e3db5c1421f6dedf059026e52126">  126</a></span><span class="preprocessor">#define WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR(pred, msg, ...)                  \</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">  ((__VA_ARGS__) + 0 * sizeof(struct {                                         \</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="preprocessor">                     _Static_assert((pred), msg);                              \</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="preprocessor">                     int x;                                                    \</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="preprocessor">                   }))</span></div>
 </div>
-<div class="foldopen" id="foldopen00157" data-start="" data-end="">
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="config_8h.html#a101a5070250a87f1a04fe3252f07a289">  157</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_HAS_COMMA_16__(                                     \</span></div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="preprocessor">_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, ...)     \</span></div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="preprocessor">  _15</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="preprocessor">#ifndef WG14_RESULT_STDERR_PRINTF</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="config_8h.html#a712c2e9fafb950ecd7011a4fd8f14e40">  136</a></span><span class="preprocessor">#define WG14_RESULT_STDERR_PRINTF(...) fprintf(stderr, __VA_ARGS__)</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="preprocessor">#ifndef WG14_RESULT_ABORTF</span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="preprocessor">#include &lt;stdarg.h&gt;</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><a class="code hl_define" href="config_8h.html#aa04b49248f99a0f596f58ac1b893335e">WG14_RESULT_INLINE</a> <span class="keywordtype">unsigned</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="preprocessor">#ifndef _MSC_VER</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>__attribute__((noreturn))</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>WG14_RESULT_PREFIX(abortf_impl)(<span class="keyword">const</span> <span class="keywordtype">char</span> *msg, ...)</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>{</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>  va_list args;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="config_8h.html#add7328e2ada978d602d8584a9bfd9249">  150</a></span>  <a class="code hl_function" href="config_8h.html#add7328e2ada978d602d8584a9bfd9249">va_start</a>(args, msg);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno"><a class="line" href="config_8h.html#a95e8a85779afd6d87e868f012efe25b6">  151</a></span>  <a class="code hl_function" href="config_8h.html#a95e8a85779afd6d87e868f012efe25b6">vfprintf</a>(stderr, msg, args);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="config_8h.html#a0b3225a00a2350b06234860096d5178a">  152</a></span>  <a class="code hl_function" href="config_8h.html#a0b3225a00a2350b06234860096d5178a">abort</a>();</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="config_8h.html#a36af1f79dd6adf0809c21e76535034d5">  156</a></span>  <a class="code hl_function" href="config_8h.html#a36af1f79dd6adf0809c21e76535034d5">va_end</a>(args);</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>}</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="preprocessor">#if defined(_MSC_VER) &amp;&amp; !defined(__clang__)</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="preprocessor">#define WG14_RESULT_ABORTF(X, ...)                                             \</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="preprocessor">  WG14_RESULT_PREFIX(abortf_impl)(&quot;FATAL: &quot; X &quot;\n&quot;, ##__VA_ARGS__)</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="preprocessor">#elif __STDC_VERSION__ &gt;= 202300L &amp;&amp; !defined(__clang__)</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="preprocessor">#define WG14_RESULT_ABORTF(X, ...)                                             \</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="preprocessor">  WG14_RESULT_PREFIX(abortf_impl)(&quot;FATAL: &quot; X &quot;\n&quot; __VA_OPT(, ) __VA_ARGS__)</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="preprocessor">#else</span></div>
+<div class="foldopen" id="foldopen00166" data-start="" data-end="">
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="config_8h.html#aaf5c138b9a6d1ce09c7b7860db035d92">  166</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_HAS_COMMA(...)                                      \</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="preprocessor">  WG14_RESULT_ABORTF_HAS_COMMA_16__(__VA_ARGS__, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, \</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="preprocessor">                                    1, 1, 1, 1, 0, 0)</span></div>
 </div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="config_8h.html#ad8d45a6fa2dc1a2983e488538d9bfc58">  160</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_CAT_(X, Y) X##Y</span></div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="config_8h.html#aad625467666fcf1f0c0dd3b4a442e43d">  161</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_CAT(X, Y) WG14_RESULT_ABORTF_CAT_(X, Y)</span></div>
-<div class="foldopen" id="foldopen00162" data-start="" data-end="">
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno"><a class="line" href="config_8h.html#aa683efc35acba4df9bfcdf075c5e5594">  162</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_INVOKE0(X)                                          \</span></div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="preprocessor">  WG14_RESULT_PREFIX(abortf_impl)(&quot;FATAL: &quot; X &quot;\n&quot;)</span></div>
+<div class="foldopen" id="foldopen00169" data-start="" data-end="">
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="config_8h.html#a101a5070250a87f1a04fe3252f07a289">  169</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_HAS_COMMA_16__(                                     \</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="preprocessor">_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, ...)     \</span></div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="preprocessor">  _15</span></div>
 </div>
-<div class="foldopen" id="foldopen00164" data-start="" data-end="">
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="config_8h.html#afc4454702c50609629ee4b8a91ba9975">  164</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_INVOKE1(X, ...)                                     \</span></div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="preprocessor">  WG14_RESULT_PREFIX(abortf_impl)(&quot;FATAL: &quot; X &quot;\n&quot;, __VA_ARGS__)</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="config_8h.html#ad8d45a6fa2dc1a2983e488538d9bfc58">  172</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_CAT_(X, Y) X##Y</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="config_8h.html#aad625467666fcf1f0c0dd3b4a442e43d">  173</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_CAT(X, Y) WG14_RESULT_ABORTF_CAT_(X, Y)</span></div>
+<div class="foldopen" id="foldopen00174" data-start="" data-end="">
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="config_8h.html#aa683efc35acba4df9bfcdf075c5e5594">  174</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_INVOKE0(X)                                          \</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="preprocessor">  WG14_RESULT_PREFIX(abortf_impl)(&quot;FATAL: &quot; X &quot;\n&quot;)</span></div>
 </div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
-<div class="foldopen" id="foldopen00167" data-start="" data-end="">
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="config_8h.html#aea7d720b7d73abb2bf40b754938ddf12">  167</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF(...)                                                \</span></div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="preprocessor">  WG14_RESULT_ABORTF_CAT(WG14_RESULT_ABORTF_INVOKE,                            \</span></div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="preprocessor">                         WG14_RESULT_ABORTF_HAS_COMMA(__VA_ARGS__))            \</span></div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="preprocessor">  (__VA_ARGS__)</span></div>
+<div class="foldopen" id="foldopen00176" data-start="" data-end="">
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno"><a class="line" href="config_8h.html#afc4454702c50609629ee4b8a91ba9975">  176</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF_INVOKE1(X, ...)                                     \</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="preprocessor">  WG14_RESULT_PREFIX(abortf_impl)(&quot;FATAL: &quot; X &quot;\n&quot;, __VA_ARGS__)</span></div>
 </div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span></div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>{</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>}</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
+<div class="foldopen" id="foldopen00179" data-start="" data-end="">
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno"><a class="line" href="config_8h.html#aea7d720b7d73abb2bf40b754938ddf12">  179</a></span><span class="preprocessor">#define WG14_RESULT_ABORTF(...)                                                \</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="preprocessor">  WG14_RESULT_ABORTF_CAT(WG14_RESULT_ABORTF_INVOKE,                            \</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="preprocessor">                         WG14_RESULT_ABORTF_HAS_COMMA(__VA_ARGS__))            \</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="preprocessor">  (__VA_ARGS__)</span></div>
+</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>{</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>}</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aconfig_8h_html_a0b3225a00a2350b06234860096d5178a"><div class="ttname"><a href="config_8h.html#a0b3225a00a2350b06234860096d5178a">abort</a></div><div class="ttdeci">abort()</div></div>
+<div class="ttc" id="aconfig_8h_html_a36af1f79dd6adf0809c21e76535034d5"><div class="ttname"><a href="config_8h.html#a36af1f79dd6adf0809c21e76535034d5">va_end</a></div><div class="ttdeci">va_end(args)</div></div>
+<div class="ttc" id="aconfig_8h_html_a95e8a85779afd6d87e868f012efe25b6"><div class="ttname"><a href="config_8h.html#a95e8a85779afd6d87e868f012efe25b6">vfprintf</a></div><div class="ttdeci">vfprintf(stderr, msg, args)</div></div>
 <div class="ttc" id="aconfig_8h_html_aa04b49248f99a0f596f58ac1b893335e"><div class="ttname"><a href="config_8h.html#aa04b49248f99a0f596f58ac1b893335e">WG14_RESULT_INLINE</a></div><div class="ttdeci">#define WG14_RESULT_INLINE</div><div class="ttdef"><b>Definition</b> <a href="config_8h_source.html#l00063">config.h:63</a></div></div>
+<div class="ttc" id="aconfig_8h_html_add7328e2ada978d602d8584a9bfd9249"><div class="ttname"><a href="config_8h.html#add7328e2ada978d602d8584a9bfd9249">va_start</a></div><div class="ttdeci">static unsigned va_start(args, msg)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

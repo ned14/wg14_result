@@ -10,6 +10,8 @@ var status__code__domain_8h =
     [ "status_code_domain_vtable_s", "structstatus__code__domain__vtable__s.html", "structstatus__code__domain__vtable__s" ],
     [ "status_code_domain_s", "structstatus__code__domain__s.html", "structstatus__code__domain__s" ],
     [ "STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT", "status__code__domain_8h.html#a65261dfd431f44d41e610530c24425fc", null ],
+    [ "STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT_INNARDS", "status__code__domain_8h.html#a8a793e1a178963f7c4423e5dcd45d4ce", null ],
+    [ "STATUS_CODE_DOMAIN_PAYLOAD_INFO_MAKE", "status__code__domain_8h.html#a63a296d347b896319901f41f124d472b", null ],
     [ "STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID", "status__code__domain_8h.html#ac9faa77aa941219871355741a7551805", null ],
     [ "STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_ABORT", "status__code__domain_8h.html#a83fecd498fe81dd0515353841e32dcd3", null ],
     [ "STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_PARSE_HEX_BYTE", "status__code__domain_8h.html#a384709caa3d37b17d1cba33759685dde", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['generic_5fcode_0',['generic_code',['../structstatus__code__domain__vtable__s.html#a0f5af6e0374d80af8a534abc8f1b40fd',1,'status_code_domain_vtable_s']]]
+  ['failure_0',['failure',['../structstatus__code__domain__vtable__s.html#ab53457de7c1718c3862747586348f436',1,'status_code_domain_vtable_s']]]
 ];
