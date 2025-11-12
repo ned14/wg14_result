@@ -69,6 +69,7 @@ extern "C"
   typedef int (*status_code_domain_string_ref_thunk_spec)(
   const WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args) * args);
 
+  //! \brief Type of a string ref of a domain
   struct WG14_RESULT_PREFIX(status_code_domain_string_ref_s)
   {
     const char *c_str, *end;

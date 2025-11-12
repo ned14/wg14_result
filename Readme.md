@@ -3,6 +3,8 @@
 
 CI: [![CI](https://github.com/ned14/wg14_result/actions/workflows/ci.yml/badge.svg)](https://github.com/ned14/wg14_result/actions/workflows/ci.yml)
 
+Reference API docs: https://ned14.github.io/wg14_result/
+
 Can be configured to be a standard library implementation for your
 standard C library runtime. Licensed permissively.
 
@@ -67,12 +69,15 @@ ruling that out at all, but it's definitely a later proposal paper.
 
 ### On my Threadripper 5975WX which is a 3.6Ghz processor bursting to 4.5Ghz on Linux:
 
+todo
 
 ### On a MacBook Pro M3 running ARM64
 
+todo
 
 ### On a MacBook Pro M3 running ARM64 Windows within a VM
 
+todo
 
 # Todo
 
@@ -94,12 +99,16 @@ ruling that out at all, but it's definitely a later proposal paper.
 - [ ] `stdc_result(T)`
 - [ ] `TRY` macros
 
+### After next WG14 meeting review
+
 - [ ] `status_code_nested`
 - [ ] `status_code_getaddrinfo`
 - [ ] `status_code_http`
 - [ ] `status_code_win32`
 - [ ] `status_code_nt`
 - [ ] `status_code_com`
+
+### Maybe in the future
 
 - [ ] `status_code_cxx_error_code`
 - [ ] `status_code_boost_error_code`
