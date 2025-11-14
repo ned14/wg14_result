@@ -168,6 +168,7 @@ extern "C"
   }
 
 
+#ifndef WG14_RESULT_DISABLE_CONVENIENCE_MACROS
 //! \brief True if the status code is empty (convenience macro)
 #define status_code_is_empty(...)                                              \
   WG14_RESULT_PREFIX(status_code_is_empty)(&(__VA_ARGS__).base)
@@ -245,6 +246,7 @@ extern "C"
   })
 #ifdef __GCC__
 #pragma GCC diagnostic pop
+#endif
 #endif
 #endif
 

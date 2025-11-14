@@ -121,17 +121,33 @@ extern "C"
     (3U << 1U) | (1U << 3U) | (1U << 4U) | (1U << 5U),
   };
 
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+#endif
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wgnu-anonymous-struct"
+#endif
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(                                                               \
+disable : 4201)  // nonstandard extension used: nameless struct/union
+#endif
+
   //! \brief The flags type within a Result
   union WG14_RESULT_PREFIX(result_flags)
   {
     // We use a union to provide backwards compatible ABI on C standards which
     // don't support enums with underlying type other than int
     enum WG14_RESULT_PREFIX(result_status_flags) status;
+#if !(defined(SWIG) && __cplusplus)
     struct
     {
       uint16_t status_bits;          // status above, low bits
       uint16_t spare_storage_value;  // spare storage sixteen bits, high bits
     };
+#endif
   };
 #if __STDC_VERSION__ >= 201100L
   _Static_assert(sizeof(union WG14_RESULT_PREFIX(result_flags)) ==
@@ -141,18 +157,27 @@ extern "C"
                  __alignof(uint32_t),
                  "result_flags does not have the alignment it is supposed to!");
 #endif
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
 
   //! \brief A Result for type `void`.
   typedef struct WG14_RESULT_PREFIX(result_with_void)
   {
     union WG14_RESULT_PREFIX(result_flags) _flags_;
     WG14_RESULT_PREFIX(status_code_system) error;
-  } WG14_RESULT_PREFIX(result_with_void);
+  } WG14_RESULT_PREFIX(result_with_void_t);
 #if __STDC_VERSION__ >= 201100L
-  _Static_assert(sizeof(WG14_RESULT_PREFIX(result_with_void)) ==
+  _Static_assert(sizeof(WG14_RESULT_PREFIX(result_with_void_t)) ==
                  3 * sizeof(void *),
                  "Result is not the size it is supposed to be!");
-  _Static_assert(__alignof(WG14_RESULT_PREFIX(result_with_void)) ==
+  _Static_assert(__alignof(WG14_RESULT_PREFIX(result_with_void_t)) ==
                  __alignof(void *),
                  "Result does not have the alignment it is supposed to!");
 #endif

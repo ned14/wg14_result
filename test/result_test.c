@@ -1,5 +1,9 @@
 #include "test_common.h"
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
+
 #include "wg14_result/result.h"
 #include "wg14_result/status_code_generic.h"
 #include "wg14_result/status_code_system.h"
@@ -7,10 +11,9 @@
 
 #ifdef _MSC_VER
 #include <crtdbg.h>
-#endif
-
-#ifdef __clang__
-#pragma clang diagnostic ignored "-Wunused-function"
+#pragma warning(disable : 4116)  // unnamed type definition in parentheses
+#pragma warning(disable : 4505)  // unreferenced function with internal linkage
+                                 // has been removed
 #endif
 
 
@@ -22,7 +25,7 @@ WG14_RESULT_DECLARE(int, int)
 typedef WG14_RESULT(int) result_int;
 WG14_RESULT_DECLARE(bool, bool)
 typedef WG14_RESULT(bool) result_bool;
-typedef WG14_RESULT_PREFIX(result_with_void) result_void;
+typedef struct WG14_RESULT_PREFIX(result_with_void) result_void;
 
 result_int test1(int x)
 {

@@ -29,7 +29,7 @@ jobs:
         esp_idf_version: latest
         target: esp32c3
         path: .
-        command: mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} && cmake --build . --parallel
+        command: mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_TESTS_AS_CXX=OFF -DBUILD_SWIG_WRAPPERS=OFF && cmake --build . --parallel
 
   Linux:
     name: Linux
@@ -41,8 +41,9 @@ jobs:
         debug: [Debug, Release]
         standard: [90, 11, 23]
         shared: [OFF, ON]
+        build_as_cxx: [OFF, ON]
     env:
-      NAME: Linux-${{ matrix.compiler }}-${{ matrix.debug }}-${{ matrix.standard }}-${{ matrix.shared }}
+      NAME: Linux-${{ matrix.compiler }}-${{ matrix.debug }}-${{ matrix.standard }}-${{ matrix.shared }}-${{ matrix.build_as_cxx }}
       CC: ${{ matrix.compiler }}
           
     steps:
@@ -53,7 +54,7 @@ jobs:
       run: |
         mkdir build && cd build
         export CXX=${CC/cc/}++
-        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_SHARED_LIBS=${{ matrix.shared }}  -DCMAKE_TOOLCHAIN_FILE=$PWD/../cmake/sanitize-toolchain.cmake
+        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_SHARED_LIBS=${{ matrix.shared }} -DBUILD_TESTS_AS_CXX=${{ matrix.build_as_cxx }} -DCMAKE_TOOLCHAIN_FILE=$PWD/../cmake/sanitize-toolchain.cmake
 
     - name: Build Linux
       shell: bash
@@ -72,8 +73,9 @@ jobs:
         debug: [Debug, Release]
         standard: [11, 23]
         shared: [OFF, ON]
+        build_as_cxx: [OFF, ON]
     env:
-      NAME: MacOS-${{ matrix.debug }}-${{ matrix.standard }}-${{ matrix.shared }}
+      NAME: MacOS-${{ matrix.debug }}-${{ matrix.standard }}-${{ matrix.shared }}-${{ matrix.build_as_cxx }}
           
     steps:
     - uses: actions/checkout@v4
@@ -82,7 +84,7 @@ jobs:
       shell: bash
       run: |
         mkdir build && cd build
-        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_SHARED_LIBS=${{ matrix.shared }} -DCMAKE_TOOLCHAIN_FILE=$PWD/../cmake/sanitize-toolchain.cmake
+        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_SHARED_LIBS=${{ matrix.shared }} -DBUILD_TESTS_AS_CXX=${{ matrix.build_as_cxx }} -DBUILD_SWIG_WRAPPERS=OFF -DCMAKE_TOOLCHAIN_FILE=$PWD/../cmake/sanitize-toolchain.cmake
 
     - name: Build Mac OS
       shell: bash
@@ -101,8 +103,9 @@ jobs:
         debug: [Debug, Release]
         standard: [11, 17]
         shared: [OFF, ON]
+        build_as_cxx: [OFF, ON]
     env:
-      NAME: Windows-${{ matrix.debug }}-${{ matrix.standard }}-${{ matrix.shared }}
+      NAME: Windows-${{ matrix.debug }}-${{ matrix.standard }}-${{ matrix.shared }}-${{ matrix.build_as_cxx }}
           
     steps:
     - uses: actions/checkout@v4
@@ -111,7 +114,7 @@ jobs:
       shell: bash
       run: |
         mkdir build && cd build
-        cmake .. -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_SHARED_LIBS=${{ matrix.shared }} -DCMAKE_C_FLAGS=/fsanitize:address
+        cmake .. -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_SHARED_LIBS=${{ matrix.shared }} -DBUILD_TESTS_AS_CXX=${{ matrix.build_as_cxx }} -DBUILD_SWIG_WRAPPERS=OFF -DCMAKE_C_FLAGS=/fsanitize:address
 
     - name: Build WinVS2022
       shell: bash

@@ -56,6 +56,10 @@ extern "C"
     WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_destruct),
   };
 
+#ifdef SWIG 
+  typedef struct WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args_s)
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args);
+#else
   //! \brief Type of the arguments to a string ref thunk function
   typedef struct WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args_s)
   {
@@ -63,6 +67,7 @@ extern "C"
     WG14_RESULT_PREFIX(status_code_domain_string_ref) * src;
     enum WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op) op;
   } WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args);
+#endif
 
   //! \brief Type of a string ref thunk function. Returns an `errno` value.
   //! Copies can fail. Nothing else can.
@@ -205,7 +210,7 @@ extern "C"
   WG14_RESULT_PREFIX(status_code_domain);
 
   //! \brief Type of a payload info of a domain
-  typedef struct WG14_RESULT_PREFIX(status_code_domain_payload_info)
+  typedef struct WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
   {
     size_t payload_size;  //!< The payload size in bytes
     size_t
@@ -287,7 +292,19 @@ extern "C"
   WG14_RESULT_VTABLE_API_GLUE(_wg14_result_vtable_api_unique_name_temporary,   \
                               __COUNTER__)
 
-#ifdef _MSC_VER
+#ifdef WG14_RESULT_DISABLE_CONVENIENCE_MACROS
+#undef WG14_RESULT_VTABLE_API_UNIQUE_NAME
+#define WG14_RESULT_VTABLE_API_UNIQUE_NAME
+#define WG14_RESULT_VTABLE_API(name, ...)                                      \
+  name(const void *WG14_RESULT_VTABLE_API_UNIQUE_NAME /*discard this*/,        \
+       __VA_ARGS__)
+#define WG14_RESULT_VTABLE_DECL(name, ...)                                     \
+  (name)(const void *WG14_RESULT_VTABLE_API_UNIQUE_NAME /*discard this*/,      \
+         __VA_ARGS__)
+#define WG14_RESULT_VTABLE_INVOKE_API(domain, name, ...)                       \
+  (domain)->vptr->name((domain), __VA_ARGS__)
+
+#elif defined(_MSC_VER)
 #ifdef _M_IX86
   // Use __stdcall to implement callee cleanup. `this` gets dropped.
 #define WG14_RESULT_VTABLE_API(name, ...) __stdcall name(__VA_ARGS__)
@@ -447,6 +464,13 @@ extern "C"
 #endif
 #endif
 
+#ifdef SWIG
+  struct WG14_RESULT_PREFIX(status_code_domain_vtable_name_args);
+  struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args);
+  struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args);
+  struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args);
+  typedef const struct WG14_RESULT_PREFIX(status_code_domain_vtable_s) WG14_RESULT_PREFIX(status_code_domain_vtable);
+#else
   //! \brief The arguments for `status_code_domain_vtable.name`
   struct WG14_RESULT_PREFIX(status_code_domain_vtable_name_args)
   {
@@ -526,6 +550,7 @@ extern "C"
                                  WG14_RESULT_PREFIX(
                                  status_code_domain_payload_info_t) info);
   } WG14_RESULT_PREFIX(status_code_domain_vtable);
+#endif
 
   //! \brief The functions defined by a status code domain, kept ABI compatible
   //! with a C++ vtable
@@ -535,8 +560,24 @@ extern "C"
     WG14_RESULT_PREFIX(status_code_domain_vtable) *const vptr;
     //! The unique id used to identify identical category instances.
     const WG14_RESULT_PREFIX(status_code_domain_unique_id_type) id;
+
+#ifdef __cplusplus
+    constexpr WG14_RESULT_PREFIX(status_code_domain_s)()
+        : vptr{nullptr}
+        , id{0}
+    {
+    }
+    constexpr WG14_RESULT_PREFIX(status_code_domain_s)(
+    WG14_RESULT_PREFIX(status_code_domain_vtable) *const vptr,
+    const WG14_RESULT_PREFIX(status_code_domain_unique_id_type) id)
+        : vptr{vptr}
+        , id{id}
+    {
+    }
+#endif
   };
 
+#ifndef SWIG
   //! \brief The default implementation for
   //! `status_code_domain_vtable.erased_copy()`.
   WG14_RESULT_INLINE int
@@ -573,6 +614,7 @@ extern "C"
     (void) code;
     (void) info;
   }
+#endif
 
 
   //! \brief Parse a uuid input string to yield a status code domain unique id
@@ -581,7 +623,7 @@ extern "C"
 
   // Alas the trick of (msg, 1 / 0) doesn't work in C23 constexpr :(
 #ifdef __cplusplus
-#define STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_ABORT(msg) (msg, 1 / 0)
+#define STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_ABORT(msg) throw msg
 #else
 #define STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID_ABORT(msg) (0)
 #endif
@@ -663,6 +705,7 @@ extern "C"
     }
     WG14_RESULT_ABORTF("status_code_domain_name failed with %d (%s)", errcode,
                        strerror(errcode));
+    abort();
   }
 
   //! \brief Retrieves the payload info of the status code domain

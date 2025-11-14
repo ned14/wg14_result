@@ -143,12 +143,14 @@ extern "C"
     return ret;
   }
 
+#ifndef SWIG
   //! \brief The arguments for `status_code_domain_vtable.generic_code`
   struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args)
   {
     WG14_RESULT_PREFIX(status_code_generic) ret;
     const WG14_RESULT_PREFIX(status_code_untyped) * code;
   };
+#endif
 
   //! \brief True if the status codes are semantically equivalent in any way
   //! (implementation). Guaranteed transitive. Firstly
@@ -218,6 +220,7 @@ extern "C"
     return WG14_RESULT_PREFIX(status_code_equivalent)(primary, &secondary.base);
   }
 
+#ifndef WG14_RESULT_DISABLE_CONVENIENCE_MACROS
 //! \brief True if the status codes are semantically equivalent in any way
 //! (convenience macro). Guaranteed transitive. Firstly
 //! `status_code_strictly_equivalent()` is run in both directions. If neither
@@ -229,6 +232,7 @@ extern "C"
 //! generic enum value (convenience macro). Guaranteed transitive.
 #define status_code_equivalent_errc(primary, errc)                             \
   WG14_RESULT_PREFIX(status_code_equivalent_errc)(&(primary).base, (errc))
+#endif
 
 
 #ifdef __cplusplus

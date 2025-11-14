@@ -1,0 +1,32 @@
+/* Proposed WG14 Result
+(C) 2024 - 2026 Niall Douglas <http://www.nedproductions.biz/>
+File Created: Oct 2025
+
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License in the accompanying file
+Licence.txt or at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+
+#ifndef WG14_RESULT_ALL_H
+#define WG14_RESULT_ALL_H
+
+#include "result.h"
+#include "status_code.h"
+#include "try.h"
+
+#if WG14_RESULT_HAVE_POSIX_SUPPORT
+#include "status_code_posix.h"
+#endif
+
+#endif

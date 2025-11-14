@@ -79,6 +79,11 @@ limitations under the License.
 (defined(__clang__) && __clang_major__ < 19)
 // Not much else we can do here
 #define WG14_RESULT_TYPEOF_UNQUAL(...) __typeof__(__VA_ARGS__)
+#elif defined(_MSC_VER) && defined(__cplusplus)
+// MSVC doesn't appear to provide __typeof_unqual__ if we are in C++
+#include <type_traits>
+#define WG14_RESULT_TYPEOF_UNQUAL(...)                                         \
+  std::remove_cv<decltype(__VA_ARGS__)>::type
 #else
 #define WG14_RESULT_TYPEOF_UNQUAL(...) __typeof_unqual__(__VA_ARGS__)
 #endif
@@ -123,11 +128,22 @@ limitations under the License.
 #endif
 
 #ifndef WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR
+#if defined(__cplusplus)
+#define WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR(pred, msg, ...)                  \
+  ((void) [] { static_assert((pred), msg); }, (__VA_ARGS__))
+#elif __STDC_VERSION__ >= 202300L
+#define WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR(pred, msg, ...)                  \
+  ((__VA_ARGS__) + 0 * sizeof(struct {                                         \
+                     static_assert((pred), msg);                               \
+                     int x;                                                    \
+                   }))
+#else
 #define WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR(pred, msg, ...)                  \
   ((__VA_ARGS__) + 0 * sizeof(struct {                                         \
                      _Static_assert((pred), msg);                              \
                      int x;                                                    \
                    }))
+#endif
 #endif
 
 
@@ -141,7 +157,7 @@ limitations under the License.
 #include <stdio.h>
 #include <stdlib.h>
 WG14_RESULT_INLINE unsigned
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) && !defined(SWIG)
 __attribute__((noreturn))
 #endif
 WG14_RESULT_PREFIX(abortf_impl)(const char *msg, ...)
@@ -150,9 +166,7 @@ WG14_RESULT_PREFIX(abortf_impl)(const char *msg, ...)
   va_start(args, msg);
   vfprintf(stderr, msg, args);
   abort();
-#ifdef _MSC_VER
-  return 0;
-#else
+#ifndef _MSC_VER
   va_end(args);
 #endif
 }

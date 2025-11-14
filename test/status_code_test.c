@@ -1,5 +1,9 @@
 #include "test_common.h"
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
+
 #include "wg14_result/status_code.h"
 #include "wg14_result/status_code_generic.h"
 #include "wg14_result/status_code_system.h"
@@ -10,13 +14,16 @@
 
 #ifdef _MSC_VER
 #include <crtdbg.h>
+#pragma warning(disable : 4116)  // unnamed type definition in parentheses
+#pragma warning(disable : 4505)  // unreferenced function with internal linkage
+                                 // has been removed
 #endif
 
 #ifdef __clang__
 #pragma clang diagnostic ignored                                               \
 "-Wgnu-statement-expression-from-macro-expansion"
 #endif
-#ifdef __GCC__
+#ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wpedantic"
 #endif
 
@@ -56,24 +63,25 @@ struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args) * args);
 
 static WG14_RESULT_CONSTEXPR
 WG14_RESULT_PREFIX(status_code_domain_vtable) Code_domain_vtable = {
-.name = Code_domain_vtable_name,
-.payload_info = Code_domain_vtable_payload_info,
-.failure = Code_domain_vtable_failure,
-.equivalent = Code_domain_vtable_equivalent,
-.generic_code = Code_domain_vtable_generic_code,
-.message = Code_domain_vtable_message,
-.reserved_slot_for_cxx_throw_exception = WG14_RESULT_NULLPTR,
-.erased_copy = WG14_RESULT_PREFIX(default_erased_copy_impl),
-.erased_destroy = WG14_RESULT_PREFIX(default_erased_destroy_impl)  //
+Code_domain_vtable_name,
+Code_domain_vtable_payload_info,
+Code_domain_vtable_failure,
+Code_domain_vtable_equivalent,
+Code_domain_vtable_generic_code,
+Code_domain_vtable_message,
+WG14_RESULT_NULLPTR,
+WG14_RESULT_PREFIX(default_erased_copy_impl),
+WG14_RESULT_PREFIX(default_erased_destroy_impl)  //
 };
 
-static WG14_RESULT_CONSTEXPR WG14_RESULT_PREFIX(status_code_domain)
-Code_domain = {.vptr = &Code_domain_vtable,
+static WG14_RESULT_CONSTEXPR
+WG14_RESULT_PREFIX(status_code_domain) Code_domain = {&Code_domain_vtable,
 #ifdef _MSC_VER
-               .id = 7886328514083815424
+                                                      7886328514083815424
 #else
-               .id = STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID(
-               "430f1201-94fc-06c7-430f-120194111111")
+                                                      STATUS_CODE_DOMAIN_UNIQUE_ID_FROM_UUID(
+                                                      "430f1201-94fc-06c7-430f-"
+                                                      "120194111111")
 #endif
 };
 STATUS_CODE_WITH_PAYLOAD_DECLARE(enum Code, Code)

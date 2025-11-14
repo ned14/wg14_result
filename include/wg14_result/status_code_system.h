@@ -39,7 +39,7 @@ extern "C"
 
   //| \brief An empty `status_code_system`
   static WG14_RESULT_CONSTEXPR_OR_CONST WG14_RESULT_PREFIX(status_code_system)
-  WG14_RESULT_PREFIX(status_code_system_empty);
+  WG14_RESULT_PREFIX(status_code_system_empty) = {{WG14_RESULT_NULLPTR}, 0};
 
   //! \brief Make a system code from an untyped input status code, this will
   //! fail if the input status cannot fit into a system code or if alignment
@@ -96,6 +96,7 @@ extern "C"
 #define STATUS_CODE_SYSTEM_MAKE_IMPL(src, ...)                                 \
   STATUS_CODE_SYSTEM_MAKE_IMPL2((src), __VA_ARGS__)
 
+#ifndef WG14_RESULT_DISABLE_CONVENIENCE_MACROS
   //! \brief Make a system code from a typed input status code, this will
   //! fail if the input status cannot fit into a system code or if alignment
   //! requirements are not met.
@@ -103,6 +104,7 @@ extern "C"
   STATUS_CODE_SYSTEM_MAKE_IMPL(                                                \
   &(__VA_ARGS__).base, STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT_INNARDS(           \
                        WG14_RESULT_TYPEOF_UNQUAL((__VA_ARGS__).value)))
+#endif
 
 #ifdef __cplusplus
 }
