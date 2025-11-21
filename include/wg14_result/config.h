@@ -21,11 +21,17 @@ limitations under the License.
 #ifndef WG14_RESULT_CONFIG_H
 #define WG14_RESULT_CONFIG_H
 
-#if WG14_RESULT_ENABLE_HEADER_ONLY || WG14_RESULT_SOURCE
 #if defined(__cplusplus)
-#if __cplusplus < 202000L && !_HAS_CXX20
+#if __cplusplus < 201100L && _MSVC_LANG < 201100L &&                           \
+!defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS) && !defined(SWIG)
+#error                                                                         \
+"If being used from C++, a minimum of C++ 11 is required. If you really need to use C++ 98, define WG14_RESULT_DISABLE_CXX_EXTENSIONS to make this a pure C library."
+#endif
 #include <version>  // some toolchains need this to set the version macros correctly
 #endif
+
+#if WG14_RESULT_ENABLE_HEADER_ONLY || WG14_RESULT_SOURCE
+#if defined(__cplusplus)
 #if __cplusplus < 202000L && !_HAS_CXX20
 #error                                                                         \
 "If being compiled as C++, the source code requires a minimum of a C++ 20 compiler for decent C11 support."
@@ -79,11 +85,12 @@ limitations under the License.
 (defined(__clang__) && __clang_major__ < 19)
 // Not much else we can do here
 #define WG14_RESULT_TYPEOF_UNQUAL(...) __typeof__(__VA_ARGS__)
-#elif defined(_MSC_VER) && defined(__cplusplus)
-// MSVC doesn't appear to provide __typeof_unqual__ if we are in C++
+#elif defined(__cplusplus)
+// C++ compilers don't appear to provide __typeof_unqual__ if the language
+// standard is old enough
 #include <type_traits>
 #define WG14_RESULT_TYPEOF_UNQUAL(...)                                         \
-  std::remove_cv<decltype(__VA_ARGS__)>::type
+  std::remove_cv<std::remove_reference<decltype(__VA_ARGS__)>::type>::type
 #else
 #define WG14_RESULT_TYPEOF_UNQUAL(...) __typeof_unqual__(__VA_ARGS__)
 #endif
@@ -194,6 +201,22 @@ _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, ...)     \
   WG14_RESULT_ABORTF_CAT(WG14_RESULT_ABORTF_INVOKE,                            \
                          WG14_RESULT_ABORTF_HAS_COMMA(__VA_ARGS__))            \
   (__VA_ARGS__)
+#endif
+#endif
+
+#ifndef WG14_RESULT_CXX_CONSTEXPR20
+#if __cplusplus >= 202000L || _HAS_CXX20
+#define WG14_RESULT_CXX_CONSTEXPR20 constexpr
+#else
+#define WG14_RESULT_CXX_CONSTEXPR20
+#endif
+#endif
+
+#ifndef WG14_RESULT_NOT_CXX_MEMSET
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+#define WG14_RESULT_NOT_CXX_MEMSET(mem, val, len)
+#else
+#define WG14_RESULT_NOT_CXX_MEMSET(mem, val, len) memset((mem), (val), (len))
 #endif
 #endif
 

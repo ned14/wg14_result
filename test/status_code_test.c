@@ -2,6 +2,7 @@
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wunused-function"
+#pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
 #include "wg14_result/status_code.h"
@@ -172,8 +173,8 @@ struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args) * args)
   case Code_error2:
     break;
   }
-  const WG14_RESULT_PREFIX(status_code_generic)
-  ret = {{WG14_RESULT_NULLPTR}, WG14_RESULT_PREFIX(status_code_errc_success)};
+  const WG14_RESULT_PREFIX(status_code_generic) ret =
+  WG14_RESULT_PREFIX(status_code_generic_empty);
   args->ret = ret;
 }
 
@@ -203,7 +204,7 @@ struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args) * args)
     return 0;
   }
   WG14_RESULT_PREFIX(status_code_domain_string_ref) ret;
-  memset(&ret, 0, sizeof(ret));
+  WG14_RESULT_NOT_CXX_MEMSET(&ret, 0, sizeof(ret));
   args->ret = ret;
   return 0;
 }
@@ -217,8 +218,7 @@ int main(void)
 #endif
 
   WG14_RESULT_CONSTEXPR_OR_CONST WG14_RESULT_PREFIX(status_code_generic)
-  empty1 = {{WG14_RESULT_NULLPTR},
-            WG14_RESULT_PREFIX(status_code_errc_success)},
+  empty1 = WG14_RESULT_PREFIX(status_code_generic_empty),
   success1 = WG14_RESULT_PREFIX(status_code_generic_make)(
   WG14_RESULT_PREFIX(status_code_errc_success)),
   failure1 = WG14_RESULT_PREFIX(status_code_generic_make)(
@@ -239,7 +239,7 @@ int main(void)
          status_code_is_success(failure1), status_code_is_failure(failure1));
 
   WG14_RESULT_CONSTEXPR_OR_CONST StatusCode
-  empty2 = {{WG14_RESULT_NULLPTR}, Code_success1},
+  empty2 = STATUS_CODE_WITH_PAYLOAD_MAKE_EMPTY(Code),
   success2 = STATUS_CODE_WITH_PAYLOAD_MAKE(Code, Code_success1),
   failure2 = STATUS_CODE_WITH_PAYLOAD_MAKE(Code, Code_goaway);
   CHECK(status_code_is_success(success2));
@@ -279,7 +279,7 @@ int main(void)
   // Test typed clone and destroy macros
 #if !defined(_MSC_VER) || defined(__clang__)
   {
-    StatusCode dest = {{WG14_RESULT_NULLPTR}, Code_success1};
+    StatusCode dest = STATUS_CODE_WITH_PAYLOAD_MAKE_EMPTY(Code);
     CHECK(status_code_clone(&dest, &failure2) == 0);
     printf("(dest == failure2) = %d\n",
            status_code_strictly_equivalent(dest, failure2));

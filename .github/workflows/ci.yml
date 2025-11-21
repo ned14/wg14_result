@@ -29,7 +29,7 @@ jobs:
         esp_idf_version: latest
         target: esp32c3
         path: .
-        command: mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_TESTS_AS_CXX=OFF -DBUILD_SWIG_WRAPPERS=OFF && cmake --build . --parallel
+        command: mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_TESTS_AS_CXX=OFF -DBUILD_SWIG_WRAPPERS=OFF -DBUILD_RUST_WRAPPERS=OFF && cmake --build . --parallel
 
   Linux:
     name: Linux
@@ -48,6 +48,7 @@ jobs:
           
     steps:
     - uses: actions/checkout@v4
+    - uses: actions-rust-lang/setup-rust-toolchain@v1
 
     - name: Configure Linux
       shell: bash
@@ -79,6 +80,7 @@ jobs:
           
     steps:
     - uses: actions/checkout@v4
+    - uses: actions-rust-lang/setup-rust-toolchain@v1
 
     - name: Configure Mac OS
       shell: bash
@@ -109,6 +111,7 @@ jobs:
           
     steps:
     - uses: actions/checkout@v4
+    - uses: actions-rust-lang/setup-rust-toolchain@v1
 
     - name: Configure WinVS2022
       shell: bash

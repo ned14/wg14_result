@@ -25,6 +25,11 @@ limitations under the License.
 #ifdef __cplusplus
 extern "C"
 {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4190)  // C linkage
+#pragma warning(disable : 4996)  // use strerror_s instead
+#endif
 #endif
 
   //! \brief Retrieve the domain for `status_code_posix`
@@ -32,12 +37,31 @@ extern "C"
   WG14_RESULT_SINGLETON WG14_RESULT_PREFIX(status_code_domain) *
   WG14_RESULT_PREFIX(status_code_posix_domain)(void);
 
-  //! \brief A POSIX status code
-  typedef struct WG14_RESULT_PREFIX(status_code_posix_s)
+  struct WG14_RESULT_PREFIX(status_code_posix_s)
   {
     WG14_RESULT_PREFIX(status_code_untyped) base;
-    int value;
-  } WG14_RESULT_PREFIX(status_code_posix);
+    int value
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+    {}
+#endif
+    ;
+  };
+
+  //! \brief A POSIX status code
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+  struct WG14_RESULT_PREFIX(status_code_posix)
+      : wg14_result::WG14_RESULT_PREFIX(status_code_special_member_functions)<
+        struct WG14_RESULT_PREFIX(status_code_posix_s)>
+  {
+    using wg14_result::WG14_RESULT_PREFIX(status_code_special_member_functions)<
+    struct WG14_RESULT_PREFIX(status_code_posix_s)>::
+    WG14_RESULT_PREFIX(status_code_special_member_functions);
+  };
+#else
+typedef struct WG14_RESULT_PREFIX(status_code_posix_s)
+WG14_RESULT_PREFIX(status_code_posix);
+#endif
+
 #if __STDC_VERSION__ >= 201100L
   _Static_assert(sizeof(WG14_RESULT_PREFIX(status_code_posix)) <=
                  sizeof(WG14_RESULT_PREFIX(status_code_system)),
@@ -53,11 +77,15 @@ extern "C"
   WG14_RESULT_PREFIX(status_code_posix_make)(int val)
   {
     const WG14_RESULT_PREFIX(status_code_posix)
-    ret = {{WG14_RESULT_PREFIX(status_code_posix_domain)()}, val};
+    ret = {WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(
+    {WG14_RESULT_PREFIX(status_code_posix_domain)()}, val)};
     return ret;
   }
 
 #ifdef __cplusplus
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 }
 #endif
 

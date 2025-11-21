@@ -71,9 +71,32 @@ class status_code_domain_string_ref_s(object):
     state = property(_wg14_result_python.status_code_domain_string_ref_s_state_get, _wg14_result_python.status_code_domain_string_ref_s_state_set)
     thunk = property(_wg14_result_python.status_code_domain_string_ref_s_thunk_get, _wg14_result_python.status_code_domain_string_ref_s_thunk_set)
 
-    def __init__(self):
-        _wg14_result_python.status_code_domain_string_ref_s_swiginit(self, _wg14_result_python.new_status_code_domain_string_ref_s())
+    def __init__(self, *args):
+        r"""
+        *Overload 1:*
+        Default construct to all bits zero
+
+        |
+
+        *Overload 2:*
+        As if aggregate constructor for C compatibility
+
+        |
+
+        *Overload 3:*
+        Copies the string ref
+
+        |
+
+        *Overload 4:*
+        Moves the string ref
+        """
+        _wg14_result_python.status_code_domain_string_ref_s_swiginit(self, _wg14_result_python.new_status_code_domain_string_ref_s(*args))
     __swig_destroy__ = _wg14_result_python.delete_status_code_domain_string_ref_s
+
+    def empty(self):
+        r""" True if the string ref is empty"""
+        return _wg14_result_python.status_code_domain_string_ref_s_empty(self)
 
 # Register status_code_domain_string_ref_s in _wg14_result_python:
 _wg14_result_python.status_code_domain_string_ref_s_swigregister(status_code_domain_string_ref_s)
@@ -153,6 +176,14 @@ class status_code_domain_s(object):
         _wg14_result_python.status_code_domain_s_swiginit(self, _wg14_result_python.new_status_code_domain_s(*args))
     __swig_destroy__ = _wg14_result_python.delete_status_code_domain_s
 
+    def name(self):
+        r""" Retrieves the name of the status code domain"""
+        return _wg14_result_python.status_code_domain_s_name(self)
+
+    def payload_info(self):
+        r""" Retrieves the payload info of the status code domain"""
+        return _wg14_result_python.status_code_domain_s_payload_info(self)
+
 # Register status_code_domain_s in _wg14_result_python:
 _wg14_result_python.status_code_domain_s_swigregister(status_code_domain_s)
 
@@ -167,6 +198,92 @@ def status_code_domain_name(domain):
 def status_code_domain_payload_info(domain):
     r""" Retrieves the payload info of the status code domain (implementation)."""
     return _wg14_result_python.status_code_domain_payload_info(domain)
+
+def status_code_is_empty(r):
+    r""" True if the status code is empty (implementation)"""
+    return _wg14_result_python.status_code_is_empty(r)
+
+def status_code_is_success(r):
+    r""" True if the status code is a success (implementation)"""
+    return _wg14_result_python.status_code_is_success(r)
+
+def status_code_is_failure(r):
+    r""" True if the status code is a failure (implementation)"""
+    return _wg14_result_python.status_code_is_failure(r)
+
+def status_code_message(r):
+    r""" Retrieves the message of the status code (implementation). Make sure you call `status_code_domain_string_ref_destroy()` when you are done with the returned string reference."""
+    return _wg14_result_python.status_code_message(r)
+
+def status_code_strictly_equivalent(primary, secondary):
+    r""" True if the status codes are strictly semantically equivalent (implementation). `primary`'s domain's equivalence function decides if `secondary` is semantically equivalent to it. Note that for most status codes, if the codes have the same domain, a pure value equality is performed. This operation may not be transitive."""
+    return _wg14_result_python.status_code_strictly_equivalent(primary, secondary)
+
+def status_code_erased_destroy(r):
+    r""" Destroys the status code (erased)"""
+    return _wg14_result_python.status_code_erased_destroy(r)
+
+def status_code_erased_clone(dest, src, dstinfo):
+    r""" Clones the status code (erased), returning an `errno` value if failed."""
+    return _wg14_result_python.status_code_erased_clone(dest, src, dstinfo)
+class wg14_result_status_code_special_member_functions(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _wg14_result_python.delete_wg14_result_status_code_special_member_functions
+
+    def __init__(self, *args):
+        r"""
+        *Overload 1:*
+        Default constructs to an empty status code
+
+        |
+
+        *Overload 2:*
+        Copy constructor which will use the domain's `erased_clone` if that is set, otherwise standard C++ copy construction.
+
+        |
+
+        *Overload 3:*
+        Move constructor which always performs a move bitcopy.
+
+        |
+
+        *Overload 4:*
+        Constructs from the underlying storage type by copy
+
+        |
+
+        *Overload 5:*
+        Constructs from the underlying storage type by move
+        """
+        _wg14_result_python.wg14_result_status_code_special_member_functions_swiginit(self, _wg14_result_python.new_wg14_result_status_code_special_member_functions(*args))
+
+    def domain(self):
+        r""" Returns the domain instance for this status code"""
+        return _wg14_result_python.wg14_result_status_code_special_member_functions_domain(self)
+
+    def empty(self):
+        r""" True if the status code is empty"""
+        return _wg14_result_python.wg14_result_status_code_special_member_functions_empty(self)
+
+    def success(self):
+        r""" True if the status code is a success"""
+        return _wg14_result_python.wg14_result_status_code_special_member_functions_success(self)
+
+    def failure(self):
+        r""" True if the status code is a failure"""
+        return _wg14_result_python.wg14_result_status_code_special_member_functions_failure(self)
+
+    def message(self):
+        r""" Retrieves the message of the status code."""
+        return _wg14_result_python.wg14_result_status_code_special_member_functions_message(self)
+
+    def equivalent(self, errc):
+        r""" True if the status code is semantically equivalent in any way to the generic enum value."""
+        return _wg14_result_python.wg14_result_status_code_special_member_functions_equivalent(self, errc)
+
+# Register wg14_result_status_code_special_member_functions in _wg14_result_python:
+_wg14_result_python.wg14_result_status_code_special_member_functions_swigregister(wg14_result_status_code_special_member_functions)
 status_code_errc_success = _wg14_result_python.status_code_errc_success
 status_code_errc_unknown = _wg14_result_python.status_code_errc_unknown
 status_code_errc_address_family_not_supported = _wg14_result_python.status_code_errc_address_family_not_supported
@@ -250,13 +367,23 @@ status_code_errc_wrong_protocol_type = _wg14_result_python.status_code_errc_wron
 def status_code_generic_domain():
     r""" Retrieve the domain for `status_code_generic`"""
     return _wg14_result_python.status_code_generic_domain()
-class status_code_generic(object):
+class status_code_generic_s(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    base = property(_wg14_result_python.status_code_generic_s_base_get, _wg14_result_python.status_code_generic_s_base_set)
+    value = property(_wg14_result_python.status_code_generic_s_value_get, _wg14_result_python.status_code_generic_s_value_set)
+
+    def __init__(self):
+        _wg14_result_python.status_code_generic_s_swiginit(self, _wg14_result_python.new_status_code_generic_s())
+    __swig_destroy__ = _wg14_result_python.delete_status_code_generic_s
+
+# Register status_code_generic_s in _wg14_result_python:
+_wg14_result_python.status_code_generic_s_swigregister(status_code_generic_s)
+class status_code_generic(wg14_result_status_code_special_member_functions):
     r""" A generic status code"""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
-    base = property(_wg14_result_python.status_code_generic_base_get, _wg14_result_python.status_code_generic_base_set)
-    value = property(_wg14_result_python.status_code_generic_value_get, _wg14_result_python.status_code_generic_value_set)
 
     def __init__(self):
         _wg14_result_python.status_code_generic_swiginit(self, _wg14_result_python.new_status_code_generic())
@@ -276,13 +403,26 @@ def status_code_equivalent(primary, secondary):
 def status_code_equivalent_errc(primary, errc):
     r""" True if the status code is semantically equivalent in any way to the generic enum value (implementation)."""
     return _wg14_result_python.status_code_equivalent_errc(primary, errc)
+class status_code_system_s(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    base = property(_wg14_result_python.status_code_system_s_base_get, _wg14_result_python.status_code_system_s_base_set)
+    value = property(_wg14_result_python.status_code_system_s_value_get, _wg14_result_python.status_code_system_s_value_set)
+
+    def __init__(self):
+        _wg14_result_python.status_code_system_s_swiginit(self, _wg14_result_python.new_status_code_system_s())
+    __swig_destroy__ = _wg14_result_python.delete_status_code_system_s
+
+# Register status_code_system_s in _wg14_result_python:
+_wg14_result_python.status_code_system_s_swigregister(status_code_system_s)
+cvar = _wg14_result_python.cvar
+status_code_generic_empty = cvar.status_code_generic_empty
+
 class status_code_system(object):
     r""" A `status_code` guaranteed to be able to hold any system error code in full. The payload is always an `intptr_t`."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
-    base = property(_wg14_result_python.status_code_system_base_get, _wg14_result_python.status_code_system_base_set)
-    value = property(_wg14_result_python.status_code_system_value_get, _wg14_result_python.status_code_system_value_set)
 
     def __init__(self):
         _wg14_result_python.status_code_system_swiginit(self, _wg14_result_python.new_status_code_system())
@@ -302,13 +442,25 @@ def status_code_system_make_from_errc(errc):
 def status_code_posix_domain():
     r""" Retrieve the domain for `status_code_posix`"""
     return _wg14_result_python.status_code_posix_domain()
+class status_code_posix_s(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    base = property(_wg14_result_python.status_code_posix_s_base_get, _wg14_result_python.status_code_posix_s_base_set)
+    value = property(_wg14_result_python.status_code_posix_s_value_get, _wg14_result_python.status_code_posix_s_value_set)
+
+    def __init__(self):
+        _wg14_result_python.status_code_posix_s_swiginit(self, _wg14_result_python.new_status_code_posix_s())
+    __swig_destroy__ = _wg14_result_python.delete_status_code_posix_s
+
+# Register status_code_posix_s in _wg14_result_python:
+_wg14_result_python.status_code_posix_s_swigregister(status_code_posix_s)
+status_code_system_empty = cvar.status_code_system_empty
+
 class status_code_posix(object):
     r""" A POSIX status code"""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
-    base = property(_wg14_result_python.status_code_posix_base_get, _wg14_result_python.status_code_posix_base_set)
-    value = property(_wg14_result_python.status_code_posix_value_get, _wg14_result_python.status_code_posix_value_set)
 
     def __init__(self):
         _wg14_result_python.status_code_posix_swiginit(self, _wg14_result_python.new_status_code_posix())
@@ -316,41 +468,46 @@ class status_code_posix(object):
 
 # Register status_code_posix in _wg14_result_python:
 _wg14_result_python.status_code_posix_swigregister(status_code_posix)
-cvar = _wg14_result_python.cvar
-status_code_system_empty = cvar.status_code_system_empty
-
 
 def status_code_posix_make(val):
     r""" Make a `status_code_posix`"""
     return _wg14_result_python.status_code_posix_make(val)
+class wg14_result_special_member_functions(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _wg14_result_python.delete_wg14_result_special_member_functions
 
-def status_code_is_empty(r):
-    r""" The type of a status code with named payload. You must call `STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)` first. Make a named status code previously declared. True if the status code is empty (implementation)"""
-    return _wg14_result_python.status_code_is_empty(r)
+    def __init__(self, *args):
+        _wg14_result_python.wg14_result_special_member_functions_swiginit(self, _wg14_result_python.new_wg14_result_special_member_functions(*args))
 
-def status_code_is_success(r):
-    r""" True if the status code is a success (implementation)"""
-    return _wg14_result_python.status_code_is_success(r)
+    def __nonzero__(self):
+        return _wg14_result_python.wg14_result_special_member_functions___nonzero__(self)
+    __bool__ = __nonzero__
 
-def status_code_is_failure(r):
-    r""" True if the status code is a failure (implementation)"""
-    return _wg14_result_python.status_code_is_failure(r)
 
-def status_code_message(r):
-    r""" Retrieves the message of the status code (implementation). Make sure you call `status_code_domain_string_ref_destroy()` when you are done with the returned string reference."""
-    return _wg14_result_python.status_code_message(r)
 
-def status_code_strictly_equivalent(primary, secondary):
-    r""" True if the status codes are strictly semantically equivalent (implementation). `primary`'s domain's equivalence function decides if `secondary` is semantically equivalent to it. Note that for most status codes, if the codes have the same domain, a pure value equality is performed. This operation may not be transitive."""
-    return _wg14_result_python.status_code_strictly_equivalent(primary, secondary)
+    def has_value(self):
+        r""" Returns true if the result is successful."""
+        return _wg14_result_python.wg14_result_special_member_functions_has_value(self)
 
-def status_code_erased_destroy(r):
-    r""" Destroys the status code (erased)"""
-    return _wg14_result_python.status_code_erased_destroy(r)
+    def has_error(self):
+        r""" Returns true if the result has failed with an error."""
+        return _wg14_result_python.wg14_result_special_member_functions_has_error(self)
 
-def status_code_erased_clone(dest, src, dstinfo):
-    r""" Clones the status code (erased), returning an `errno` value if failed."""
-    return _wg14_result_python.status_code_erased_clone(dest, src, dstinfo)
+    def has_exception(self):
+        r""" Returns true if the result has failed with a C++ exception."""
+        return _wg14_result_python.wg14_result_special_member_functions_has_exception(self)
+
+    def has_failure(self):
+        r""" Returns true if the result has failed in any way."""
+        return _wg14_result_python.wg14_result_special_member_functions_has_failure(self)
+
+    def has_lost_consistency(self):
+        r""" Returns true if the result has lost internal consistency."""
+        return _wg14_result_python.wg14_result_special_member_functions_has_lost_consistency(self)
+
+# Register wg14_result_special_member_functions in _wg14_result_python:
+_wg14_result_python.wg14_result_special_member_functions_swigregister(wg14_result_special_member_functions)
 result_status_flag_none = _wg14_result_python.result_status_flag_none
 result_status_flag_have_value = _wg14_result_python.result_status_flag_have_value
 result_status_flag_have_error = _wg14_result_python.result_status_flag_have_error
@@ -387,26 +544,48 @@ class result_flags(object):
     __repr__ = _swig_repr
     status = property(_wg14_result_python.result_flags_status_get, _wg14_result_python.result_flags_status_set)
 
-    def __init__(self):
-        _wg14_result_python.result_flags_swiginit(self, _wg14_result_python.new_result_flags())
+    def __init__(self, *args):
+        _wg14_result_python.result_flags_swiginit(self, _wg14_result_python.new_result_flags(*args))
     __swig_destroy__ = _wg14_result_python.delete_result_flags
+
+    def have_value(self):
+        return _wg14_result_python.result_flags_have_value(self)
+
+    def have_error(self):
+        return _wg14_result_python.result_flags_have_error(self)
+
+    def have_exception(self):
+        return _wg14_result_python.result_flags_have_exception(self)
+
+    def have_lost_consistency(self):
+        return _wg14_result_python.result_flags_have_lost_consistency(self)
 
 # Register result_flags in _wg14_result_python:
 _wg14_result_python.result_flags_swigregister(result_flags)
-class result_with_void_t(object):
+class result_with_void_s(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    _flags_ = property(_wg14_result_python.result_with_void_s__flags__get, _wg14_result_python.result_with_void_s__flags__set)
+    error = property(_wg14_result_python.result_with_void_s_error_get, _wg14_result_python.result_with_void_s_error_set)
+
+    def __init__(self):
+        _wg14_result_python.result_with_void_s_swiginit(self, _wg14_result_python.new_result_with_void_s())
+    __swig_destroy__ = _wg14_result_python.delete_result_with_void_s
+
+# Register result_with_void_s in _wg14_result_python:
+_wg14_result_python.result_with_void_s_swigregister(result_with_void_s)
+class result_with_void(wg14_result_special_member_functions):
     r""" A Result for type `void`."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
-    _flags_ = property(_wg14_result_python.result_with_void_t__flags__get, _wg14_result_python.result_with_void_t__flags__set)
-    error = property(_wg14_result_python.result_with_void_t_error_get, _wg14_result_python.result_with_void_t_error_set)
 
-    def __init__(self):
-        _wg14_result_python.result_with_void_t_swiginit(self, _wg14_result_python.new_result_with_void_t())
-    __swig_destroy__ = _wg14_result_python.delete_result_with_void_t
+    def __init__(self, *args):
+        _wg14_result_python.result_with_void_swiginit(self, _wg14_result_python.new_result_with_void(*args))
+    __swig_destroy__ = _wg14_result_python.delete_result_with_void
 
-# Register result_with_void_t in _wg14_result_python:
-_wg14_result_python.result_with_void_t_swigregister(result_with_void_t)
+# Register result_with_void in _wg14_result_python:
+_wg14_result_python.result_with_void_swigregister(result_with_void)
 
 def result_void_make_success():
     r""" Makes a successful Result with type `void`."""

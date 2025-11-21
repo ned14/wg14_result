@@ -27,6 +27,11 @@ limitations under the License.
 #include <stdbool.h>
 #include <string.h>
 
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+#include <initializer_list>
+#include <new>
+#endif
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -37,6 +42,7 @@ extern "C"
 #endif
 #ifdef _MSC_VER
 #pragma warning(push)
+#pragma warning(disable : 4190)  // C linkage
 #pragma warning(disable : 4996)  // use strerror_s instead
 #endif
 
@@ -80,6 +86,63 @@ extern "C"
     const char *c_str, *end;
     void *state[3];
     status_code_domain_string_ref_thunk_spec thunk;
+
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+    //! \brief Default construct to all bits zero
+    constexpr WG14_RESULT_PREFIX(status_code_domain_string_ref_s)()
+        : c_str(nullptr)
+        , end(nullptr)
+        , state{nullptr, nullptr, nullptr}
+        , thunk(nullptr)
+    {
+    }
+    //! \brief As if aggregate constructor for C compatibility
+    constexpr WG14_RESULT_PREFIX(status_code_domain_string_ref_s)(
+    const char *c_str, const char *end, std::initializer_list<void *> state,
+    status_code_domain_string_ref_thunk_spec thunk)
+        : c_str(c_str)
+        , end(end)
+        , state{state.begin()[0], state.begin()[1], state.begin()[2]}
+        , thunk(thunk)
+    {
+    }
+    //! \brief Copies the string ref
+    inline WG14_RESULT_PREFIX(status_code_domain_string_ref_s)(
+    const WG14_RESULT_PREFIX(status_code_domain_string_ref_s) & o);
+    //! \brief Copies the string ref
+    WG14_RESULT_PREFIX(status_code_domain_string_ref_s) &
+    operator=(const WG14_RESULT_PREFIX(status_code_domain_string_ref_s) & o)
+    {
+      if(this != &o)
+      {
+        auto temp(o);
+        *this =
+        static_cast<WG14_RESULT_PREFIX(status_code_domain_string_ref_s) &&>(
+        temp);
+      }
+      return *this;
+    }
+    //! \brief Moves the string ref
+    inline WG14_RESULT_PREFIX(status_code_domain_string_ref_s)(
+    WG14_RESULT_PREFIX(status_code_domain_string_ref_s) && o) noexcept;
+    //! \brief Moves the string ref
+    WG14_RESULT_PREFIX(status_code_domain_string_ref_s) &
+    operator=(WG14_RESULT_PREFIX(status_code_domain_string_ref_s) && o) noexcept
+    {
+      if(this != &o)
+      {
+        this->~WG14_RESULT_PREFIX(status_code_domain_string_ref_s)();
+        new(this) WG14_RESULT_PREFIX(status_code_domain_string_ref_s)(
+        static_cast<WG14_RESULT_PREFIX(status_code_domain_string_ref_s) &&>(o));
+      }
+      return *this;
+    }
+    //! \brief Destroys the string ref
+    inline ~WG14_RESULT_PREFIX(status_code_domain_string_ref_s)();
+
+    //! \brief True if the string ref is empty
+    inline bool empty() const noexcept;
+#endif
   };
 
   //! \brief Returns true if the string ref is empty
@@ -156,6 +219,32 @@ extern "C"
     memset(src, 0, sizeof(*src));
   }
 
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS) &&    \
+!defined(SWIG)
+  inline bool
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_s)::empty() const noexcept
+  {
+    return WG14_RESULT_PREFIX(status_code_domain_string_ref_is_empty)(this);
+  }
+  inline WG14_RESULT_PREFIX(status_code_domain_string_ref_s)::
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_s)(
+  const WG14_RESULT_PREFIX(status_code_domain_string_ref_s) & o)
+  {
+    WG14_RESULT_PREFIX(status_code_domain_string_ref_copy)(this, &o);
+  }
+  inline WG14_RESULT_PREFIX(status_code_domain_string_ref_s)::
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_s)(
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_s) && o) noexcept
+  {
+    WG14_RESULT_PREFIX(status_code_domain_string_ref_move)(this, &o);
+  }
+  inline WG14_RESULT_PREFIX(status_code_domain_string_ref_s)::
+  ~WG14_RESULT_PREFIX(status_code_domain_string_ref_s)()
+  {
+    WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(this);
+  }
+#endif
+
   //! \brief Make a string ref which refers to a null terminated static string
   //! slice
   WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
@@ -180,6 +269,10 @@ extern "C"
     status_code_domain_string_ref_from_static_string_slice)(s, strlen(s));
   }
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreturn-type-c-linkage"
+#endif
   //! \brief Make an atomic refcounted string ref which tracks living copies
   //! using an atomic reference count, freeing the internally stored buffer on
   //! final destroy. The input range is copied and does not need to be null
@@ -189,6 +282,9 @@ extern "C"
   WG14_RESULT_PREFIX(
   status_code_domain_string_ref_atomic_refcounted_from_buffer)(const char *s,
                                                                size_t len);
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
   //! \brief Make an atomic refcounted string ref which copies the input null
   //! terminated static string
@@ -202,7 +298,6 @@ extern "C"
 
 
   /**************************************************************************/
-
 
   //! \brief The functions defined by a status code domain, kept ABI compatible
   //! with a C++ vtable
@@ -246,12 +341,20 @@ extern "C"
   //! \brief Type of an untyped status code
   typedef struct WG14_RESULT_PREFIX(status_code_untyped)
   {
-    WG14_RESULT_PREFIX(status_code_domain) * domain;
+    WG14_RESULT_PREFIX(status_code_domain) * domain
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+    { nullptr }
+#endif
+    ;
   } WG14_RESULT_PREFIX(status_code_untyped);
 
   //! \brief Type of a generic status code
-  typedef struct WG14_RESULT_PREFIX(status_code_generic_s)
-  WG14_RESULT_PREFIX(status_code_generic);
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+  struct WG14_RESULT_PREFIX(status_code_generic);
+#else
+typedef struct WG14_RESULT_PREFIX(status_code_generic_s)
+WG14_RESULT_PREFIX(status_code_generic);
+#endif
 
   /* We have to do a bit of work to achieve C++ vtable calling convention
   (__thiscall) compatibility which won't always be possible on all platforms,
@@ -474,15 +577,29 @@ extern "C"
   //! \brief The arguments for `status_code_domain_vtable.name`
   struct WG14_RESULT_PREFIX(status_code_domain_vtable_name_args)
   {
-    WG14_RESULT_PREFIX(status_code_domain_string_ref) ret;
-    WG14_RESULT_PREFIX(status_code_domain) * domain;
+    WG14_RESULT_PREFIX(status_code_domain_string_ref)
+    ret;
+    WG14_RESULT_PREFIX(status_code_domain) * domain
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+    {}
+#endif
+    ;
   };
 
   //! \brief The arguments for `status_code_domain_vtable.payload_info`
   struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args)
   {
-    WG14_RESULT_PREFIX(status_code_domain_payload_info_t) ret;
-    WG14_RESULT_PREFIX(status_code_domain) * domain;
+    WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
+    ret
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+    {0, 0, 0}
+#endif
+    ;
+    WG14_RESULT_PREFIX(status_code_domain) * domain
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+    {}
+#endif
+    ;
   };
 
   struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args);
@@ -490,8 +607,13 @@ extern "C"
   //! \brief The arguments for `status_code_domain_vtable.message`
   struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args)
   {
-    WG14_RESULT_PREFIX(status_code_domain_string_ref) ret;
-    const WG14_RESULT_PREFIX(status_code_untyped) * code;
+    WG14_RESULT_PREFIX(status_code_domain_string_ref)
+    ret;
+    const WG14_RESULT_PREFIX(status_code_untyped) * code
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+    {}
+#endif
+    ;
   };
 
   //! \brief The functions defined by a status code domain, kept ABI compatible
@@ -561,7 +683,7 @@ extern "C"
     //! The unique id used to identify identical category instances.
     const WG14_RESULT_PREFIX(status_code_domain_unique_id_type) id;
 
-#ifdef __cplusplus
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
     constexpr WG14_RESULT_PREFIX(status_code_domain_s)()
         : vptr{nullptr}
         , id{0}
@@ -574,6 +696,21 @@ extern "C"
         , id{id}
     {
     }
+    WG14_RESULT_PREFIX(status_code_domain_s)
+    (const WG14_RESULT_PREFIX(status_code_domain_s) &) = default;
+    WG14_RESULT_PREFIX(status_code_domain_s)
+    (WG14_RESULT_PREFIX(status_code_domain_s) &&) = default;
+    WG14_RESULT_PREFIX(status_code_domain_s) &
+    operator=(const WG14_RESULT_PREFIX(status_code_domain_s) &) = delete;
+    WG14_RESULT_PREFIX(status_code_domain_s) &
+    operator=(WG14_RESULT_PREFIX(status_code_domain_s) &&) = delete;
+    ~WG14_RESULT_PREFIX(status_code_domain_s)() = default;
+
+    //! \brief Retrieves the name of the status code domain
+    inline WG14_RESULT_PREFIX(status_code_domain_string_ref) name() const;
+    //! \brief Retrieves the payload info of the status code domain
+    inline WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
+    payload_info() const noexcept;
 #endif
   };
 
@@ -721,6 +858,116 @@ extern "C"
     return args.ret;
   }
 
+  /**************************************************************************/
+
+  //! \brief True if the status code is empty (implementation)
+  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_empty)(
+  const WG14_RESULT_PREFIX(status_code_untyped) * r)
+  {
+    return r->domain == WG14_RESULT_NULLPTR;
+  }
+
+  //! \brief True if the status code is a success (implementation)
+  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_success)(
+  const WG14_RESULT_PREFIX(status_code_untyped) * r)
+  {
+    return (r->domain != WG14_RESULT_NULLPTR) ?
+           !WG14_RESULT_VTABLE_INVOKE_API(r->domain, failure, r) :
+           false;
+  }
+
+  //! \brief True if the status code is a failure (implementation)
+  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_failure)(
+  const WG14_RESULT_PREFIX(status_code_untyped) * r)
+  {
+    return (r->domain != WG14_RESULT_NULLPTR) ?
+           WG14_RESULT_VTABLE_INVOKE_API(r->domain, failure, r) :
+           false;
+  }
+
+  //! \brief Retrieves the message of the status code (implementation). Make
+  //! sure you call `status_code_domain_string_ref_destroy()` when you are done
+  //! with the returned string reference.
+  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
+  WG14_RESULT_PREFIX(status_code_message)(
+  const WG14_RESULT_PREFIX(status_code_untyped) * r)
+  {
+    if(r->domain != WG14_RESULT_NULLPTR)
+    {
+      struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args) args;
+      WG14_RESULT_NOT_CXX_MEMSET(&args, 0, sizeof(args));
+      args.code = r;
+      const int errcode =
+      WG14_RESULT_VTABLE_INVOKE_API(r->domain, message, &args);
+      if(errcode == 0)
+      {
+        return args.ret;
+      }
+      WG14_RESULT_ABORTF("status_code_message failed with %d (%s)", errcode,
+                         strerror(errcode));
+    }
+    return WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string)(
+    "(empty)");
+  }
+
+  //! \brief True if the status codes are strictly semantically equivalent
+  //! (implementation). `primary`'s domain's equivalence function decides if
+  //! `secondary` is semantically equivalent to it. Note that for most status
+  //! codes, if the codes have the same domain, a pure value equality is
+  //! performed. This operation may not be transitive.
+  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_strictly_equivalent)(
+  const WG14_RESULT_PREFIX(status_code_untyped) * primary,
+  const WG14_RESULT_PREFIX(status_code_untyped) * secondary)
+  {
+    if(primary->domain != WG14_RESULT_NULLPTR &&
+       secondary->domain != WG14_RESULT_NULLPTR)
+    {
+      return WG14_RESULT_VTABLE_INVOKE_API(primary->domain, equivalent, primary,
+                                           secondary);
+    }
+    // If we are both empty, we are equivalent
+    if(WG14_RESULT_NULLPTR == primary->domain &&
+       WG14_RESULT_NULLPTR == secondary->domain)
+    {
+      return true;  // NOLINT
+    }
+    // Otherwise not equivalent
+    return false;
+  }
+
+  //! \brief Destroys the status code (erased)
+  WG14_RESULT_INLINE void WG14_RESULT_PREFIX(status_code_erased_destroy)(
+  WG14_RESULT_PREFIX(status_code_untyped) * r)
+  {
+    if(r->domain != WG14_RESULT_NULLPTR &&
+       r->domain->vptr->erased_destroy != WG14_RESULT_NULLPTR)
+    {
+      struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args)
+      args;
+      WG14_RESULT_NOT_CXX_MEMSET(&args, 0, sizeof(args));
+      args.domain = r->domain;
+      WG14_RESULT_VTABLE_INVOKE_API(r->domain, payload_info, &args);
+      WG14_RESULT_VTABLE_INVOKE_API(r->domain, erased_destroy, r, args.ret);
+      r->domain = WG14_RESULT_NULLPTR;
+    }
+  }
+
+  //! \brief Clones the status code (erased), returning an `errno` value
+  //! if failed.
+  WG14_RESULT_INLINE int WG14_RESULT_PREFIX(status_code_erased_clone)(
+  WG14_RESULT_PREFIX(status_code_untyped) * dest,
+  const WG14_RESULT_PREFIX(status_code_untyped) * src,
+  WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo)
+  {
+    WG14_RESULT_PREFIX(status_code_erased_destroy)(dest);
+    if(src->domain != WG14_RESULT_NULLPTR)
+    {
+      return WG14_RESULT_VTABLE_INVOKE_API(src->domain, erased_copy, dest, src,
+                                           dstinfo);
+    }
+    return 0;
+  }
+
 
 #ifdef _MSC_VER
 #pragma warning(pop)
@@ -734,6 +981,189 @@ extern "C"
 
 #if WG14_RESULT_ENABLE_HEADER_ONLY
 #include "../../src/wg14_result/status_code_domain.c"
+#endif
+
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4996)  // use strerror_s instead
+#endif
+
+inline WG14_RESULT_PREFIX(status_code_domain_string_ref)
+WG14_RESULT_PREFIX(status_code_domain)::name() const
+{
+  return WG14_RESULT_PREFIX(status_code_domain_name)(this);
+}
+inline WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
+WG14_RESULT_PREFIX(status_code_domain)::payload_info() const noexcept
+{
+  return WG14_RESULT_PREFIX(status_code_domain_payload_info)(this);
+}
+
+enum WG14_RESULT_PREFIX(status_code_errc) : int;
+
+
+namespace wg14_result
+{
+  template <class StorageType>
+  struct WG14_RESULT_PREFIX(status_code_special_member_functions)
+      : StorageType
+  {
+#ifndef SWIG
+    //! \brief The type of the status code's payload
+    using value_type = decltype(((StorageType *) nullptr)->value);
+#endif
+
+  private:
+    struct _tag_copy_directly
+    {
+    };
+    struct _tag_copy_via_domain
+    {
+    };
+    WG14_RESULT_PREFIX(status_code_special_member_functions)
+    (_tag_copy_directly,
+     const WG14_RESULT_PREFIX(status_code_special_member_functions) & o)
+        : StorageType(o)
+    {
+    }
+    WG14_RESULT_PREFIX(status_code_special_member_functions)
+    (_tag_copy_via_domain,
+     const WG14_RESULT_PREFIX(status_code_special_member_functions) & o)
+        : StorageType()
+    {
+      const auto dstinfo = o.domain()->payload_info();
+      const int errcode = WG14_RESULT_PREFIX(status_code_erased_clone)(
+      &this->base, &o.base, dstinfo);
+      if(errcode != 0)
+      {
+        WG14_RESULT_ABORTF("status_code_erased_clone failed due to %d (%s)",
+                           errcode, strerror(errcode));
+      }
+    }
+
+  public:
+    //! \brief Default constructs to an empty status code
+    WG14_RESULT_PREFIX(status_code_special_member_functions)() = default;
+    //! \brief Copy constructor which will use the domain's `erased_clone` if
+    //! that is set, otherwise standard C++ copy construction.
+    WG14_RESULT_PREFIX(status_code_special_member_functions)
+    (const WG14_RESULT_PREFIX(status_code_special_member_functions) & o)
+        : WG14_RESULT_PREFIX(status_code_special_member_functions)(
+          (o.base.domain != nullptr &&
+           o.base.domain->vptr->erased_copy != nullptr) ?
+          WG14_RESULT_PREFIX(status_code_special_member_functions)(
+          _tag_copy_via_domain{}, o) :
+          WG14_RESULT_PREFIX(status_code_special_member_functions)(
+          _tag_copy_directly{}, o))
+    {
+    }
+    //! \brief Move constructor which always performs a move bitcopy.
+    WG14_RESULT_PREFIX(status_code_special_member_functions)
+    (WG14_RESULT_PREFIX(status_code_special_member_functions) && o) noexcept
+        : StorageType(static_cast<StorageType &&>(o))
+    {
+      // Status codes guarantee that a bit copy + bit clear = move
+      o.base.domain = nullptr;
+    }
+    //! \brief Copy assignment, see copy constructor for detail
+    WG14_RESULT_PREFIX(status_code_special_member_functions) &operator=(
+    const WG14_RESULT_PREFIX(status_code_special_member_functions) & o)
+    {
+      if(this != &o)
+      {
+        auto temp(o);
+        *this = static_cast<WG14_RESULT_PREFIX(
+                            status_code_special_member_functions) &&>(temp);
+      }
+      return *this;
+    }
+    //! \brief Move assignment, always performs a move bitcopy.
+    WG14_RESULT_PREFIX(status_code_special_member_functions) &
+    operator=(WG14_RESULT_PREFIX(status_code_special_member_functions) &&
+              o) noexcept
+    {
+      if(this != &o)
+      {
+        this->~WG14_RESULT_PREFIX(status_code_special_member_functions)();
+        new(this) WG14_RESULT_PREFIX(status_code_special_member_functions)(
+        static_cast<WG14_RESULT_PREFIX(
+                    status_code_special_member_functions) &&>(o));
+      }
+      return *this;
+    }
+    //! \brief Destructor which calls `status_code_erased_destroy()` for you.
+    ~WG14_RESULT_PREFIX(status_code_special_member_functions)()
+    {
+      WG14_RESULT_PREFIX(status_code_erased_destroy)(&this->base);
+    }
+
+    //! \brief Constructs from the underlying storage type by copy
+    constexpr WG14_RESULT_PREFIX(status_code_special_member_functions)(
+    const StorageType &v)
+        : StorageType(v)
+    {
+    }
+    //! \brief Constructs from the underlying storage type by move
+    constexpr WG14_RESULT_PREFIX(status_code_special_member_functions)(
+    StorageType &&v)
+        : StorageType(static_cast<StorageType &&>(v))
+    {
+    }
+
+    //! \brief Returns the domain instance for this status code
+    WG14_RESULT_PREFIX(status_code_domain) * domain() const noexcept
+    {
+      return this->base.domain;
+    }
+    //! \brief True if the status code is empty
+    bool empty() const noexcept
+    {
+      return WG14_RESULT_PREFIX(status_code_is_empty)(&this->base);
+    }
+    //! \brief True if the status code is a success
+    bool success() const noexcept
+    {
+      return WG14_RESULT_PREFIX(status_code_is_success)(&this->base);
+    }
+    //! \brief True if the status code is a failure
+    bool failure() const noexcept
+    {
+      return WG14_RESULT_PREFIX(status_code_is_failure)(&this->base);
+    }
+    //! \brief Retrieves the message of the status code.
+    WG14_RESULT_PREFIX(status_code_domain_string_ref)
+    message() const noexcept
+    {
+      return WG14_RESULT_PREFIX(status_code_message)(&this->base);
+    }
+    //! \brief True if the status codes are strictly semantically equivalent.
+    template <class T>
+    bool strictly_equivalent(
+    const status_code_special_member_functions<T> &o) const noexcept
+    {
+      return WG14_RESULT_PREFIX(status_code_strictly_equivalent)(&this->base,
+                                                                 &o.base);
+    }
+    //! \brief True if the status codes are semantically equivalent in any way.
+    template <class T>
+    inline bool
+    equivalent(const status_code_special_member_functions<T> &o) const noexcept;
+    //! \brief True if the status code is semantically equivalent in any way
+    //! to the generic enum value.
+    inline bool equivalent(enum WG14_RESULT_PREFIX(status_code_errc)
+                           errc) const noexcept;
+  };
+}  // namespace wg14_result
+#define WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(...)      \
+  {__VA_ARGS__}
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+#else
+#define WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(...)      \
+  __VA_ARGS__
 #endif
 
 #endif

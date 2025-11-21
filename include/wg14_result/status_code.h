@@ -35,137 +35,66 @@ extern "C"
 //! \brief The type of a status code with named payload. You must call
 //! `STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)` first.
 #define STATUS_CODE_WITH_PAYLOAD(name)                                         \
-  struct WG14_RESULT_PREFIX(status_code_with_payload_##name)
-  /* \brief Declare a status code with payload of type `T` named `name`.
-
-  Before you do this there needs to be a `static constexpr` variable declared
-  called `name_domain`, otherwise the code emitted by this macro won't compile.
-  */
-#define STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)                              \
-  struct WG14_RESULT_PREFIX(status_code_with_payload_##name)                   \
+  WG14_RESULT_PREFIX(status_code_with_payload_##name)
+#define STATUS_CODE_WITH_PAYLOAD_DECLARE_IMPL1(T, name)                        \
+  struct WG14_RESULT_PREFIX(status_code_with_payload_##name##_s)               \
   {                                                                            \
     WG14_RESULT_PREFIX(status_code_untyped) base;                              \
-    T value;                                                                   \
-  };                                                                           \
-  WG14_RESULT_INLINE struct WG14_RESULT_PREFIX(                                \
-  status_code_with_payload_##name)                                             \
+    T value
+#define STATUS_CODE_WITH_PAYLOAD_DECLARE_IMPL2(T, name)                        \
+  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_with_payload_##name)       \
   WG14_RESULT_PREFIX(status_code_with_payload_##name##_make)(T val)            \
   {                                                                            \
-    struct WG14_RESULT_PREFIX(status_code_with_payload_##name)                 \
-    ret = {{&name##_domain}, val};                                             \
+    WG14_RESULT_PREFIX(status_code_with_payload_##name)                        \
+    ret = {WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(       \
+    {&name##_domain}, val)};                                                   \
+    return ret;                                                                \
+  }                                                                            \
+  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_with_payload_##name)       \
+  WG14_RESULT_PREFIX(status_code_with_payload_##name##_make_empty)(void)       \
+  {                                                                            \
+    WG14_RESULT_PREFIX(status_code_with_payload_##name) ret;                   \
+    WG14_RESULT_NOT_CXX_MEMSET(&ret, 0, sizeof(ret));                          \
     return ret;                                                                \
   }
+  /* \brief Declare a status code with payload of type `T` named `name`.
+
+  Before you do this there needs to be a `static constexpr` variable
+  declared called `name_domain`, otherwise the code emitted by this macro
+  won't compile.
+  */
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+#define STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)                              \
+  STATUS_CODE_WITH_PAYLOAD_DECLARE_IMPL1(T, name);                             \
+  }                                                                            \
+  ;                                                                            \
+  struct WG14_RESULT_PREFIX(status_code_with_payload_##name)                   \
+      : wg14_result::WG14_RESULT_PREFIX(status_code_special_member_functions)< \
+        WG14_RESULT_PREFIX(status_code_with_payload_##name##_s)>               \
+  {                                                                            \
+    using wg14_result::WG14_RESULT_PREFIX(                                     \
+    status_code_special_member_functions)<                                     \
+    WG14_RESULT_PREFIX(status_code_with_payload_##name##_s)>::                 \
+    WG14_RESULT_PREFIX(status_code_special_member_functions);                  \
+  };                                                                           \
+  STATUS_CODE_WITH_PAYLOAD_DECLARE_IMPL2(T, name)
+#else
+#define STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)                              \
+  STATUS_CODE_WITH_PAYLOAD_DECLARE_IMPL1(T, name);                             \
+  }                                                                            \
+  ;                                                                            \
+  typedef struct WG14_RESULT_PREFIX(status_code_with_payload_##name##_s)       \
+  WG14_RESULT_PREFIX(status_code_with_payload_##name);                         \
+  STATUS_CODE_WITH_PAYLOAD_DECLARE_IMPL2(T, name)
+#endif
+
 //! \brief Make a named status code previously declared.
 #define STATUS_CODE_WITH_PAYLOAD_MAKE(name, ...)                               \
   WG14_RESULT_PREFIX(status_code_with_payload_##name##_make)(__VA_ARGS__)
 
-  //! \brief True if the status code is empty (implementation)
-  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_empty)(
-  const WG14_RESULT_PREFIX(status_code_untyped) * r)
-  {
-    return r->domain == WG14_RESULT_NULLPTR;
-  }
-
-  //! \brief True if the status code is a success (implementation)
-  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_success)(
-  const WG14_RESULT_PREFIX(status_code_untyped) * r)
-  {
-    return (r->domain != WG14_RESULT_NULLPTR) ?
-           !WG14_RESULT_VTABLE_INVOKE_API(r->domain, failure, r) :
-           false;
-  }
-
-  //! \brief True if the status code is a failure (implementation)
-  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_failure)(
-  const WG14_RESULT_PREFIX(status_code_untyped) * r)
-  {
-    return (r->domain != WG14_RESULT_NULLPTR) ?
-           WG14_RESULT_VTABLE_INVOKE_API(r->domain, failure, r) :
-           false;
-  }
-
-  //! \brief Retrieves the message of the status code (implementation). Make
-  //! sure you call `status_code_domain_string_ref_destroy()` when you are done
-  //! with the returned string reference.
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
-  WG14_RESULT_PREFIX(status_code_message)(
-  const WG14_RESULT_PREFIX(status_code_untyped) * r)
-  {
-    if(r->domain != WG14_RESULT_NULLPTR)
-    {
-      struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args) args;
-      memset(&args, 0, sizeof(args));
-      args.code = r;
-      const int errcode =
-      WG14_RESULT_VTABLE_INVOKE_API(r->domain, message, &args);
-      if(errcode == 0)
-      {
-        return args.ret;
-      }
-      WG14_RESULT_ABORTF("status_code_message failed with %d (%s)", errcode,
-                         strerror(errcode));
-    }
-    return WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string)(
-    "(empty)");
-  }
-
-  //! \brief True if the status codes are strictly semantically equivalent
-  //! (implementation). `primary`'s domain's equivalence function decides if
-  //! `secondary` is semantically equivalent to it. Note that for most status
-  //! codes, if the codes have the same domain, a pure value equality is
-  //! performed. This operation may not be transitive.
-  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_strictly_equivalent)(
-  const WG14_RESULT_PREFIX(status_code_untyped) * primary,
-  const WG14_RESULT_PREFIX(status_code_untyped) * secondary)
-  {
-    if(primary->domain != WG14_RESULT_NULLPTR &&
-       secondary->domain != WG14_RESULT_NULLPTR)
-    {
-      return WG14_RESULT_VTABLE_INVOKE_API(primary->domain, equivalent, primary,
-                                           secondary);
-    }
-    // If we are both empty, we are equivalent
-    if(WG14_RESULT_NULLPTR == primary->domain &&
-       WG14_RESULT_NULLPTR == secondary->domain)
-    {
-      return true;  // NOLINT
-    }
-    // Otherwise not equivalent
-    return false;
-  }
-
-  //! \brief Destroys the status code (erased)
-  WG14_RESULT_INLINE void WG14_RESULT_PREFIX(status_code_erased_destroy)(
-  WG14_RESULT_PREFIX(status_code_untyped) * r)
-  {
-    if(r->domain != WG14_RESULT_NULLPTR &&
-       r->domain->vptr->erased_destroy != WG14_RESULT_NULLPTR)
-    {
-      struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args)
-      args;
-      memset(&args, 0, sizeof(args));
-      args.domain = r->domain;
-      WG14_RESULT_VTABLE_INVOKE_API(r->domain, payload_info, &args);
-      WG14_RESULT_VTABLE_INVOKE_API(r->domain, erased_destroy, r, args.ret);
-      r->domain = WG14_RESULT_NULLPTR;
-    }
-  }
-
-  //! \brief Clones the status code (erased), returning an `errno` value
-  //! if failed.
-  WG14_RESULT_INLINE int WG14_RESULT_PREFIX(status_code_erased_clone)(
-  WG14_RESULT_PREFIX(status_code_untyped) * dest,
-  const WG14_RESULT_PREFIX(status_code_untyped) * src,
-  WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo)
-  {
-    WG14_RESULT_PREFIX(status_code_erased_destroy)(dest);
-    if(src->domain != WG14_RESULT_NULLPTR)
-    {
-      return WG14_RESULT_VTABLE_INVOKE_API(src->domain, erased_copy, dest, src,
-                                           dstinfo);
-    }
-    return 0;
-  }
+//! \brief Make an empty named status code previously declared.
+#define STATUS_CODE_WITH_PAYLOAD_MAKE_EMPTY(name)                              \
+  WG14_RESULT_PREFIX(status_code_with_payload_##name##_make_empty)()
 
 
 #ifndef WG14_RESULT_DISABLE_CONVENIENCE_MACROS

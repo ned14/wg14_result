@@ -2,6 +2,7 @@
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wunused-function"
+#pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
 #include "wg14_result/result.h"
@@ -25,7 +26,7 @@ WG14_RESULT_DECLARE(int, int)
 typedef WG14_RESULT(int) result_int;
 WG14_RESULT_DECLARE(bool, bool)
 typedef WG14_RESULT(bool) result_bool;
-typedef struct WG14_RESULT_PREFIX(result_with_void) result_void;
+typedef WG14_RESULT_PREFIX(result_with_void) result_void;
 
 result_int test1(int x)
 {

@@ -23,6 +23,19 @@ also include their source files. If so:
 as the library source code needs minimum C 11.
     - If a C++ compiler is being used, the minimum requirement for the headers
 is raised to C++ 20 as previous C++ standards don't implement enough of C 11.
+- Comes with _optional_ C++ extensions where the standard member functions for
+the types (i.e. default, copy, move, destruct) call the C free functions which
+implement those operations. This means that if you are using this library from
+C++, or using this library via language bindings generated from the C++,
+lifetime management is taken care of for you.
+- Language bindings are provided for:
+    - Rust (`bindings/rust`) via Rust FFI bindgen.
+    - SWIG
+        - Python (`bindings/SWIG/python`)
+        - Other languages SWIG supports should be trivial to add: C#, D, Go,
+Guile, Java, Javascript, Lua, OCaml, Octave, Perl, PHP, R, Ruby, Scilab,
+Tcl/Tk. And FORTRAN via a special fork of SWIG.
+
 
 ## Example of use
 

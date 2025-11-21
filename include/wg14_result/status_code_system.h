@@ -27,19 +27,43 @@ limitations under the License.
 #ifdef __cplusplus
 extern "C"
 {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4190)  // C linkage
+#pragma warning(disable : 4996)  // use strerror_s instead
+#endif
 #endif
 
-  //! \brief A `status_code` guaranteed to be able to hold any system error code
-  //! in full. The payload is always an `intptr_t`.
-  typedef struct WG14_RESULT_PREFIX(status_code_system_s)
+  struct WG14_RESULT_PREFIX(status_code_system_s)
   {
     WG14_RESULT_PREFIX(status_code_untyped) base;
-    intptr_t value;
-  } WG14_RESULT_PREFIX(status_code_system);
+    intptr_t value
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+    {}
+#endif
+    ;
+  };
+  //! \brief A `status_code` guaranteed to be able to hold any system error code
+  //! in full. The payload is always an `intptr_t`.
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+  struct WG14_RESULT_PREFIX(status_code_system)
+      : wg14_result::WG14_RESULT_PREFIX(status_code_special_member_functions)<
+        struct WG14_RESULT_PREFIX(status_code_system_s)>
+  {
+    using wg14_result::WG14_RESULT_PREFIX(status_code_special_member_functions)<
+    struct WG14_RESULT_PREFIX(status_code_system_s)>::
+    WG14_RESULT_PREFIX(status_code_special_member_functions);
+  };
+#else
+typedef struct WG14_RESULT_PREFIX(status_code_system_s)
+WG14_RESULT_PREFIX(status_code_system);
+#endif
 
   //| \brief An empty `status_code_system`
   static WG14_RESULT_CONSTEXPR_OR_CONST WG14_RESULT_PREFIX(status_code_system)
-  WG14_RESULT_PREFIX(status_code_system_empty) = {{WG14_RESULT_NULLPTR}, 0};
+  WG14_RESULT_PREFIX(status_code_system_empty) = {
+  WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(
+  {WG14_RESULT_NULLPTR}, 0)};
 
   //! \brief Make a system code from an untyped input status code, this will
   //! fail if the input status cannot fit into a system code or if alignment
@@ -53,19 +77,19 @@ extern "C"
     ret;
     if(dstinfo.total_size > sizeof(ret))
     {
-      WG14_RESULT_ABORTF(
-      "status_code_with_payload_system_make cannot make a system code sized "
-      "%zu from an input status code sized %zu.",
-      sizeof(ret), dstinfo.total_size);
+      WG14_RESULT_ABORTF("status_code_with_payload_system_make cannot make "
+                         "a system code sized "
+                         "%zu from an input status code sized %zu.",
+                         sizeof(ret), dstinfo.total_size);
     }
     if(dstinfo.total_alignment > __alignof(ret))
     {
-      WG14_RESULT_ABORTF(
-      "status_code_with_payload_system_make cannot make a system code aligned "
-      "%zu from an input status code aligned %zu.",
-      __alignof(ret), dstinfo.total_alignment);
+      WG14_RESULT_ABORTF("status_code_with_payload_system_make cannot make "
+                         "a system code aligned "
+                         "%zu from an input status code aligned %zu.",
+                         __alignof(ret), dstinfo.total_alignment);
     }
-    memcpy(&ret, src, dstinfo.total_size);
+    memcpy(&ret.base, src, dstinfo.total_size);
     return ret;
   }
 
@@ -74,10 +98,14 @@ extern "C"
   WG14_RESULT_PREFIX(status_code_system_make_from_errc)(
   enum WG14_RESULT_PREFIX(status_code_errc) errc)
   {
-    const union
+    const union punner
     {
       WG14_RESULT_PREFIX(status_code_generic) gen;
       WG14_RESULT_PREFIX(status_code_system) sys;
+
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+      ~punner() {}
+#endif
     } ret = {WG14_RESULT_PREFIX(status_code_generic_make)(errc)};
     return ret.sys;
   }
@@ -107,7 +135,73 @@ extern "C"
 #endif
 
 #ifdef __cplusplus
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 }
+#endif
+
+// This annoyingly must be here to please SWIG
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+#include <new>
+
+namespace wg14_result
+{
+  template <class StorageType>
+  struct wg14_result_special_member_functions : StorageType
+  {
+    wg14_result_special_member_functions() = default;
+    wg14_result_special_member_functions(
+    const wg14_result_special_member_functions &) = default;
+    wg14_result_special_member_functions(
+    wg14_result_special_member_functions &&) = default;
+    wg14_result_special_member_functions &
+    operator=(const wg14_result_special_member_functions &) = default;
+    wg14_result_special_member_functions &
+    operator=(wg14_result_special_member_functions &&) = default;
+    ~wg14_result_special_member_functions() = default;
+
+    constexpr wg14_result_special_member_functions(const StorageType &o)
+        : StorageType(o)
+    {
+    }
+    constexpr wg14_result_special_member_functions(StorageType &&o)
+        : StorageType(static_cast<StorageType &&>(o))
+    {
+    }
+
+    //! \brief Permits boolean testing for success.
+    constexpr explicit operator bool() const noexcept { return has_value(); }
+    //! \brief Returns true if the result is successful.
+    constexpr bool has_value() const noexcept
+    {
+      return this->_flags_.have_value();
+    }
+    //! \brief Returns true if the result has failed with an error.
+    constexpr bool has_error() const noexcept
+    {
+      return this->_flags_.have_error();
+    }
+    //! \brief Returns true if the result has failed with a C++ exception.
+    constexpr bool has_exception() const noexcept
+    {
+      return this->_flags_.have_exception();
+    }
+    //! \brief Returns true if the result has failed in any way.
+    constexpr bool has_failure() const noexcept
+    {
+      return has_error() || has_exception();
+    }
+    //! \brief Returns true if the result has lost internal consistency.
+    constexpr bool has_lost_consistency() const noexcept
+    {
+      return this->_flags_.have_lost_consistency();
+    }
+  };
+}  // namespace wg14_result
+#define WG14_RESULT_SPECIAL_MEMBER_FUNCTIONS_INITIALISER {},
+#else
+#define WG14_RESULT_SPECIAL_MEMBER_FUNCTIONS_INITIALISER
 #endif
 
 #endif

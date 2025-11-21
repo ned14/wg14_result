@@ -3154,18 +3154,24 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_p_void swig_types[3]
 #define SWIGTYPE_p_result_flags swig_types[4]
 #define SWIGTYPE_p_result_with_void swig_types[5]
-#define SWIGTYPE_p_status_code_domain_payload_info_t swig_types[6]
-#define SWIGTYPE_p_status_code_domain_s swig_types[7]
-#define SWIGTYPE_p_status_code_domain_string_ref_s swig_types[8]
-#define SWIGTYPE_p_status_code_domain_string_ref_thunk_args_s swig_types[9]
-#define SWIGTYPE_p_status_code_domain_vtable_s swig_types[10]
-#define SWIGTYPE_p_status_code_generic_s swig_types[11]
-#define SWIGTYPE_p_status_code_posix_s swig_types[12]
-#define SWIGTYPE_p_status_code_system_s swig_types[13]
-#define SWIGTYPE_p_status_code_untyped swig_types[14]
-#define SWIGTYPE_p_unsigned_long_long swig_types[15]
-static swig_type_info *swig_types[17];
-static swig_module_info swig_module = {swig_types, 16, 0, 0, 0, 0};
+#define SWIGTYPE_p_result_with_void_s swig_types[6]
+#define SWIGTYPE_p_status_code_domain_payload_info_t swig_types[7]
+#define SWIGTYPE_p_status_code_domain_s swig_types[8]
+#define SWIGTYPE_p_status_code_domain_string_ref_s swig_types[9]
+#define SWIGTYPE_p_status_code_domain_string_ref_thunk_args_s swig_types[10]
+#define SWIGTYPE_p_status_code_domain_vtable_s swig_types[11]
+#define SWIGTYPE_p_status_code_generic swig_types[12]
+#define SWIGTYPE_p_status_code_generic_s swig_types[13]
+#define SWIGTYPE_p_status_code_posix swig_types[14]
+#define SWIGTYPE_p_status_code_posix_s swig_types[15]
+#define SWIGTYPE_p_status_code_system swig_types[16]
+#define SWIGTYPE_p_status_code_system_s swig_types[17]
+#define SWIGTYPE_p_status_code_untyped swig_types[18]
+#define SWIGTYPE_p_unsigned_long_long swig_types[19]
+#define SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t swig_types[20]
+#define SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t swig_types[21]
+static swig_type_info *swig_types[23];
+static swig_module_info swig_module = {swig_types, 22, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3456,6 +3462,9 @@ SWIG_FromCharPtr(const char *cptr)
 { 
   return SWIG_FromCharPtrAndSize(cptr, (cptr ? strlen(cptr) : 0));
 }
+
+
+#include <memory>
 
 
 SWIGINTERNINLINE PyObject*
@@ -4019,17 +4028,177 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_status_code_domain_string_ref_s(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_status_code_domain_string_ref_s__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   status_code_domain_string_ref_s *result = 0 ;
   
   (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "new_status_code_domain_string_ref_s", 0, 0, 0)) SWIG_fail;
+  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
   result = (status_code_domain_string_ref_s *)new status_code_domain_string_ref_s();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_domain_string_ref_s, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_status_code_domain_string_ref_s__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  SwigValueWrapper< std::initializer_list< void * > > arg3 ;
+  status_code_domain_string_ref_thunk_spec arg4 = (status_code_domain_string_ref_thunk_spec) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  status_code_domain_string_ref_s *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_status_code_domain_string_ref_s" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = reinterpret_cast< char * >(buf1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_status_code_domain_string_ref_s" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  
+  {
+    int res = SWIG_ConvertFunctionPtr(swig_obj[3], (void**)(&arg4), SWIGTYPE_p_f_p_q_const__status_code_domain_string_ref_thunk_args_s__int);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "new_status_code_domain_string_ref_s" "', argument " "4"" of type '" "status_code_domain_string_ref_thunk_spec""'"); 
+    }
+  }
+  result = (status_code_domain_string_ref_s *)new status_code_domain_string_ref_s((char const *)arg1,(char const *)arg2,arg3,arg4);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_domain_string_ref_s, SWIG_POINTER_NEW |  0 );
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_status_code_domain_string_ref_s__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  status_code_domain_string_ref_s *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  status_code_domain_string_ref_s *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_status_code_domain_string_ref_s,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_status_code_domain_string_ref_s" "', argument " "1"" of type '" "status_code_domain_string_ref_s const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_status_code_domain_string_ref_s" "', argument " "1"" of type '" "status_code_domain_string_ref_s const &""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_domain_string_ref_s * >(argp1);
+  result = (status_code_domain_string_ref_s *)new status_code_domain_string_ref_s((status_code_domain_string_ref_s const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_domain_string_ref_s, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_status_code_domain_string_ref_s__SWIG_3(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  status_code_domain_string_ref_s *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::unique_ptr< status_code_domain_string_ref_s > rvrdeleter1 ;
+  status_code_domain_string_ref_s *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_status_code_domain_string_ref_s, SWIG_POINTER_RELEASE |  0 );
+  if (!SWIG_IsOK(res1)) {
+    if (res1 == SWIG_ERROR_RELEASE_NOT_OWNED) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_status_code_domain_string_ref_s" "', cannot release ownership as memory is not owned for argument " "1"" of type '" "status_code_domain_string_ref_s &&""'");
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_status_code_domain_string_ref_s" "', argument " "1"" of type '" "status_code_domain_string_ref_s &&""'"); 
+    }
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_status_code_domain_string_ref_s" "', argument " "1"" of type '" "status_code_domain_string_ref_s &&""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_domain_string_ref_s * >(argp1);
+  rvrdeleter1.reset(arg1);
+  result = (status_code_domain_string_ref_s *)new status_code_domain_string_ref_s((status_code_domain_string_ref_s &&)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_domain_string_ref_s, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_status_code_domain_string_ref_s(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[5] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_status_code_domain_string_ref_s", 0, 4, argv))) SWIG_fail;
+  --argc;
+  if (argc == 0) {
+    return _wrap_new_status_code_domain_string_ref_s__SWIG_0(self, argc, argv);
+  }
+  if (argc == 1) {
+    int _v = 0;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_status_code_domain_string_ref_s, SWIG_POINTER_NO_NULL | 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_status_code_domain_string_ref_s__SWIG_2(self, argc, argv);
+    }
+  }
+  if (argc == 1) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_status_code_domain_string_ref_s, SWIG_POINTER_NO_NULL);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_status_code_domain_string_ref_s__SWIG_3(self, argc, argv);
+    }
+  }
+  if (argc == 4) {
+    int _v = 0;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsCharPtrAndSize(argv[1], 0, NULL, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_ConvertFunctionPtr(argv[3], &ptr, SWIGTYPE_p_f_p_q_const__status_code_domain_string_ref_thunk_args_s__int);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_new_status_code_domain_string_ref_s__SWIG_1(self, argc, argv);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_status_code_domain_string_ref_s'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    status_code_domain_string_ref_s::status_code_domain_string_ref_s()\n"
+    "    status_code_domain_string_ref_s::status_code_domain_string_ref_s(char const *,char const *,std::initializer_list< void * >,status_code_domain_string_ref_thunk_spec)\n"
+    "    status_code_domain_string_ref_s::status_code_domain_string_ref_s(status_code_domain_string_ref_s const &)\n"
+    "    status_code_domain_string_ref_s::status_code_domain_string_ref_s(status_code_domain_string_ref_s &&)\n");
+  return 0;
 }
 
 
@@ -4050,6 +4219,30 @@ SWIGINTERN PyObject *_wrap_delete_status_code_domain_string_ref_s(PyObject *self
   arg1 = reinterpret_cast< status_code_domain_string_ref_s * >(argp1);
   delete arg1;
   resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_domain_string_ref_s_empty(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_domain_string_ref_s *arg1 = (status_code_domain_string_ref_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_domain_string_ref_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_domain_string_ref_s_empty" "', argument " "1"" of type '" "status_code_domain_string_ref_s const *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_domain_string_ref_s * >(argp1);
+  result = (bool)((status_code_domain_string_ref_s const *)arg1)->empty();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -4740,6 +4933,62 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_new_status_code_domain_s__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  status_code_domain_s *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  status_code_domain_s *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_status_code_domain_s,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_status_code_domain_s" "', argument " "1"" of type '" "status_code_domain_s const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_status_code_domain_s" "', argument " "1"" of type '" "status_code_domain_s const &""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_domain_s * >(argp1);
+  result = (status_code_domain_s *)new status_code_domain_s((status_code_domain_s const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_domain_s, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_status_code_domain_s__SWIG_3(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  status_code_domain_s *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::unique_ptr< status_code_domain_s > rvrdeleter1 ;
+  status_code_domain_s *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_status_code_domain_s, SWIG_POINTER_RELEASE |  0 );
+  if (!SWIG_IsOK(res1)) {
+    if (res1 == SWIG_ERROR_RELEASE_NOT_OWNED) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_status_code_domain_s" "', cannot release ownership as memory is not owned for argument " "1"" of type '" "status_code_domain_s &&""'");
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_status_code_domain_s" "', argument " "1"" of type '" "status_code_domain_s &&""'"); 
+    }
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_status_code_domain_s" "', argument " "1"" of type '" "status_code_domain_s &&""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_domain_s * >(argp1);
+  rvrdeleter1.reset(arg1);
+  result = (status_code_domain_s *)new status_code_domain_s((status_code_domain_s &&)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_domain_s, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_new_status_code_domain_s(PyObject *self, PyObject *args) {
   Py_ssize_t argc;
   PyObject *argv[3] = {
@@ -4750,6 +4999,23 @@ SWIGINTERN PyObject *_wrap_new_status_code_domain_s(PyObject *self, PyObject *ar
   --argc;
   if (argc == 0) {
     return _wrap_new_status_code_domain_s__SWIG_0(self, argc, argv);
+  }
+  if (argc == 1) {
+    int _v = 0;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_status_code_domain_s, SWIG_POINTER_NO_NULL | 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_status_code_domain_s__SWIG_2(self, argc, argv);
+    }
+  }
+  if (argc == 1) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_status_code_domain_s, SWIG_POINTER_NO_NULL);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_status_code_domain_s__SWIG_3(self, argc, argv);
+    }
   }
   if (argc == 2) {
     int _v = 0;
@@ -4771,7 +5037,9 @@ fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_status_code_domain_s'.\n"
     "  Possible C/C++ prototypes are:\n"
     "    status_code_domain_s::status_code_domain_s()\n"
-    "    status_code_domain_s::status_code_domain_s(status_code_domain_vtable *const,status_code_domain_unique_id_type const)\n");
+    "    status_code_domain_s::status_code_domain_s(status_code_domain_vtable *const,status_code_domain_unique_id_type const)\n"
+    "    status_code_domain_s::status_code_domain_s(status_code_domain_s const &)\n"
+    "    status_code_domain_s::status_code_domain_s(status_code_domain_s &&)\n");
   return 0;
 }
 
@@ -4793,6 +5061,54 @@ SWIGINTERN PyObject *_wrap_delete_status_code_domain_s(PyObject *self, PyObject 
   arg1 = reinterpret_cast< status_code_domain_s * >(argp1);
   delete arg1;
   resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_domain_s_name(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_domain_s *arg1 = (status_code_domain_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  status_code_domain_string_ref result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_domain_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_domain_s_name" "', argument " "1"" of type '" "status_code_domain_s const *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_domain_s * >(argp1);
+  result = ((status_code_domain_s const *)arg1)->name();
+  resultobj = SWIG_NewPointerObj((new status_code_domain_string_ref(result)), SWIGTYPE_p_status_code_domain_string_ref_s, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_domain_s_payload_info(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_domain_s *arg1 = (status_code_domain_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  status_code_domain_payload_info_t result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_domain_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_domain_s_payload_info" "', argument " "1"" of type '" "status_code_domain_s const *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_domain_s * >(argp1);
+  result = ((status_code_domain_s const *)arg1)->payload_info();
+  resultobj = SWIG_NewPointerObj((new status_code_domain_payload_info_t(result)), SWIGTYPE_p_status_code_domain_payload_info_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -4879,697 +5195,6 @@ SWIGINTERN PyObject *_wrap_status_code_domain_payload_info(PyObject *self, PyObj
   arg1 = reinterpret_cast< status_code_domain * >(argp1);
   result = status_code_domain_payload_info((status_code_domain_s const *)arg1);
   resultobj = SWIG_NewPointerObj((new status_code_domain_payload_info_t(result)), SWIGTYPE_p_status_code_domain_payload_info_t, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_generic_domain(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_domain *result = 0 ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "status_code_generic_domain", 0, 0, 0)) SWIG_fail;
-  result = (status_code_domain *)status_code_generic_domain();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_domain_s, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_generic_base_set(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_generic_s *arg1 = (status_code_generic_s *) 0 ;
-  status_code_untyped *arg2 = (status_code_untyped *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "status_code_generic_base_set", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_generic_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_generic_base_set" "', argument " "1"" of type '" "status_code_generic_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_status_code_untyped, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_generic_base_set" "', argument " "2"" of type '" "status_code_untyped *""'"); 
-  }
-  arg2 = reinterpret_cast< status_code_untyped * >(argp2);
-  if (arg1) (arg1)->base = *arg2;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_generic_base_get(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_generic_s *arg1 = (status_code_generic_s *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  status_code_untyped *result = 0 ;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_generic_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_generic_base_get" "', argument " "1"" of type '" "status_code_generic_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
-  result = (status_code_untyped *)& ((arg1)->base);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_untyped, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_generic_value_set(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_generic_s *arg1 = (status_code_generic_s *) 0 ;
-  enum status_code_errc arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject *swig_obj[2] ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "status_code_generic_value_set", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_generic_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_generic_value_set" "', argument " "1"" of type '" "status_code_generic_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
-  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "status_code_generic_value_set" "', argument " "2"" of type '" "enum status_code_errc""'");
-  } 
-  arg2 = static_cast< enum status_code_errc >(val2);
-  if (arg1) (arg1)->value = arg2;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_generic_value_get(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_generic_s *arg1 = (status_code_generic_s *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  enum status_code_errc result;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_generic_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_generic_value_get" "', argument " "1"" of type '" "status_code_generic_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
-  result = (enum status_code_errc) ((arg1)->value);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_status_code_generic(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_generic_s *result = 0 ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "new_status_code_generic", 0, 0, 0)) SWIG_fail;
-  result = (status_code_generic_s *)new status_code_generic_s();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_generic_s, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_status_code_generic(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_generic_s *arg1 = (status_code_generic_s *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_generic_s, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_status_code_generic" "', argument " "1"" of type '" "status_code_generic_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
-  delete arg1;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *status_code_generic_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_status_code_generic_s, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *status_code_generic_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  return SWIG_Python_InitShadowInstance(args);
-}
-
-SWIGINTERN PyObject *_wrap_status_code_generic_make(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  enum status_code_errc arg1 ;
-  int val1 ;
-  int ecode1 = 0 ;
-  PyObject *swig_obj[1] ;
-  status_code_generic result;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "status_code_generic_make" "', argument " "1"" of type '" "enum status_code_errc""'");
-  } 
-  arg1 = static_cast< enum status_code_errc >(val1);
-  result = status_code_generic_make(arg1);
-  resultobj = SWIG_NewPointerObj((new status_code_generic(result)), SWIGTYPE_p_status_code_generic_s, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_equivalent(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_untyped *arg1 = (status_code_untyped *) 0 ;
-  status_code_untyped *arg2 = (status_code_untyped *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  bool result;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "status_code_equivalent", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_untyped, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_equivalent" "', argument " "1"" of type '" "status_code_untyped const *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_untyped * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_status_code_untyped, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_equivalent" "', argument " "2"" of type '" "status_code_untyped const *""'"); 
-  }
-  arg2 = reinterpret_cast< status_code_untyped * >(argp2);
-  result = (bool)status_code_equivalent((status_code_untyped const *)arg1,(status_code_untyped const *)arg2);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_equivalent_errc(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_untyped *arg1 = (status_code_untyped *) 0 ;
-  enum status_code_errc arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject *swig_obj[2] ;
-  bool result;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "status_code_equivalent_errc", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_untyped, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_equivalent_errc" "', argument " "1"" of type '" "status_code_untyped const *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_untyped * >(argp1);
-  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "status_code_equivalent_errc" "', argument " "2"" of type '" "enum status_code_errc""'");
-  } 
-  arg2 = static_cast< enum status_code_errc >(val2);
-  result = (bool)status_code_equivalent_errc((status_code_untyped const *)arg1,arg2);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_system_base_set(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_system_s *arg1 = (status_code_system_s *) 0 ;
-  status_code_untyped *arg2 = (status_code_untyped *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "status_code_system_base_set", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_system_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_system_base_set" "', argument " "1"" of type '" "status_code_system_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_system_s * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_status_code_untyped, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_system_base_set" "', argument " "2"" of type '" "status_code_untyped *""'"); 
-  }
-  arg2 = reinterpret_cast< status_code_untyped * >(argp2);
-  if (arg1) (arg1)->base = *arg2;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_system_base_get(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_system_s *arg1 = (status_code_system_s *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  status_code_untyped *result = 0 ;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_system_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_system_base_get" "', argument " "1"" of type '" "status_code_system_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_system_s * >(argp1);
-  result = (status_code_untyped *)& ((arg1)->base);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_untyped, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_system_value_set(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_system_s *arg1 = (status_code_system_s *) 0 ;
-  intptr_t arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "status_code_system_value_set", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_system_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_system_value_set" "', argument " "1"" of type '" "status_code_system_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_system_s * >(argp1);
-  {
-    res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_intptr_t,  0  | 0);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_system_value_set" "', argument " "2"" of type '" "intptr_t""'"); 
-    }  
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "status_code_system_value_set" "', argument " "2"" of type '" "intptr_t""'");
-    } else {
-      intptr_t * temp = reinterpret_cast< intptr_t * >(argp2);
-      arg2 = *temp;
-      if (SWIG_IsNewObj(res2)) delete temp;
-    }
-  }
-  if (arg1) (arg1)->value = arg2;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_system_value_get(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_system_s *arg1 = (status_code_system_s *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  intptr_t result;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_system_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_system_value_get" "', argument " "1"" of type '" "status_code_system_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_system_s * >(argp1);
-  result =  ((arg1)->value);
-  resultobj = SWIG_NewPointerObj((new intptr_t(result)), SWIGTYPE_p_intptr_t, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_status_code_system(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_system_s *result = 0 ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "new_status_code_system", 0, 0, 0)) SWIG_fail;
-  result = (status_code_system_s *)new status_code_system_s();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_system_s, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_status_code_system(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_system_s *arg1 = (status_code_system_s *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_system_s, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_status_code_system" "', argument " "1"" of type '" "status_code_system_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_system_s * >(argp1);
-  delete arg1;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *status_code_system_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_status_code_system_s, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *status_code_system_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  return SWIG_Python_InitShadowInstance(args);
-}
-
-SWIGINTERN int Swig_var_status_code_system_empty_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable status_code_system_empty is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *Swig_var_status_code_system_empty_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(&status_code_system_empty), SWIGTYPE_p_status_code_system_s,  0 );
-  return pyobj;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_system_make(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_untyped *arg1 = (status_code_untyped *) 0 ;
-  status_code_domain_payload_info_t arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  status_code_system result;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "status_code_system_make", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_untyped, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_system_make" "', argument " "1"" of type '" "status_code_untyped const *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_untyped * >(argp1);
-  {
-    res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_status_code_domain_payload_info_t,  0  | 0);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_system_make" "', argument " "2"" of type '" "status_code_domain_payload_info_t""'"); 
-    }  
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "status_code_system_make" "', argument " "2"" of type '" "status_code_domain_payload_info_t""'");
-    } else {
-      status_code_domain_payload_info_t * temp = reinterpret_cast< status_code_domain_payload_info_t * >(argp2);
-      arg2 = *temp;
-      if (SWIG_IsNewObj(res2)) delete temp;
-    }
-  }
-  result = status_code_system_make((status_code_untyped const *)arg1,SWIG_STD_MOVE(arg2));
-  resultobj = SWIG_NewPointerObj((new status_code_system(result)), SWIGTYPE_p_status_code_system_s, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_system_make_from_errc(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  enum status_code_errc arg1 ;
-  int val1 ;
-  int ecode1 = 0 ;
-  PyObject *swig_obj[1] ;
-  status_code_system result;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "status_code_system_make_from_errc" "', argument " "1"" of type '" "enum status_code_errc""'");
-  } 
-  arg1 = static_cast< enum status_code_errc >(val1);
-  result = status_code_system_make_from_errc(arg1);
-  resultobj = SWIG_NewPointerObj((new status_code_system(result)), SWIGTYPE_p_status_code_system_s, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_posix_domain(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_domain *result = 0 ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "status_code_posix_domain", 0, 0, 0)) SWIG_fail;
-  result = (status_code_domain *)status_code_posix_domain();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_domain_s, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_posix_base_set(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_posix_s *arg1 = (status_code_posix_s *) 0 ;
-  status_code_untyped *arg2 = (status_code_untyped *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "status_code_posix_base_set", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_posix_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_posix_base_set" "', argument " "1"" of type '" "status_code_posix_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_posix_s * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_status_code_untyped, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_posix_base_set" "', argument " "2"" of type '" "status_code_untyped *""'"); 
-  }
-  arg2 = reinterpret_cast< status_code_untyped * >(argp2);
-  if (arg1) (arg1)->base = *arg2;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_posix_base_get(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_posix_s *arg1 = (status_code_posix_s *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  status_code_untyped *result = 0 ;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_posix_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_posix_base_get" "', argument " "1"" of type '" "status_code_posix_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_posix_s * >(argp1);
-  result = (status_code_untyped *)& ((arg1)->base);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_untyped, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_posix_value_set(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_posix_s *arg1 = (status_code_posix_s *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject *swig_obj[2] ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "status_code_posix_value_set", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_posix_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_posix_value_set" "', argument " "1"" of type '" "status_code_posix_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_posix_s * >(argp1);
-  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "status_code_posix_value_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->value = arg2;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_status_code_posix_value_get(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_posix_s *arg1 = (status_code_posix_s *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  int result;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_posix_s, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_posix_value_get" "', argument " "1"" of type '" "status_code_posix_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_posix_s * >(argp1);
-  result = (int) ((arg1)->value);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_status_code_posix(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_posix_s *result = 0 ;
-  
-  (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "new_status_code_posix", 0, 0, 0)) SWIG_fail;
-  result = (status_code_posix_s *)new status_code_posix_s();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_posix_s, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_status_code_posix(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  status_code_posix_s *arg1 = (status_code_posix_s *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_posix_s, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_status_code_posix" "', argument " "1"" of type '" "status_code_posix_s *""'"); 
-  }
-  arg1 = reinterpret_cast< status_code_posix_s * >(argp1);
-  delete arg1;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *status_code_posix_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_status_code_posix_s, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *status_code_posix_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  return SWIG_Python_InitShadowInstance(args);
-}
-
-SWIGINTERN PyObject *_wrap_status_code_posix_make(PyObject *self, PyObject *args) {
-  PyObject *resultobj = 0;
-  int arg1 ;
-  int val1 ;
-  int ecode1 = 0 ;
-  PyObject *swig_obj[1] ;
-  status_code_posix result;
-  
-  (void)self;
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "status_code_posix_make" "', argument " "1"" of type '" "int""'");
-  } 
-  arg1 = static_cast< int >(val1);
-  result = status_code_posix_make(arg1);
-  resultobj = SWIG_NewPointerObj((new status_code_posix(result)), SWIGTYPE_p_status_code_posix_s, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -5773,6 +5398,1586 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_new_wg14_result_status_code_special_member_functions__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
+  PyObject *resultobj = 0;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
+  result = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *)new wg14_result::status_code_special_member_functions< struct status_code_generic_s >();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_wg14_result_status_code_special_member_functions__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  wg14_result::status_code_special_member_functions< status_code_generic_s > *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_status_code_special_member_functions" "', argument " "1"" of type '" "wg14_result::status_code_special_member_functions< status_code_generic_s > const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_wg14_result_status_code_special_member_functions" "', argument " "1"" of type '" "wg14_result::status_code_special_member_functions< status_code_generic_s > const &""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::status_code_special_member_functions< status_code_generic_s > * >(argp1);
+  result = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *)new wg14_result::status_code_special_member_functions< struct status_code_generic_s >((wg14_result::status_code_special_member_functions< status_code_generic_s > const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_wg14_result_status_code_special_member_functions__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  wg14_result::status_code_special_member_functions< status_code_generic_s > *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::unique_ptr< wg14_result::status_code_special_member_functions< status_code_generic_s > > rvrdeleter1 ;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, SWIG_POINTER_RELEASE |  0 );
+  if (!SWIG_IsOK(res1)) {
+    if (res1 == SWIG_ERROR_RELEASE_NOT_OWNED) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_status_code_special_member_functions" "', cannot release ownership as memory is not owned for argument " "1"" of type '" "wg14_result::status_code_special_member_functions< status_code_generic_s > &&""'");
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_status_code_special_member_functions" "', argument " "1"" of type '" "wg14_result::status_code_special_member_functions< status_code_generic_s > &&""'"); 
+    }
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_wg14_result_status_code_special_member_functions" "', argument " "1"" of type '" "wg14_result::status_code_special_member_functions< status_code_generic_s > &&""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::status_code_special_member_functions< status_code_generic_s > * >(argp1);
+  rvrdeleter1.reset(arg1);
+  result = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *)new wg14_result::status_code_special_member_functions< struct status_code_generic_s >((wg14_result::status_code_special_member_functions< status_code_generic_s > &&)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_wg14_result_status_code_special_member_functions(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *arg1 = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_wg14_result_status_code_special_member_functions" "', argument " "1"" of type '" "wg14_result::status_code_special_member_functions< struct status_code_generic_s > *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::status_code_special_member_functions< struct status_code_generic_s > * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_wg14_result_status_code_special_member_functions__SWIG_3(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  status_code_generic_s *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_status_code_generic_s,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_status_code_special_member_functions" "', argument " "1"" of type '" "status_code_generic_s const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_wg14_result_status_code_special_member_functions" "', argument " "1"" of type '" "status_code_generic_s const &""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
+  result = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *)new wg14_result::status_code_special_member_functions< struct status_code_generic_s >((status_code_generic_s const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_wg14_result_status_code_special_member_functions__SWIG_4(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  status_code_generic_s *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::unique_ptr< status_code_generic_s > rvrdeleter1 ;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_status_code_generic_s, SWIG_POINTER_RELEASE |  0 );
+  if (!SWIG_IsOK(res1)) {
+    if (res1 == SWIG_ERROR_RELEASE_NOT_OWNED) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_status_code_special_member_functions" "', cannot release ownership as memory is not owned for argument " "1"" of type '" "status_code_generic_s &&""'");
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_status_code_special_member_functions" "', argument " "1"" of type '" "status_code_generic_s &&""'"); 
+    }
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_wg14_result_status_code_special_member_functions" "', argument " "1"" of type '" "status_code_generic_s &&""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
+  rvrdeleter1.reset(arg1);
+  result = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *)new wg14_result::status_code_special_member_functions< struct status_code_generic_s >((status_code_generic_s &&)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_wg14_result_status_code_special_member_functions(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[2] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_wg14_result_status_code_special_member_functions", 0, 1, argv))) SWIG_fail;
+  --argc;
+  if (argc == 0) {
+    return _wrap_new_wg14_result_status_code_special_member_functions__SWIG_0(self, argc, argv);
+  }
+  if (argc == 1) {
+    int _v = 0;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, SWIG_POINTER_NO_NULL | 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_wg14_result_status_code_special_member_functions__SWIG_1(self, argc, argv);
+    }
+  }
+  if (argc == 1) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, SWIG_POINTER_NO_NULL);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_wg14_result_status_code_special_member_functions__SWIG_2(self, argc, argv);
+    }
+  }
+  if (argc == 1) {
+    int _v = 0;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_status_code_generic_s, SWIG_POINTER_NO_NULL | 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_wg14_result_status_code_special_member_functions__SWIG_3(self, argc, argv);
+    }
+  }
+  if (argc == 1) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_status_code_generic_s, SWIG_POINTER_NO_NULL);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_wg14_result_status_code_special_member_functions__SWIG_4(self, argc, argv);
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_wg14_result_status_code_special_member_functions'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    wg14_result::status_code_special_member_functions< struct status_code_generic_s >::status_code_special_member_functions()\n"
+    "    wg14_result::status_code_special_member_functions< struct status_code_generic_s >::status_code_special_member_functions(wg14_result::status_code_special_member_functions< status_code_generic_s > const &)\n"
+    "    wg14_result::status_code_special_member_functions< struct status_code_generic_s >::status_code_special_member_functions(wg14_result::status_code_special_member_functions< status_code_generic_s > &&)\n"
+    "    wg14_result::status_code_special_member_functions< struct status_code_generic_s >::status_code_special_member_functions(status_code_generic_s const &)\n"
+    "    wg14_result::status_code_special_member_functions< struct status_code_generic_s >::status_code_special_member_functions(status_code_generic_s &&)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_status_code_special_member_functions_domain(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *arg1 = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  status_code_domain *result = 0 ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_status_code_special_member_functions_domain" "', argument " "1"" of type '" "wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::status_code_special_member_functions< struct status_code_generic_s > * >(argp1);
+  result = (status_code_domain *)((wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *)arg1)->domain();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_domain_s, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_status_code_special_member_functions_empty(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *arg1 = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_status_code_special_member_functions_empty" "', argument " "1"" of type '" "wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::status_code_special_member_functions< struct status_code_generic_s > * >(argp1);
+  result = (bool)((wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *)arg1)->empty();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_status_code_special_member_functions_success(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *arg1 = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_status_code_special_member_functions_success" "', argument " "1"" of type '" "wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::status_code_special_member_functions< struct status_code_generic_s > * >(argp1);
+  result = (bool)((wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *)arg1)->success();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_status_code_special_member_functions_failure(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *arg1 = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_status_code_special_member_functions_failure" "', argument " "1"" of type '" "wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::status_code_special_member_functions< struct status_code_generic_s > * >(argp1);
+  result = (bool)((wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *)arg1)->failure();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_status_code_special_member_functions_message(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *arg1 = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  status_code_domain_string_ref result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_status_code_special_member_functions_message" "', argument " "1"" of type '" "wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::status_code_special_member_functions< struct status_code_generic_s > * >(argp1);
+  result = ((wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *)arg1)->message();
+  resultobj = SWIG_NewPointerObj((new status_code_domain_string_ref(result)), SWIGTYPE_p_status_code_domain_string_ref_s, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_status_code_special_member_functions_equivalent(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::status_code_special_member_functions< struct status_code_generic_s > *arg1 = (wg14_result::status_code_special_member_functions< struct status_code_generic_s > *) 0 ;
+  enum status_code_errc arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  bool result;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "wg14_result_status_code_special_member_functions_equivalent", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_status_code_special_member_functions_equivalent" "', argument " "1"" of type '" "wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::status_code_special_member_functions< struct status_code_generic_s > * >(argp1);
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "wg14_result_status_code_special_member_functions_equivalent" "', argument " "2"" of type '" "enum status_code_errc""'");
+  } 
+  arg2 = static_cast< enum status_code_errc >(val2);
+  result = (bool)((wg14_result::status_code_special_member_functions< struct status_code_generic_s > const *)arg1)->equivalent(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *wg14_result_status_code_special_member_functions_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *wg14_result_status_code_special_member_functions_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_status_code_generic_domain(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_domain *result = 0 ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "status_code_generic_domain", 0, 0, 0)) SWIG_fail;
+  result = (status_code_domain *)status_code_generic_domain();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_domain_s, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_generic_s_base_set(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_generic_s *arg1 = (status_code_generic_s *) 0 ;
+  status_code_untyped *arg2 = (status_code_untyped *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "status_code_generic_s_base_set", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_generic_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_generic_s_base_set" "', argument " "1"" of type '" "status_code_generic_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_status_code_untyped, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_generic_s_base_set" "', argument " "2"" of type '" "status_code_untyped *""'"); 
+  }
+  arg2 = reinterpret_cast< status_code_untyped * >(argp2);
+  if (arg1) (arg1)->base = *arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_generic_s_base_get(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_generic_s *arg1 = (status_code_generic_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  status_code_untyped *result = 0 ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_generic_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_generic_s_base_get" "', argument " "1"" of type '" "status_code_generic_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
+  result = (status_code_untyped *)& ((arg1)->base);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_untyped, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_generic_s_value_set(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_generic_s *arg1 = (status_code_generic_s *) 0 ;
+  enum status_code_errc arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "status_code_generic_s_value_set", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_generic_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_generic_s_value_set" "', argument " "1"" of type '" "status_code_generic_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "status_code_generic_s_value_set" "', argument " "2"" of type '" "enum status_code_errc""'");
+  } 
+  arg2 = static_cast< enum status_code_errc >(val2);
+  if (arg1) (arg1)->value = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_generic_s_value_get(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_generic_s *arg1 = (status_code_generic_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  enum status_code_errc result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_generic_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_generic_s_value_get" "', argument " "1"" of type '" "status_code_generic_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
+  result = (enum status_code_errc) ((arg1)->value);
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_status_code_generic_s(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_generic_s *result = 0 ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "new_status_code_generic_s", 0, 0, 0)) SWIG_fail;
+  result = (status_code_generic_s *)new status_code_generic_s();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_generic_s, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_status_code_generic_s(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_generic_s *arg1 = (status_code_generic_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_generic_s, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_status_code_generic_s" "', argument " "1"" of type '" "status_code_generic_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_generic_s * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *status_code_generic_s_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_status_code_generic_s, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *status_code_generic_s_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_status_code_generic(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_generic *result = 0 ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "new_status_code_generic", 0, 0, 0)) SWIG_fail;
+  result = (status_code_generic *)new status_code_generic();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_generic, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_status_code_generic(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_generic *arg1 = (status_code_generic *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_generic, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_status_code_generic" "', argument " "1"" of type '" "status_code_generic *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_generic * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *status_code_generic_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_status_code_generic, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *status_code_generic_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN int Swig_var_status_code_generic_empty_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable status_code_generic_empty is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *Swig_var_status_code_generic_empty_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(&status_code_generic_empty), SWIGTYPE_p_status_code_generic,  0 );
+  return pyobj;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_generic_make(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  enum status_code_errc arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  status_code_generic result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "status_code_generic_make" "', argument " "1"" of type '" "enum status_code_errc""'");
+  } 
+  arg1 = static_cast< enum status_code_errc >(val1);
+  result = status_code_generic_make(arg1);
+  resultobj = SWIG_NewPointerObj((new status_code_generic(result)), SWIGTYPE_p_status_code_generic, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_equivalent(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_untyped *arg1 = (status_code_untyped *) 0 ;
+  status_code_untyped *arg2 = (status_code_untyped *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  bool result;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "status_code_equivalent", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_untyped, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_equivalent" "', argument " "1"" of type '" "status_code_untyped const *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_untyped * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_status_code_untyped, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_equivalent" "', argument " "2"" of type '" "status_code_untyped const *""'"); 
+  }
+  arg2 = reinterpret_cast< status_code_untyped * >(argp2);
+  result = (bool)status_code_equivalent((status_code_untyped const *)arg1,(status_code_untyped const *)arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_equivalent_errc(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_untyped *arg1 = (status_code_untyped *) 0 ;
+  enum status_code_errc arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  bool result;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "status_code_equivalent_errc", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_untyped, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_equivalent_errc" "', argument " "1"" of type '" "status_code_untyped const *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_untyped * >(argp1);
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "status_code_equivalent_errc" "', argument " "2"" of type '" "enum status_code_errc""'");
+  } 
+  arg2 = static_cast< enum status_code_errc >(val2);
+  result = (bool)status_code_equivalent_errc((status_code_untyped const *)arg1,arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_system_s_base_set(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_system_s *arg1 = (status_code_system_s *) 0 ;
+  status_code_untyped *arg2 = (status_code_untyped *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "status_code_system_s_base_set", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_system_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_system_s_base_set" "', argument " "1"" of type '" "status_code_system_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_system_s * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_status_code_untyped, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_system_s_base_set" "', argument " "2"" of type '" "status_code_untyped *""'"); 
+  }
+  arg2 = reinterpret_cast< status_code_untyped * >(argp2);
+  if (arg1) (arg1)->base = *arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_system_s_base_get(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_system_s *arg1 = (status_code_system_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  status_code_untyped *result = 0 ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_system_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_system_s_base_get" "', argument " "1"" of type '" "status_code_system_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_system_s * >(argp1);
+  result = (status_code_untyped *)& ((arg1)->base);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_untyped, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_system_s_value_set(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_system_s *arg1 = (status_code_system_s *) 0 ;
+  intptr_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "status_code_system_s_value_set", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_system_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_system_s_value_set" "', argument " "1"" of type '" "status_code_system_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_system_s * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_intptr_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_system_s_value_set" "', argument " "2"" of type '" "intptr_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "status_code_system_s_value_set" "', argument " "2"" of type '" "intptr_t""'");
+    } else {
+      intptr_t * temp = reinterpret_cast< intptr_t * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  if (arg1) (arg1)->value = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_system_s_value_get(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_system_s *arg1 = (status_code_system_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  intptr_t result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_system_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_system_s_value_get" "', argument " "1"" of type '" "status_code_system_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_system_s * >(argp1);
+  result =  ((arg1)->value);
+  resultobj = SWIG_NewPointerObj((new intptr_t(result)), SWIGTYPE_p_intptr_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_status_code_system_s(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_system_s *result = 0 ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "new_status_code_system_s", 0, 0, 0)) SWIG_fail;
+  result = (status_code_system_s *)new status_code_system_s();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_system_s, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_status_code_system_s(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_system_s *arg1 = (status_code_system_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_system_s, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_status_code_system_s" "', argument " "1"" of type '" "status_code_system_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_system_s * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *status_code_system_s_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_status_code_system_s, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *status_code_system_s_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_status_code_system(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_system *result = 0 ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "new_status_code_system", 0, 0, 0)) SWIG_fail;
+  result = (status_code_system *)new status_code_system();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_system, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_status_code_system(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_system *arg1 = (status_code_system *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_system, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_status_code_system" "', argument " "1"" of type '" "status_code_system *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_system * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *status_code_system_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_status_code_system, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *status_code_system_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN int Swig_var_status_code_system_empty_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable status_code_system_empty is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *Swig_var_status_code_system_empty_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(&status_code_system_empty), SWIGTYPE_p_status_code_system,  0 );
+  return pyobj;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_system_make(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_untyped *arg1 = (status_code_untyped *) 0 ;
+  status_code_domain_payload_info_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  status_code_system result;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "status_code_system_make", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_untyped, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_system_make" "', argument " "1"" of type '" "status_code_untyped const *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_untyped * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_status_code_domain_payload_info_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_system_make" "', argument " "2"" of type '" "status_code_domain_payload_info_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "status_code_system_make" "', argument " "2"" of type '" "status_code_domain_payload_info_t""'");
+    } else {
+      status_code_domain_payload_info_t * temp = reinterpret_cast< status_code_domain_payload_info_t * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  result = status_code_system_make((status_code_untyped const *)arg1,SWIG_STD_MOVE(arg2));
+  resultobj = SWIG_NewPointerObj((new status_code_system(result)), SWIGTYPE_p_status_code_system, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_system_make_from_errc(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  enum status_code_errc arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  status_code_system result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "status_code_system_make_from_errc" "', argument " "1"" of type '" "enum status_code_errc""'");
+  } 
+  arg1 = static_cast< enum status_code_errc >(val1);
+  result = status_code_system_make_from_errc(arg1);
+  resultobj = SWIG_NewPointerObj((new status_code_system(result)), SWIGTYPE_p_status_code_system, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_posix_domain(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_domain *result = 0 ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "status_code_posix_domain", 0, 0, 0)) SWIG_fail;
+  result = (status_code_domain *)status_code_posix_domain();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_domain_s, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_posix_s_base_set(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_posix_s *arg1 = (status_code_posix_s *) 0 ;
+  status_code_untyped *arg2 = (status_code_untyped *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "status_code_posix_s_base_set", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_posix_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_posix_s_base_set" "', argument " "1"" of type '" "status_code_posix_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_posix_s * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_status_code_untyped, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "status_code_posix_s_base_set" "', argument " "2"" of type '" "status_code_untyped *""'"); 
+  }
+  arg2 = reinterpret_cast< status_code_untyped * >(argp2);
+  if (arg1) (arg1)->base = *arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_posix_s_base_get(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_posix_s *arg1 = (status_code_posix_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  status_code_untyped *result = 0 ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_posix_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_posix_s_base_get" "', argument " "1"" of type '" "status_code_posix_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_posix_s * >(argp1);
+  result = (status_code_untyped *)& ((arg1)->base);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_untyped, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_posix_s_value_set(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_posix_s *arg1 = (status_code_posix_s *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject *swig_obj[2] ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "status_code_posix_s_value_set", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_posix_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_posix_s_value_set" "', argument " "1"" of type '" "status_code_posix_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_posix_s * >(argp1);
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "status_code_posix_s_value_set" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  if (arg1) (arg1)->value = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_status_code_posix_s_value_get(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_posix_s *arg1 = (status_code_posix_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  int result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_posix_s, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "status_code_posix_s_value_get" "', argument " "1"" of type '" "status_code_posix_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_posix_s * >(argp1);
+  result = (int) ((arg1)->value);
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_status_code_posix_s(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_posix_s *result = 0 ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "new_status_code_posix_s", 0, 0, 0)) SWIG_fail;
+  result = (status_code_posix_s *)new status_code_posix_s();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_posix_s, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_status_code_posix_s(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_posix_s *arg1 = (status_code_posix_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_posix_s, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_status_code_posix_s" "', argument " "1"" of type '" "status_code_posix_s *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_posix_s * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *status_code_posix_s_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_status_code_posix_s, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *status_code_posix_s_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_status_code_posix(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_posix *result = 0 ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "new_status_code_posix", 0, 0, 0)) SWIG_fail;
+  result = (status_code_posix *)new status_code_posix();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_posix, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_status_code_posix(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  status_code_posix *arg1 = (status_code_posix *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_status_code_posix, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_status_code_posix" "', argument " "1"" of type '" "status_code_posix *""'"); 
+  }
+  arg1 = reinterpret_cast< status_code_posix * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *status_code_posix_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_status_code_posix, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *status_code_posix_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_status_code_posix_make(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  status_code_posix result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "status_code_posix_make" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  result = status_code_posix_make(arg1);
+  resultobj = SWIG_NewPointerObj((new status_code_posix(result)), SWIGTYPE_p_status_code_posix, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_wg14_result_special_member_functions__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
+  PyObject *resultobj = 0;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
+  result = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *)new wg14_result::wg14_result_special_member_functions< result_with_void_s >();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_wg14_result_special_member_functions__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_special_member_functions" "', argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_wg14_result_special_member_functions" "', argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > const &""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::wg14_result_special_member_functions< result_with_void_s > * >(argp1);
+  result = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *)new wg14_result::wg14_result_special_member_functions< result_with_void_s >((wg14_result::wg14_result_special_member_functions< result_with_void_s > const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_wg14_result_special_member_functions__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::unique_ptr< wg14_result::wg14_result_special_member_functions< result_with_void_s > > rvrdeleter1 ;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, SWIG_POINTER_RELEASE |  0 );
+  if (!SWIG_IsOK(res1)) {
+    if (res1 == SWIG_ERROR_RELEASE_NOT_OWNED) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_special_member_functions" "', cannot release ownership as memory is not owned for argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > &&""'");
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_special_member_functions" "', argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > &&""'"); 
+    }
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_wg14_result_special_member_functions" "', argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > &&""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::wg14_result_special_member_functions< result_with_void_s > * >(argp1);
+  rvrdeleter1.reset(arg1);
+  result = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *)new wg14_result::wg14_result_special_member_functions< result_with_void_s >((wg14_result::wg14_result_special_member_functions< result_with_void_s > &&)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_wg14_result_special_member_functions(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *arg1 = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_wg14_result_special_member_functions" "', argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::wg14_result_special_member_functions< result_with_void_s > * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_wg14_result_special_member_functions__SWIG_3(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  result_with_void_s *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_result_with_void_s,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_special_member_functions" "', argument " "1"" of type '" "result_with_void_s const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_wg14_result_special_member_functions" "', argument " "1"" of type '" "result_with_void_s const &""'"); 
+  }
+  arg1 = reinterpret_cast< result_with_void_s * >(argp1);
+  result = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *)new wg14_result::wg14_result_special_member_functions< result_with_void_s >((result_with_void_s const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_wg14_result_special_member_functions__SWIG_4(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  result_with_void_s *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::unique_ptr< result_with_void_s > rvrdeleter1 ;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_result_with_void_s, SWIG_POINTER_RELEASE |  0 );
+  if (!SWIG_IsOK(res1)) {
+    if (res1 == SWIG_ERROR_RELEASE_NOT_OWNED) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_special_member_functions" "', cannot release ownership as memory is not owned for argument " "1"" of type '" "result_with_void_s &&""'");
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_wg14_result_special_member_functions" "', argument " "1"" of type '" "result_with_void_s &&""'"); 
+    }
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_wg14_result_special_member_functions" "', argument " "1"" of type '" "result_with_void_s &&""'"); 
+  }
+  arg1 = reinterpret_cast< result_with_void_s * >(argp1);
+  rvrdeleter1.reset(arg1);
+  result = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *)new wg14_result::wg14_result_special_member_functions< result_with_void_s >((result_with_void_s &&)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_wg14_result_special_member_functions(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[2] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_wg14_result_special_member_functions", 0, 1, argv))) SWIG_fail;
+  --argc;
+  if (argc == 0) {
+    return _wrap_new_wg14_result_special_member_functions__SWIG_0(self, argc, argv);
+  }
+  if (argc == 1) {
+    int _v = 0;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, SWIG_POINTER_NO_NULL | 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_wg14_result_special_member_functions__SWIG_1(self, argc, argv);
+    }
+  }
+  if (argc == 1) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, SWIG_POINTER_NO_NULL);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_wg14_result_special_member_functions__SWIG_2(self, argc, argv);
+    }
+  }
+  if (argc == 1) {
+    int _v = 0;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_result_with_void_s, SWIG_POINTER_NO_NULL | 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_wg14_result_special_member_functions__SWIG_3(self, argc, argv);
+    }
+  }
+  if (argc == 1) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_result_with_void_s, SWIG_POINTER_NO_NULL);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_wg14_result_special_member_functions__SWIG_4(self, argc, argv);
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_wg14_result_special_member_functions'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    wg14_result::wg14_result_special_member_functions< result_with_void_s >::wg14_result_special_member_functions()\n"
+    "    wg14_result::wg14_result_special_member_functions< result_with_void_s >::wg14_result_special_member_functions(wg14_result::wg14_result_special_member_functions< result_with_void_s > const &)\n"
+    "    wg14_result::wg14_result_special_member_functions< result_with_void_s >::wg14_result_special_member_functions(wg14_result::wg14_result_special_member_functions< result_with_void_s > &&)\n"
+    "    wg14_result::wg14_result_special_member_functions< result_with_void_s >::wg14_result_special_member_functions(result_with_void_s const &)\n"
+    "    wg14_result::wg14_result_special_member_functions< result_with_void_s >::wg14_result_special_member_functions(result_with_void_s &&)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_special_member_functions___nonzero__(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *arg1 = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_special_member_functions___nonzero__" "', argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::wg14_result_special_member_functions< result_with_void_s > * >(argp1);
+  result = (bool)((wg14_result::wg14_result_special_member_functions< result_with_void_s > const *)arg1)->operator bool();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_special_member_functions_has_value(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *arg1 = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_special_member_functions_has_value" "', argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::wg14_result_special_member_functions< result_with_void_s > * >(argp1);
+  result = (bool)((wg14_result::wg14_result_special_member_functions< result_with_void_s > const *)arg1)->has_value();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_special_member_functions_has_error(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *arg1 = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_special_member_functions_has_error" "', argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::wg14_result_special_member_functions< result_with_void_s > * >(argp1);
+  result = (bool)((wg14_result::wg14_result_special_member_functions< result_with_void_s > const *)arg1)->has_error();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_special_member_functions_has_exception(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *arg1 = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_special_member_functions_has_exception" "', argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::wg14_result_special_member_functions< result_with_void_s > * >(argp1);
+  result = (bool)((wg14_result::wg14_result_special_member_functions< result_with_void_s > const *)arg1)->has_exception();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_special_member_functions_has_failure(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *arg1 = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_special_member_functions_has_failure" "', argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::wg14_result_special_member_functions< result_with_void_s > * >(argp1);
+  result = (bool)((wg14_result::wg14_result_special_member_functions< result_with_void_s > const *)arg1)->has_failure();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_wg14_result_special_member_functions_has_lost_consistency(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  wg14_result::wg14_result_special_member_functions< result_with_void_s > *arg1 = (wg14_result::wg14_result_special_member_functions< result_with_void_s > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "wg14_result_special_member_functions_has_lost_consistency" "', argument " "1"" of type '" "wg14_result::wg14_result_special_member_functions< result_with_void_s > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wg14_result::wg14_result_special_member_functions< result_with_void_s > * >(argp1);
+  result = (bool)((wg14_result::wg14_result_special_member_functions< result_with_void_s > const *)arg1)->has_lost_consistency();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *wg14_result_special_member_functions_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *wg14_result_special_member_functions_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
 SWIGINTERN PyObject *_wrap_result_flags_status_set(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   result_flags *arg1 = (result_flags *) 0 ;
@@ -5827,17 +7032,145 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_result_flags(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_result_flags__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   result_flags *result = 0 ;
   
   (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "new_result_flags", 0, 0, 0)) SWIG_fail;
+  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
   result = (result_flags *)new result_flags();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_result_flags, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_result_flags__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  result_status_flags arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  result_flags *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_result_flags" "', argument " "1"" of type '" "result_status_flags""'");
+  } 
+  arg1 = static_cast< result_status_flags >(val1);
+  result = (result_flags *)new result_flags(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_result_flags, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_result_flags__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  result_flags *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  result_flags *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_result_flags,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_result_flags" "', argument " "1"" of type '" "result_flags const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_result_flags" "', argument " "1"" of type '" "result_flags const &""'"); 
+  }
+  arg1 = reinterpret_cast< result_flags * >(argp1);
+  result = (result_flags *)new result_flags((result_flags const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_result_flags, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_result_flags__SWIG_3(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  result_flags *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::unique_ptr< result_flags > rvrdeleter1 ;
+  result_flags *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_result_flags, SWIG_POINTER_RELEASE |  0 );
+  if (!SWIG_IsOK(res1)) {
+    if (res1 == SWIG_ERROR_RELEASE_NOT_OWNED) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_result_flags" "', cannot release ownership as memory is not owned for argument " "1"" of type '" "result_flags &&""'");
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_result_flags" "', argument " "1"" of type '" "result_flags &&""'"); 
+    }
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_result_flags" "', argument " "1"" of type '" "result_flags &&""'"); 
+  }
+  arg1 = reinterpret_cast< result_flags * >(argp1);
+  rvrdeleter1.reset(arg1);
+  result = (result_flags *)new result_flags((result_flags &&)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_result_flags, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_result_flags(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[2] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_result_flags", 0, 1, argv))) SWIG_fail;
+  --argc;
+  if (argc == 0) {
+    return _wrap_new_result_flags__SWIG_0(self, argc, argv);
+  }
+  if (argc == 1) {
+    int _v = 0;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_result_flags, SWIG_POINTER_NO_NULL | 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_result_flags__SWIG_2(self, argc, argv);
+    }
+  }
+  if (argc == 1) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_result_flags, SWIG_POINTER_NO_NULL);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_result_flags__SWIG_3(self, argc, argv);
+    }
+  }
+  if (argc == 1) {
+    int _v = 0;
+    {
+      int res = SWIG_AsVal_int(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      return _wrap_new_result_flags__SWIG_1(self, argc, argv);
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_result_flags'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    result_flags::result_flags()\n"
+    "    result_flags::result_flags(result_status_flags)\n"
+    "    result_flags::result_flags(result_flags const &)\n"
+    "    result_flags::result_flags(result_flags &&)\n");
+  return 0;
 }
 
 
@@ -5864,6 +7197,102 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_result_flags_have_value(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  result_flags *arg1 = (result_flags *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_flags, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_flags_have_value" "', argument " "1"" of type '" "result_flags const *""'"); 
+  }
+  arg1 = reinterpret_cast< result_flags * >(argp1);
+  result = (bool)((result_flags const *)arg1)->have_value();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_result_flags_have_error(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  result_flags *arg1 = (result_flags *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_flags, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_flags_have_error" "', argument " "1"" of type '" "result_flags const *""'"); 
+  }
+  arg1 = reinterpret_cast< result_flags * >(argp1);
+  result = (bool)((result_flags const *)arg1)->have_error();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_result_flags_have_exception(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  result_flags *arg1 = (result_flags *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_flags, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_flags_have_exception" "', argument " "1"" of type '" "result_flags const *""'"); 
+  }
+  arg1 = reinterpret_cast< result_flags * >(argp1);
+  result = (bool)((result_flags const *)arg1)->have_exception();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_result_flags_have_lost_consistency(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  result_flags *arg1 = (result_flags *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_flags, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_flags_have_lost_consistency" "', argument " "1"" of type '" "result_flags const *""'"); 
+  }
+  arg1 = reinterpret_cast< result_flags * >(argp1);
+  result = (bool)((result_flags const *)arg1)->have_lost_consistency();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *result_flags_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
@@ -5875,9 +7304,9 @@ SWIGINTERN PyObject *result_flags_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObj
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_result_with_void_t__flags__set(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_result_with_void_s__flags__set(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
-  result_with_void *arg1 = (result_with_void *) 0 ;
+  result_with_void_s *arg1 = (result_with_void_s *) 0 ;
   result_flags *arg2 = (result_flags *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -5886,15 +7315,15 @@ SWIGINTERN PyObject *_wrap_result_with_void_t__flags__set(PyObject *self, PyObje
   PyObject *swig_obj[2] ;
   
   (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "result_with_void_t__flags__set", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_with_void, 0 |  0 );
+  if (!SWIG_Python_UnpackTuple(args, "result_with_void_s__flags__set", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_with_void_s, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_with_void_t__flags__set" "', argument " "1"" of type '" "result_with_void *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_with_void_s__flags__set" "', argument " "1"" of type '" "result_with_void_s *""'"); 
   }
-  arg1 = reinterpret_cast< result_with_void * >(argp1);
+  arg1 = reinterpret_cast< result_with_void_s * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_result_flags, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "result_with_void_t__flags__set" "', argument " "2"" of type '" "result_flags *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "result_with_void_s__flags__set" "', argument " "2"" of type '" "result_flags *""'"); 
   }
   arg2 = reinterpret_cast< result_flags * >(argp2);
   if (arg1) (arg1)->_flags_ = *arg2;
@@ -5905,9 +7334,9 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_result_with_void_t__flags__get(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_result_with_void_s__flags__get(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
-  result_with_void *arg1 = (result_with_void *) 0 ;
+  result_with_void_s *arg1 = (result_with_void_s *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
@@ -5916,11 +7345,11 @@ SWIGINTERN PyObject *_wrap_result_with_void_t__flags__get(PyObject *self, PyObje
   (void)self;
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_with_void, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_with_void_s, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_with_void_t__flags__get" "', argument " "1"" of type '" "result_with_void *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_with_void_s__flags__get" "', argument " "1"" of type '" "result_with_void_s *""'"); 
   }
-  arg1 = reinterpret_cast< result_with_void * >(argp1);
+  arg1 = reinterpret_cast< result_with_void_s * >(argp1);
   result = (result_flags *)& ((arg1)->_flags_);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_result_flags, 0 |  0 );
   return resultobj;
@@ -5929,9 +7358,9 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_result_with_void_t_error_set(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_result_with_void_s_error_set(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
-  result_with_void *arg1 = (result_with_void *) 0 ;
+  result_with_void_s *arg1 = (result_with_void_s *) 0 ;
   status_code_system *arg2 = (status_code_system *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -5940,15 +7369,15 @@ SWIGINTERN PyObject *_wrap_result_with_void_t_error_set(PyObject *self, PyObject
   PyObject *swig_obj[2] ;
   
   (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "result_with_void_t_error_set", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_with_void, 0 |  0 );
+  if (!SWIG_Python_UnpackTuple(args, "result_with_void_s_error_set", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_with_void_s, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_with_void_t_error_set" "', argument " "1"" of type '" "result_with_void *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_with_void_s_error_set" "', argument " "1"" of type '" "result_with_void_s *""'"); 
   }
-  arg1 = reinterpret_cast< result_with_void * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_status_code_system_s, 0 |  0 );
+  arg1 = reinterpret_cast< result_with_void_s * >(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_status_code_system, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "result_with_void_t_error_set" "', argument " "2"" of type '" "status_code_system *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "result_with_void_s_error_set" "', argument " "2"" of type '" "status_code_system *""'"); 
   }
   arg2 = reinterpret_cast< status_code_system * >(argp2);
   if (arg1) (arg1)->error = *arg2;
@@ -5959,9 +7388,9 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_result_with_void_t_error_get(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_result_with_void_s_error_get(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
-  result_with_void *arg1 = (result_with_void *) 0 ;
+  result_with_void_s *arg1 = (result_with_void_s *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
@@ -5970,25 +7399,73 @@ SWIGINTERN PyObject *_wrap_result_with_void_t_error_get(PyObject *self, PyObject
   (void)self;
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_with_void, 0 |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_with_void_s, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_with_void_t_error_get" "', argument " "1"" of type '" "result_with_void *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_with_void_s_error_get" "', argument " "1"" of type '" "result_with_void_s *""'"); 
   }
-  arg1 = reinterpret_cast< result_with_void * >(argp1);
+  arg1 = reinterpret_cast< result_with_void_s * >(argp1);
   result = (status_code_system *)& ((arg1)->error);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_system_s, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_status_code_system, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_new_result_with_void_t(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_result_with_void_s(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  result_with_void_s *result = 0 ;
+  
+  (void)self;
+  if (!SWIG_Python_UnpackTuple(args, "new_result_with_void_s", 0, 0, 0)) SWIG_fail;
+  result = (result_with_void_s *)new result_with_void_s();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_result_with_void_s, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_result_with_void_s(PyObject *self, PyObject *args) {
+  PyObject *resultobj = 0;
+  result_with_void_s *arg1 = (result_with_void_s *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  (void)self;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_with_void_s, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_result_with_void_s" "', argument " "1"" of type '" "result_with_void_s *""'"); 
+  }
+  arg1 = reinterpret_cast< result_with_void_s * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *result_with_void_s_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_result_with_void_s, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *result_with_void_s_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_result_with_void__SWIG_0(PyObject *self, Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   result_with_void *result = 0 ;
   
   (void)self;
-  if (!SWIG_Python_UnpackTuple(args, "new_result_with_void_t", 0, 0, 0)) SWIG_fail;
+  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
   result = (result_with_void *)new result_with_void();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_result_with_void, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -5997,7 +7474,102 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_result_with_void_t(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_result_with_void__SWIG_1(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  result_with_void *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  result_with_void *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_result_with_void,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_result_with_void" "', argument " "1"" of type '" "result_with_void const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_result_with_void" "', argument " "1"" of type '" "result_with_void const &""'"); 
+  }
+  arg1 = reinterpret_cast< result_with_void * >(argp1);
+  result = (result_with_void *)new result_with_void((result_with_void const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_result_with_void, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_result_with_void__SWIG_2(PyObject *self, Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  result_with_void *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::unique_ptr< result_with_void > rvrdeleter1 ;
+  result_with_void *result = 0 ;
+  
+  (void)self;
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_result_with_void, SWIG_POINTER_RELEASE |  0 );
+  if (!SWIG_IsOK(res1)) {
+    if (res1 == SWIG_ERROR_RELEASE_NOT_OWNED) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_result_with_void" "', cannot release ownership as memory is not owned for argument " "1"" of type '" "result_with_void &&""'");
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_result_with_void" "', argument " "1"" of type '" "result_with_void &&""'"); 
+    }
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_result_with_void" "', argument " "1"" of type '" "result_with_void &&""'"); 
+  }
+  arg1 = reinterpret_cast< result_with_void * >(argp1);
+  rvrdeleter1.reset(arg1);
+  result = (result_with_void *)new result_with_void((result_with_void &&)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_result_with_void, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_result_with_void(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[2] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_result_with_void", 0, 1, argv))) SWIG_fail;
+  --argc;
+  if (argc == 0) {
+    return _wrap_new_result_with_void__SWIG_0(self, argc, argv);
+  }
+  if (argc == 1) {
+    int _v = 0;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_result_with_void, SWIG_POINTER_NO_NULL | 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_result_with_void__SWIG_1(self, argc, argv);
+    }
+  }
+  if (argc == 1) {
+    int _v = 0;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_result_with_void, SWIG_POINTER_NO_NULL);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_result_with_void__SWIG_2(self, argc, argv);
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_result_with_void'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    result_with_void::result_with_void()\n"
+    "    result_with_void::result_with_void(result_with_void const &)\n"
+    "    result_with_void::result_with_void(result_with_void &&)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_result_with_void(PyObject *self, PyObject *args) {
   PyObject *resultobj = 0;
   result_with_void *arg1 = (result_with_void *) 0 ;
   void *argp1 = 0 ;
@@ -6009,7 +7581,7 @@ SWIGINTERN PyObject *_wrap_delete_result_with_void_t(PyObject *self, PyObject *a
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_result_with_void, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_result_with_void_t" "', argument " "1"" of type '" "result_with_void *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_result_with_void" "', argument " "1"" of type '" "result_with_void *""'"); 
   }
   arg1 = reinterpret_cast< result_with_void * >(argp1);
   delete arg1;
@@ -6020,14 +7592,14 @@ fail:
 }
 
 
-SWIGINTERN PyObject *result_with_void_t_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *result_with_void_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_result_with_void, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *result_with_void_t_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *result_with_void_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
@@ -6057,7 +7629,7 @@ SWIGINTERN PyObject *_wrap_result_void_make_failure(PyObject *self, PyObject *ar
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   {
-    res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_status_code_system_s,  0  | 0);
+    res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_status_code_system,  0  | 0);
     if (!SWIG_IsOK(res1)) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "result_void_make_failure" "', argument " "1"" of type '" "status_code_system""'"); 
     }  
@@ -6086,8 +7658,27 @@ static PyMethodDef SwigMethods[] = {
 	 { "status_code_domain_string_ref_s_state_get", _wrap_status_code_domain_string_ref_s_state_get, METH_O, NULL},
 	 { "status_code_domain_string_ref_s_thunk_set", _wrap_status_code_domain_string_ref_s_thunk_set, METH_VARARGS, NULL},
 	 { "status_code_domain_string_ref_s_thunk_get", _wrap_status_code_domain_string_ref_s_thunk_get, METH_O, NULL},
-	 { "new_status_code_domain_string_ref_s", _wrap_new_status_code_domain_string_ref_s, METH_NOARGS, NULL},
-	 { "delete_status_code_domain_string_ref_s", _wrap_delete_status_code_domain_string_ref_s, METH_O, NULL},
+	 { "new_status_code_domain_string_ref_s", _wrap_new_status_code_domain_string_ref_s, METH_VARARGS, "\n"
+		"*Overload 1:*\n"
+		"Default construct to all bits zero\n"
+		"\n"
+		"|\n"
+		"\n"
+		"*Overload 2:*\n"
+		"As if aggregate constructor for C compatibility\n"
+		"\n"
+		"|\n"
+		"\n"
+		"*Overload 3:*\n"
+		"Copies the string ref\n"
+		"\n"
+		"|\n"
+		"\n"
+		"*Overload 4:*\n"
+		"Moves the string ref\n"
+		""},
+	 { "delete_status_code_domain_string_ref_s", _wrap_delete_status_code_domain_string_ref_s, METH_O, " Destroys the string ref"},
+	 { "status_code_domain_string_ref_s_empty", _wrap_status_code_domain_string_ref_s_empty, METH_O, " True if the string ref is empty"},
 	 { "status_code_domain_string_ref_s_swigregister", status_code_domain_string_ref_s_swigregister, METH_O, NULL},
 	 { "status_code_domain_string_ref_s_swiginit", status_code_domain_string_ref_s_swiginit, METH_VARARGS, NULL},
 	 { "status_code_domain_string_ref_is_empty", _wrap_status_code_domain_string_ref_is_empty, METH_O, " Returns true if the string ref is empty"},
@@ -6119,16 +7710,62 @@ static PyMethodDef SwigMethods[] = {
 	 { "status_code_domain_s_id_get", _wrap_status_code_domain_s_id_get, METH_O, " The unique id used to identify identical category instances."},
 	 { "new_status_code_domain_s", _wrap_new_status_code_domain_s, METH_VARARGS, NULL},
 	 { "delete_status_code_domain_s", _wrap_delete_status_code_domain_s, METH_O, NULL},
+	 { "status_code_domain_s_name", _wrap_status_code_domain_s_name, METH_O, " Retrieves the name of the status code domain"},
+	 { "status_code_domain_s_payload_info", _wrap_status_code_domain_s_payload_info, METH_O, " Retrieves the payload info of the status code domain"},
 	 { "status_code_domain_s_swigregister", status_code_domain_s_swigregister, METH_O, NULL},
 	 { "status_code_domain_s_swiginit", status_code_domain_s_swiginit, METH_VARARGS, NULL},
 	 { "status_code_domain_unique_id_from_uuid", _wrap_status_code_domain_unique_id_from_uuid, METH_O, " Parse a uuid input string to yield a status code domain unique id"},
 	 { "status_code_domain_name", _wrap_status_code_domain_name, METH_O, " Generate a constexpr expression which yields a status code domain unique id Retrieves the name of the status code domain (implementation). Make sure you call `status_code_domain_string_ref_destroy()` when you are done with the returned string reference."},
 	 { "status_code_domain_payload_info", _wrap_status_code_domain_payload_info, METH_O, " Retrieves the payload info of the status code domain (implementation)."},
+	 { "status_code_is_empty", _wrap_status_code_is_empty, METH_O, " True if the status code is empty (implementation)"},
+	 { "status_code_is_success", _wrap_status_code_is_success, METH_O, " True if the status code is a success (implementation)"},
+	 { "status_code_is_failure", _wrap_status_code_is_failure, METH_O, " True if the status code is a failure (implementation)"},
+	 { "status_code_message", _wrap_status_code_message, METH_O, " Retrieves the message of the status code (implementation). Make sure you call `status_code_domain_string_ref_destroy()` when you are done with the returned string reference."},
+	 { "status_code_strictly_equivalent", _wrap_status_code_strictly_equivalent, METH_VARARGS, " True if the status codes are strictly semantically equivalent (implementation). `primary`'s domain's equivalence function decides if `secondary` is semantically equivalent to it. Note that for most status codes, if the codes have the same domain, a pure value equality is performed. This operation may not be transitive."},
+	 { "status_code_erased_destroy", _wrap_status_code_erased_destroy, METH_O, " Destroys the status code (erased)"},
+	 { "status_code_erased_clone", _wrap_status_code_erased_clone, METH_VARARGS, " Clones the status code (erased), returning an `errno` value if failed."},
+	 { "delete_wg14_result_status_code_special_member_functions", _wrap_delete_wg14_result_status_code_special_member_functions, METH_O, " Destructor which calls `status_code_erased_destroy()` for you."},
+	 { "new_wg14_result_status_code_special_member_functions", _wrap_new_wg14_result_status_code_special_member_functions, METH_VARARGS, "\n"
+		"*Overload 1:*\n"
+		"Default constructs to an empty status code\n"
+		"\n"
+		"|\n"
+		"\n"
+		"*Overload 2:*\n"
+		"Copy constructor which will use the domain's `erased_clone` if that is set, otherwise standard C++ copy construction.\n"
+		"\n"
+		"|\n"
+		"\n"
+		"*Overload 3:*\n"
+		"Move constructor which always performs a move bitcopy.\n"
+		"\n"
+		"|\n"
+		"\n"
+		"*Overload 4:*\n"
+		"Constructs from the underlying storage type by copy\n"
+		"\n"
+		"|\n"
+		"\n"
+		"*Overload 5:*\n"
+		"Constructs from the underlying storage type by move\n"
+		""},
+	 { "wg14_result_status_code_special_member_functions_domain", _wrap_wg14_result_status_code_special_member_functions_domain, METH_O, " Returns the domain instance for this status code"},
+	 { "wg14_result_status_code_special_member_functions_empty", _wrap_wg14_result_status_code_special_member_functions_empty, METH_O, " True if the status code is empty"},
+	 { "wg14_result_status_code_special_member_functions_success", _wrap_wg14_result_status_code_special_member_functions_success, METH_O, " True if the status code is a success"},
+	 { "wg14_result_status_code_special_member_functions_failure", _wrap_wg14_result_status_code_special_member_functions_failure, METH_O, " True if the status code is a failure"},
+	 { "wg14_result_status_code_special_member_functions_message", _wrap_wg14_result_status_code_special_member_functions_message, METH_O, " Retrieves the message of the status code."},
+	 { "wg14_result_status_code_special_member_functions_equivalent", _wrap_wg14_result_status_code_special_member_functions_equivalent, METH_VARARGS, " True if the status code is semantically equivalent in any way to the generic enum value."},
+	 { "wg14_result_status_code_special_member_functions_swigregister", wg14_result_status_code_special_member_functions_swigregister, METH_O, NULL},
+	 { "wg14_result_status_code_special_member_functions_swiginit", wg14_result_status_code_special_member_functions_swiginit, METH_VARARGS, NULL},
 	 { "status_code_generic_domain", _wrap_status_code_generic_domain, METH_NOARGS, " Retrieve the domain for `status_code_generic`"},
-	 { "status_code_generic_base_set", _wrap_status_code_generic_base_set, METH_VARARGS, NULL},
-	 { "status_code_generic_base_get", _wrap_status_code_generic_base_get, METH_O, NULL},
-	 { "status_code_generic_value_set", _wrap_status_code_generic_value_set, METH_VARARGS, NULL},
-	 { "status_code_generic_value_get", _wrap_status_code_generic_value_get, METH_O, NULL},
+	 { "status_code_generic_s_base_set", _wrap_status_code_generic_s_base_set, METH_VARARGS, NULL},
+	 { "status_code_generic_s_base_get", _wrap_status_code_generic_s_base_get, METH_O, NULL},
+	 { "status_code_generic_s_value_set", _wrap_status_code_generic_s_value_set, METH_VARARGS, NULL},
+	 { "status_code_generic_s_value_get", _wrap_status_code_generic_s_value_get, METH_O, NULL},
+	 { "new_status_code_generic_s", _wrap_new_status_code_generic_s, METH_NOARGS, NULL},
+	 { "delete_status_code_generic_s", _wrap_delete_status_code_generic_s, METH_O, NULL},
+	 { "status_code_generic_s_swigregister", status_code_generic_s_swigregister, METH_O, NULL},
+	 { "status_code_generic_s_swiginit", status_code_generic_s_swiginit, METH_VARARGS, NULL},
 	 { "new_status_code_generic", _wrap_new_status_code_generic, METH_NOARGS, NULL},
 	 { "delete_status_code_generic", _wrap_delete_status_code_generic, METH_O, NULL},
 	 { "status_code_generic_swigregister", status_code_generic_swigregister, METH_O, NULL},
@@ -6136,10 +7773,14 @@ static PyMethodDef SwigMethods[] = {
 	 { "status_code_generic_make", _wrap_status_code_generic_make, METH_O, " Make a `status_code_generic`"},
 	 { "status_code_equivalent", _wrap_status_code_equivalent, METH_VARARGS, " True if the status codes are semantically equivalent in any way (implementation). Guaranteed transitive. Firstly `status_code_strictly_equivalent()` is run in both directions. If neither succeeds, each domain is asked for the equivalent generic code, and those are compared."},
 	 { "status_code_equivalent_errc", _wrap_status_code_equivalent_errc, METH_VARARGS, " True if the status code is semantically equivalent in any way to the generic enum value (implementation)."},
-	 { "status_code_system_base_set", _wrap_status_code_system_base_set, METH_VARARGS, NULL},
-	 { "status_code_system_base_get", _wrap_status_code_system_base_get, METH_O, NULL},
-	 { "status_code_system_value_set", _wrap_status_code_system_value_set, METH_VARARGS, NULL},
-	 { "status_code_system_value_get", _wrap_status_code_system_value_get, METH_O, NULL},
+	 { "status_code_system_s_base_set", _wrap_status_code_system_s_base_set, METH_VARARGS, NULL},
+	 { "status_code_system_s_base_get", _wrap_status_code_system_s_base_get, METH_O, NULL},
+	 { "status_code_system_s_value_set", _wrap_status_code_system_s_value_set, METH_VARARGS, NULL},
+	 { "status_code_system_s_value_get", _wrap_status_code_system_s_value_get, METH_O, NULL},
+	 { "new_status_code_system_s", _wrap_new_status_code_system_s, METH_NOARGS, NULL},
+	 { "delete_status_code_system_s", _wrap_delete_status_code_system_s, METH_O, NULL},
+	 { "status_code_system_s_swigregister", status_code_system_s_swigregister, METH_O, NULL},
+	 { "status_code_system_s_swiginit", status_code_system_s_swiginit, METH_VARARGS, NULL},
 	 { "new_status_code_system", _wrap_new_status_code_system, METH_NOARGS, NULL},
 	 { "delete_status_code_system", _wrap_delete_status_code_system, METH_O, NULL},
 	 { "status_code_system_swigregister", status_code_system_swigregister, METH_O, NULL},
@@ -6147,36 +7788,51 @@ static PyMethodDef SwigMethods[] = {
 	 { "status_code_system_make", _wrap_status_code_system_make, METH_VARARGS, " Make a system code from an untyped input status code, this will fail if the input status cannot fit into a system code or if alignment requirements are not met."},
 	 { "status_code_system_make_from_errc", _wrap_status_code_system_make_from_errc, METH_O, " Make a system code from an `enum status_code_errc`"},
 	 { "status_code_posix_domain", _wrap_status_code_posix_domain, METH_NOARGS, " Retrieve the domain for `status_code_posix`"},
-	 { "status_code_posix_base_set", _wrap_status_code_posix_base_set, METH_VARARGS, NULL},
-	 { "status_code_posix_base_get", _wrap_status_code_posix_base_get, METH_O, NULL},
-	 { "status_code_posix_value_set", _wrap_status_code_posix_value_set, METH_VARARGS, NULL},
-	 { "status_code_posix_value_get", _wrap_status_code_posix_value_get, METH_O, NULL},
+	 { "status_code_posix_s_base_set", _wrap_status_code_posix_s_base_set, METH_VARARGS, NULL},
+	 { "status_code_posix_s_base_get", _wrap_status_code_posix_s_base_get, METH_O, NULL},
+	 { "status_code_posix_s_value_set", _wrap_status_code_posix_s_value_set, METH_VARARGS, NULL},
+	 { "status_code_posix_s_value_get", _wrap_status_code_posix_s_value_get, METH_O, NULL},
+	 { "new_status_code_posix_s", _wrap_new_status_code_posix_s, METH_NOARGS, NULL},
+	 { "delete_status_code_posix_s", _wrap_delete_status_code_posix_s, METH_O, NULL},
+	 { "status_code_posix_s_swigregister", status_code_posix_s_swigregister, METH_O, NULL},
+	 { "status_code_posix_s_swiginit", status_code_posix_s_swiginit, METH_VARARGS, NULL},
 	 { "new_status_code_posix", _wrap_new_status_code_posix, METH_NOARGS, NULL},
 	 { "delete_status_code_posix", _wrap_delete_status_code_posix, METH_O, NULL},
 	 { "status_code_posix_swigregister", status_code_posix_swigregister, METH_O, NULL},
 	 { "status_code_posix_swiginit", status_code_posix_swiginit, METH_VARARGS, NULL},
 	 { "status_code_posix_make", _wrap_status_code_posix_make, METH_O, " Make a `status_code_posix`"},
-	 { "status_code_is_empty", _wrap_status_code_is_empty, METH_O, " The type of a status code with named payload. You must call `STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)` first. Make a named status code previously declared. True if the status code is empty (implementation)"},
-	 { "status_code_is_success", _wrap_status_code_is_success, METH_O, " True if the status code is a success (implementation)"},
-	 { "status_code_is_failure", _wrap_status_code_is_failure, METH_O, " True if the status code is a failure (implementation)"},
-	 { "status_code_message", _wrap_status_code_message, METH_O, " Retrieves the message of the status code (implementation). Make sure you call `status_code_domain_string_ref_destroy()` when you are done with the returned string reference."},
-	 { "status_code_strictly_equivalent", _wrap_status_code_strictly_equivalent, METH_VARARGS, " True if the status codes are strictly semantically equivalent (implementation). `primary`'s domain's equivalence function decides if `secondary` is semantically equivalent to it. Note that for most status codes, if the codes have the same domain, a pure value equality is performed. This operation may not be transitive."},
-	 { "status_code_erased_destroy", _wrap_status_code_erased_destroy, METH_O, " Destroys the status code (erased)"},
-	 { "status_code_erased_clone", _wrap_status_code_erased_clone, METH_VARARGS, " Clones the status code (erased), returning an `errno` value if failed."},
+	 { "delete_wg14_result_special_member_functions", _wrap_delete_wg14_result_special_member_functions, METH_O, NULL},
+	 { "new_wg14_result_special_member_functions", _wrap_new_wg14_result_special_member_functions, METH_VARARGS, NULL},
+	 { "wg14_result_special_member_functions___nonzero__", _wrap_wg14_result_special_member_functions___nonzero__, METH_O, " Permits boolean testing for success."},
+	 { "wg14_result_special_member_functions_has_value", _wrap_wg14_result_special_member_functions_has_value, METH_O, " Returns true if the result is successful."},
+	 { "wg14_result_special_member_functions_has_error", _wrap_wg14_result_special_member_functions_has_error, METH_O, " Returns true if the result has failed with an error."},
+	 { "wg14_result_special_member_functions_has_exception", _wrap_wg14_result_special_member_functions_has_exception, METH_O, " Returns true if the result has failed with a C++ exception."},
+	 { "wg14_result_special_member_functions_has_failure", _wrap_wg14_result_special_member_functions_has_failure, METH_O, " Returns true if the result has failed in any way."},
+	 { "wg14_result_special_member_functions_has_lost_consistency", _wrap_wg14_result_special_member_functions_has_lost_consistency, METH_O, " Returns true if the result has lost internal consistency."},
+	 { "wg14_result_special_member_functions_swigregister", wg14_result_special_member_functions_swigregister, METH_O, NULL},
+	 { "wg14_result_special_member_functions_swiginit", wg14_result_special_member_functions_swiginit, METH_VARARGS, NULL},
 	 { "result_flags_status_set", _wrap_result_flags_status_set, METH_VARARGS, NULL},
 	 { "result_flags_status_get", _wrap_result_flags_status_get, METH_O, NULL},
-	 { "new_result_flags", _wrap_new_result_flags, METH_NOARGS, NULL},
+	 { "new_result_flags", _wrap_new_result_flags, METH_VARARGS, NULL},
 	 { "delete_result_flags", _wrap_delete_result_flags, METH_O, NULL},
+	 { "result_flags_have_value", _wrap_result_flags_have_value, METH_O, NULL},
+	 { "result_flags_have_error", _wrap_result_flags_have_error, METH_O, NULL},
+	 { "result_flags_have_exception", _wrap_result_flags_have_exception, METH_O, NULL},
+	 { "result_flags_have_lost_consistency", _wrap_result_flags_have_lost_consistency, METH_O, NULL},
 	 { "result_flags_swigregister", result_flags_swigregister, METH_O, NULL},
 	 { "result_flags_swiginit", result_flags_swiginit, METH_VARARGS, NULL},
-	 { "result_with_void_t__flags__set", _wrap_result_with_void_t__flags__set, METH_VARARGS, NULL},
-	 { "result_with_void_t__flags__get", _wrap_result_with_void_t__flags__get, METH_O, NULL},
-	 { "result_with_void_t_error_set", _wrap_result_with_void_t_error_set, METH_VARARGS, NULL},
-	 { "result_with_void_t_error_get", _wrap_result_with_void_t_error_get, METH_O, NULL},
-	 { "new_result_with_void_t", _wrap_new_result_with_void_t, METH_NOARGS, NULL},
-	 { "delete_result_with_void_t", _wrap_delete_result_with_void_t, METH_O, NULL},
-	 { "result_with_void_t_swigregister", result_with_void_t_swigregister, METH_O, NULL},
-	 { "result_with_void_t_swiginit", result_with_void_t_swiginit, METH_VARARGS, NULL},
+	 { "result_with_void_s__flags__set", _wrap_result_with_void_s__flags__set, METH_VARARGS, NULL},
+	 { "result_with_void_s__flags__get", _wrap_result_with_void_s__flags__get, METH_O, NULL},
+	 { "result_with_void_s_error_set", _wrap_result_with_void_s_error_set, METH_VARARGS, NULL},
+	 { "result_with_void_s_error_get", _wrap_result_with_void_s_error_get, METH_O, NULL},
+	 { "new_result_with_void_s", _wrap_new_result_with_void_s, METH_NOARGS, NULL},
+	 { "delete_result_with_void_s", _wrap_delete_result_with_void_s, METH_O, NULL},
+	 { "result_with_void_s_swigregister", result_with_void_s_swigregister, METH_O, NULL},
+	 { "result_with_void_s_swiginit", result_with_void_s_swiginit, METH_VARARGS, NULL},
+	 { "new_result_with_void", _wrap_new_result_with_void, METH_VARARGS, NULL},
+	 { "delete_result_with_void", _wrap_delete_result_with_void, METH_O, NULL},
+	 { "result_with_void_swigregister", result_with_void_swigregister, METH_O, NULL},
+	 { "result_with_void_swiginit", result_with_void_swiginit, METH_VARARGS, NULL},
 	 { "result_void_make_success", _wrap_result_void_make_success, METH_NOARGS, " Makes a successful Result with type `void`."},
 	 { "result_void_make_failure", _wrap_result_void_make_failure, METH_O, " Makes an unsuccessful Result with type `void`."},
 	 { NULL, NULL, 0, NULL }
@@ -6185,22 +7841,37 @@ static PyMethodDef SwigMethods[] = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
+static void *_p_result_with_voidTo_p_result_with_void_s(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((result_with_void_s *) (wg14_result::wg14_result_special_member_functions< result_with_void_s > *) ((result_with_void *) x));
+}
+static void *_p_status_code_genericTo_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((wg14_result::status_code_special_member_functions< struct status_code_generic_s > *)  ((status_code_generic *) x));
+}
+static void *_p_result_with_voidTo_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((wg14_result::wg14_result_special_member_functions< result_with_void_s > *)  ((result_with_void *) x));
+}
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_q_const__status_code_domain_string_ref_thunk_args_s__int = {"_p_f_p_q_const__status_code_domain_string_ref_thunk_args_s__int", "status_code_domain_string_ref_thunk_spec|int (*)(status_code_domain_string_ref_thunk_args_s const *)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_intptr_t = {"_p_intptr_t", "intptr_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_void = {"_p_p_void", "void **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_result_flags = {"_p_result_flags", "result_flags *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_result_with_void = {"_p_result_with_void", "result_with_void_t *|result_with_void *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_result_with_void = {"_p_result_with_void", "result_with_void *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_result_with_void_s = {"_p_result_with_void_s", "result_with_void_s *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_status_code_domain_payload_info_t = {"_p_status_code_domain_payload_info_t", "status_code_domain_payload_info_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_status_code_domain_s = {"_p_status_code_domain_s", "status_code_domain *|status_code_domain_s *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_status_code_domain_string_ref_s = {"_p_status_code_domain_string_ref_s", "status_code_domain_string_ref *|status_code_domain_string_ref_s *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_status_code_domain_string_ref_thunk_args_s = {"_p_status_code_domain_string_ref_thunk_args_s", "status_code_domain_string_ref_thunk_args *|status_code_domain_string_ref_thunk_args_s *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_status_code_domain_vtable_s = {"_p_status_code_domain_vtable_s", "status_code_domain_vtable *|status_code_domain_vtable_s *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_status_code_generic_s = {"_p_status_code_generic_s", "status_code_generic *|status_code_generic_s *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_status_code_posix_s = {"_p_status_code_posix_s", "status_code_posix *|status_code_posix_s *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_status_code_system_s = {"_p_status_code_system_s", "status_code_system *|status_code_system_s *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_status_code_generic = {"_p_status_code_generic", "status_code_generic *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_status_code_generic_s = {"_p_status_code_generic_s", "status_code_generic_s *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_status_code_posix = {"_p_status_code_posix", "status_code_posix *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_status_code_posix_s = {"_p_status_code_posix_s", "status_code_posix_s *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_status_code_system = {"_p_status_code_system", "status_code_system *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_status_code_system_s = {"_p_status_code_system_s", "status_code_system_s *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_status_code_untyped = {"_p_status_code_untyped", "status_code_untyped *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_long_long = {"_p_unsigned_long_long", "status_code_domain_unique_id_type *|unsigned long long *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t = {"_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t", "wg14_result::status_code_special_member_functions< struct status_code_generic_s > *|wg14_result::status_code_special_member_functions< status_code_generic_s > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t = {"_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t", "wg14_result::wg14_result_special_member_functions< result_with_void_s > *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_char,
@@ -6209,16 +7880,22 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_p_void,
   &_swigt__p_result_flags,
   &_swigt__p_result_with_void,
+  &_swigt__p_result_with_void_s,
   &_swigt__p_status_code_domain_payload_info_t,
   &_swigt__p_status_code_domain_s,
   &_swigt__p_status_code_domain_string_ref_s,
   &_swigt__p_status_code_domain_string_ref_thunk_args_s,
   &_swigt__p_status_code_domain_vtable_s,
+  &_swigt__p_status_code_generic,
   &_swigt__p_status_code_generic_s,
+  &_swigt__p_status_code_posix,
   &_swigt__p_status_code_posix_s,
+  &_swigt__p_status_code_system,
   &_swigt__p_status_code_system_s,
   &_swigt__p_status_code_untyped,
   &_swigt__p_unsigned_long_long,
+  &_swigt__p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t,
+  &_swigt__p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t,
 };
 
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
@@ -6227,16 +7904,22 @@ static swig_cast_info _swigc__p_intptr_t[] = {  {&_swigt__p_intptr_t, 0, 0, 0},{
 static swig_cast_info _swigc__p_p_void[] = {  {&_swigt__p_p_void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_result_flags[] = {  {&_swigt__p_result_flags, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_result_with_void[] = {  {&_swigt__p_result_with_void, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_result_with_void_s[] = {  {&_swigt__p_result_with_void_s, 0, 0, 0},  {&_swigt__p_result_with_void, _p_result_with_voidTo_p_result_with_void_s, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_status_code_domain_payload_info_t[] = {  {&_swigt__p_status_code_domain_payload_info_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_status_code_domain_s[] = {  {&_swigt__p_status_code_domain_s, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_status_code_domain_string_ref_s[] = {  {&_swigt__p_status_code_domain_string_ref_s, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_status_code_domain_string_ref_thunk_args_s[] = {  {&_swigt__p_status_code_domain_string_ref_thunk_args_s, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_status_code_domain_vtable_s[] = {  {&_swigt__p_status_code_domain_vtable_s, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_status_code_generic[] = {  {&_swigt__p_status_code_generic, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_status_code_generic_s[] = {  {&_swigt__p_status_code_generic_s, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_status_code_posix[] = {  {&_swigt__p_status_code_posix, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_status_code_posix_s[] = {  {&_swigt__p_status_code_posix_s, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_status_code_system[] = {  {&_swigt__p_status_code_system, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_status_code_system_s[] = {  {&_swigt__p_status_code_system_s, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_status_code_untyped[] = {  {&_swigt__p_status_code_untyped, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_long_long[] = {  {&_swigt__p_unsigned_long_long, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t[] = {  {&_swigt__p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, 0, 0, 0},  {&_swigt__p_status_code_generic, _p_status_code_genericTo_p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t[] = {  {&_swigt__p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, 0, 0, 0},  {&_swigt__p_result_with_void, _p_result_with_voidTo_p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_char,
@@ -6245,16 +7928,22 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_p_void,
   _swigc__p_result_flags,
   _swigc__p_result_with_void,
+  _swigc__p_result_with_void_s,
   _swigc__p_status_code_domain_payload_info_t,
   _swigc__p_status_code_domain_s,
   _swigc__p_status_code_domain_string_ref_s,
   _swigc__p_status_code_domain_string_ref_thunk_args_s,
   _swigc__p_status_code_domain_vtable_s,
+  _swigc__p_status_code_generic,
   _swigc__p_status_code_generic_s,
+  _swigc__p_status_code_posix,
   _swigc__p_status_code_posix_s,
+  _swigc__p_status_code_system,
   _swigc__p_status_code_system_s,
   _swigc__p_status_code_untyped,
   _swigc__p_unsigned_long_long,
+  _swigc__p_wg14_result__status_code_special_member_functionsT_status_code_generic_s_t,
+  _swigc__p_wg14_result__wg14_result_special_member_functionsT_result_with_void_s_t,
 };
 
 
@@ -6813,6 +8502,7 @@ SWIG_init(void) {
 #endif
   }
   PyDict_SetItemString(md, "cvar", globals);
+  SWIG_addvarlink(globals, "status_code_generic_empty", Swig_var_status_code_generic_empty_get, Swig_var_status_code_generic_empty_set);
   SWIG_addvarlink(globals, "status_code_system_empty", Swig_var_status_code_system_empty_get, Swig_var_status_code_system_empty_set);
   SWIG_Python_SetConstant(d, "result_status_flag_none",SWIG_From_int(static_cast< int >(result_status_flag_none)));
   SWIG_Python_SetConstant(d, "result_status_flag_have_value",SWIG_From_int(static_cast< int >(result_status_flag_have_value)));

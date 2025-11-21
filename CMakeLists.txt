@@ -6,7 +6,9 @@ set(CMAKE_C_STANDARD "11" CACHE STRING "C standard to use")
 option(HEADER_ONLY_BUILD "Build using header only (unity build)" OFF)
 option(BUILD_POSIX_SUPPORT "Build POSIX code support" ON)
 option(BUILD_SWIG_WRAPPERS "Build SWIG wrappers" ON)
+option(BUILD_RUST_WRAPPERS "Build RUST wrappers" ON)
 option(BUILD_TESTS_AS_CXX "Build tests as C++" ON)
+option(BUILD_SWIG_AS_CXX "Build SWIG wrappers as C++" ON)
 
 project(wg14_result LANGUAGES C CXX)
 include(GNUInstallDirs)
@@ -81,15 +83,18 @@ if(BUILD_SWIG_WRAPPERS)
       find_package(Python COMPONENTS Development.Module REQUIRED)
       set(link_libraries Python::Module)
       # We want the member functions to appear in Python
-      set_property(SOURCE "SWIG/${PROJECT_NAME}.i" PROPERTY CPLUSPLUS ON)
-      set_property(SOURCE "SWIG/${PROJECT_NAME}.i" PROPERTY COMPILE_OPTIONS "-doxygen")
+      if(BUILD_SWIG_AS_CXX)
+        set_property(SOURCE "bindings/SWIG/${PROJECT_NAME}.i" PROPERTY CPLUSPLUS ON)
+      endif()
+      set_property(SOURCE "bindings/SWIG/${PROJECT_NAME}.i" PROPERTY COMPILE_OPTIONS "-doxygen")
     else()
-      set_property(SOURCE "SWIG/${PROJECT_NAME}.i" PROPERTY CPLUSPLUS OFF)
+      set_property(SOURCE "bindings/SWIG/${PROJECT_NAME}.i" PROPERTY CPLUSPLUS OFF)
     endif()
-    #set_property(SOURCE "SWIG/${PROJECT_NAME}.i" PROPERTY COMPILE_OPTIONS "-E")
+    #set_property(SOURCE "bindings/SWIG/${PROJECT_NAME}.i" PROPERTY COMPILE_OPTIONS "-E")
+    set_property(SOURCE "bindings/SWIG/${PROJECT_NAME}.i" APPEND PROPERTY OBJECT_DEPENDS ${LIBRARY_SOURCES})
     swig_add_library(${PROJECT_NAME}_${language} TYPE SHARED LANGUAGE ${language}
-      OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SWIG/${language}/"
-      SOURCES "SWIG/${PROJECT_NAME}.i"
+      OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/bindings/SWIG/${language}/"
+      SOURCES "bindings/SWIG/${PROJECT_NAME}.i"
     )
     target_compile_definitions(${PROJECT_NAME}_${language} PUBLIC WG14_RESULT_DISABLE_CONVENIENCE_MACROS)
     set_target_properties(${PROJECT_NAME}_${language} PROPERTIES
@@ -98,8 +103,40 @@ if(BUILD_SWIG_WRAPPERS)
       RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
       SWIG_USE_TARGET_INCLUDE_DIRECTORIES TRUE
     )
+    if(BUILD_SWIG_AS_CXX)
+      target_compile_features(${PROJECT_NAME}_${language} PRIVATE cxx_std_11)
+    endif()
     target_link_libraries(${PROJECT_NAME}_${language} PUBLIC ${PROJECT_NAME} ${link_libraries})
   endforeach()
+endif()
+
+if(BUILD_RUST_WRAPPERS)
+  find_program(BINDGEN_PROGRAM bindgen)
+  find_program(RUSTC_PROGRAM rustc REQUIRED)
+  if(BINDGEN_PROGRAM)
+    add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/bindings/rust/raw_bindings.rs"
+      COMMAND "${BINDGEN_PROGRAM}" -o "${CMAKE_CURRENT_SOURCE_DIR}/bindings/rust/raw_bindings.rs"
+      "${CMAKE_CURRENT_SOURCE_DIR}/include/wg14_result/all.hpp"
+      --allowlist-function 'result.*'
+      --allowlist-function 'status_code.*'
+      --allowlist-function 'wg14_result.*'
+      --allowlist-type 'result.*'
+      --allowlist-type 'status_code.*'
+      --allowlist-type 'wg14_result.*'
+      --allowlist-var 'result.*'
+      --allowlist-var 'status_code.*'
+      --allowlist-var 'wg14_result.*'
+      --generate-inline-functions
+      --no-layout-tests
+      --with-derive-default
+      --must-use-type result
+      --
+      -I ${CMAKE_CURRENT_LIST_DIR}/include
+      DEPENDS ${LIBRARY_SOURCES}
+    )
+    add_custom_target(${PROJECT_NAME}_regenerate_rust_bindings DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/bindings/rust/raw_bindings.rs")
+    add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_regenerate_rust_bindings)
+  endif()
 endif()
 
 if(PROJECT_IS_TOP_LEVEL AND (NOT DEFINED BUILD_TESTING OR BUILD_TESTING))
@@ -122,6 +159,9 @@ if(PROJECT_IS_TOP_LEVEL AND (NOT DEFINED BUILD_TESTING OR BUILD_TESTING))
       RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
       ${ADD_EXAMPLE_PROPERTIES}
     )
+    if(BUILD_TESTS_AS_CXX)
+      target_compile_features(${target} PRIVATE cxx_std_11)
+    endif()
   endfunction()
   function(add_code_test target)
     add_code_example(${target} ${ARGN})

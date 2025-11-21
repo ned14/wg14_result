@@ -148,6 +148,52 @@ disable : 4201)  // nonstandard extension used: nameless struct/union
       uint16_t spare_storage_value;  // spare storage sixteen bits, high bits
     };
 #endif
+
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+    constexpr WG14_RESULT_PREFIX(result_flags)()
+        : status{WG14_RESULT_PREFIX(result_status_flag_none)}
+    {
+    }
+    constexpr /*implicit*/ WG14_RESULT_PREFIX(result_flags)(
+    WG14_RESULT_PREFIX(result_status_flags) v)
+        : status{v}
+    {
+    }
+    constexpr WG14_RESULT_PREFIX(result_flags)(
+    const WG14_RESULT_PREFIX(result_flags) &) = default;
+    constexpr WG14_RESULT_PREFIX(result_flags)(
+    WG14_RESULT_PREFIX(result_flags) &&) = default;
+    constexpr WG14_RESULT_PREFIX(result_flags) &
+    operator=(const WG14_RESULT_PREFIX(result_flags) &) = default;
+    constexpr WG14_RESULT_PREFIX(result_flags) &
+    operator=(WG14_RESULT_PREFIX(result_flags) &&) = default;
+    WG14_RESULT_CXX_CONSTEXPR20 ~WG14_RESULT_PREFIX(result_flags)() = default;
+
+    constexpr bool have_value() const noexcept
+    {
+      return (static_cast<uint16_t>(status_bits) &
+              static_cast<uint16_t>(
+              WG14_RESULT_PREFIX(result_status_flag_have_value))) != 0;
+    }
+    constexpr bool have_error() const noexcept
+    {
+      return (static_cast<uint16_t>(status_bits) &
+              static_cast<uint16_t>(
+              WG14_RESULT_PREFIX(result_status_flag_have_error))) != 0;
+    }
+    constexpr bool have_exception() const noexcept
+    {
+      return (static_cast<uint16_t>(status_bits) &
+              static_cast<uint16_t>(
+              WG14_RESULT_PREFIX(result_status_flag_have_exception))) != 0;
+    }
+    constexpr bool have_lost_consistency() const noexcept
+    {
+      return (static_cast<uint16_t>(status_bits) &
+              static_cast<uint16_t>(WG14_RESULT_PREFIX(
+              result_status_flag_have_lost_consistency))) != 0;
+    }
+#endif
   };
 #if __STDC_VERSION__ >= 201100L
   _Static_assert(sizeof(union WG14_RESULT_PREFIX(result_flags)) ==
@@ -167,75 +213,151 @@ disable : 4201)  // nonstandard extension used: nameless struct/union
 #pragma GCC diagnostic pop
 #endif
 
-  //! \brief A Result for type `void`.
-  typedef struct WG14_RESULT_PREFIX(result_with_void)
+  struct WG14_RESULT_PREFIX(result_with_void_s)
   {
     union WG14_RESULT_PREFIX(result_flags) _flags_;
     WG14_RESULT_PREFIX(status_code_system) error;
-  } WG14_RESULT_PREFIX(result_with_void_t);
+  };
+  //! \brief A Result for type `void`.
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+  struct WG14_RESULT_PREFIX(result_with_void)
+      : wg14_result::wg14_result_special_member_functions<WG14_RESULT_PREFIX(
+        result_with_void_s)>
+  {
+    using wg14_result::wg14_result_special_member_functions<WG14_RESULT_PREFIX(
+    result_with_void_s)>::wg14_result_special_member_functions;
+
+    WG14_RESULT_CXX_CONSTEXPR20
+    WG14_RESULT_PREFIX(result_with_void)() = default;
+    WG14_RESULT_PREFIX(result_with_void)
+    (const WG14_RESULT_PREFIX(result_with_void) &) = default;
+    WG14_RESULT_PREFIX(result_with_void)
+    (WG14_RESULT_PREFIX(result_with_void) &&) = default;
+    WG14_RESULT_PREFIX(result_with_void) &
+    operator=(const WG14_RESULT_PREFIX(result_with_void) &) = default;
+    WG14_RESULT_PREFIX(result_with_void) &
+    operator=(WG14_RESULT_PREFIX(result_with_void) &&) = default;
+    WG14_RESULT_CXX_CONSTEXPR20 ~WG14_RESULT_PREFIX(result_with_void)() =
+    default;
+  };
+#else
+typedef struct WG14_RESULT_PREFIX(result_with_void_s)
+WG14_RESULT_PREFIX(result_with_void);
+#endif
 #if __STDC_VERSION__ >= 201100L
-  _Static_assert(sizeof(WG14_RESULT_PREFIX(result_with_void_t)) ==
+  _Static_assert(sizeof(WG14_RESULT_PREFIX(result_with_void)) ==
                  3 * sizeof(void *),
                  "Result is not the size it is supposed to be!");
-  _Static_assert(__alignof(WG14_RESULT_PREFIX(result_with_void_t)) ==
+  _Static_assert(__alignof(WG14_RESULT_PREFIX(result_with_void)) ==
                  __alignof(void *),
                  "Result does not have the alignment it is supposed to!");
 #endif
 
   //! \brief Makes a successful Result with type `void`.
-  WG14_RESULT_INLINE struct WG14_RESULT_PREFIX(result_with_void)
+  WG14_RESULT_INLINE WG14_RESULT_PREFIX(result_with_void)
   WG14_RESULT_PREFIX(result_void_make_success)(void)
   {
-    struct WG14_RESULT_PREFIX(result_with_void)
-    ret = {{WG14_RESULT_PREFIX(result_status_flag_have_value)},
-           WG14_RESULT_PREFIX(status_code_system_empty)};
-    return ret;
+    const struct WG14_RESULT_PREFIX(result_with_void_s)
+    ret1 = {{WG14_RESULT_PREFIX(result_status_flag_have_value)},
+            WG14_RESULT_PREFIX(status_code_system_empty)};
+    const WG14_RESULT_PREFIX(result_with_void) ret2 =
+    WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(ret1);
+    return ret2;
   }
   //! \brief Makes an unsuccessful Result with type `void`.
-  WG14_RESULT_INLINE struct WG14_RESULT_PREFIX(result_with_void)
-  WG14_RESULT_PREFIX(result_void_make_failure)(
-  WG14_RESULT_PREFIX(status_code_system) err)
+  WG14_RESULT_INLINE WG14_RESULT_PREFIX(result_with_void) WG14_RESULT_PREFIX(
+  result_void_make_failure)(WG14_RESULT_PREFIX(status_code_system) err)
   {
-    struct WG14_RESULT_PREFIX(result_with_void)
-    ret = {{WG14_RESULT_PREFIX(result_status_flag_have_error)}, err};
-    return ret;
+    const struct WG14_RESULT_PREFIX(result_with_void_s)
+    ret1 = {{WG14_RESULT_PREFIX(result_status_flag_have_error)}, err};
+    const WG14_RESULT_PREFIX(result_with_void) ret2 =
+    WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(ret1);
+    return ret2;
   }
 
-//! \brief Declare a Result named `name` with successful type `T`
-#define WG14_RESULT_DECLARE(T, name)                                           \
-  struct WG14_RESULT_PREFIX(result_with_##name)                                \
+#define WG14_RESULT_DECLARE_IMPL1(T, name, ...)                                \
+  struct WG14_RESULT_PREFIX(result_with_##name##_s)                            \
   {                                                                            \
-    T value;                                                                   \
+    T value __VA_ARGS__;                                                       \
     union WG14_RESULT_PREFIX(result_flags) _flags_;                            \
     WG14_RESULT_PREFIX(status_code_system) error;                              \
-  };                                                                           \
-  WG14_RESULT_INLINE struct WG14_RESULT_PREFIX(result_with_##name)             \
+  };
+#define WG14_RESULT_DECLARE_IMPL2(T, name)                                     \
+  WG14_RESULT_INLINE WG14_RESULT_PREFIX(result_with_##name)                    \
   WG14_RESULT_PREFIX(result_##name##_make_success)(T val)                      \
   {                                                                            \
-    struct WG14_RESULT_PREFIX(result_with_##name)                              \
-    ret = {val,                                                                \
-           {WG14_RESULT_PREFIX(result_status_flag_have_value)},                \
-           WG14_RESULT_PREFIX(status_code_system_empty)};                      \
-    return ret;                                                                \
+    struct WG14_RESULT_PREFIX(result_with_##name##_s)                          \
+    ret1 = {val,                                                               \
+            {WG14_RESULT_PREFIX(result_status_flag_have_value)},               \
+            WG14_RESULT_PREFIX(status_code_system_empty)};                     \
+    WG14_RESULT_PREFIX(result_with_##name)                                     \
+    ret2 = WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(ret1); \
+    return ret2;                                                               \
   }                                                                            \
-  WG14_RESULT_INLINE struct WG14_RESULT_PREFIX(result_with_##name)             \
+  WG14_RESULT_INLINE WG14_RESULT_PREFIX(result_with_##name)                    \
   WG14_RESULT_PREFIX(result_##name##_make_failure)(                            \
   WG14_RESULT_PREFIX(status_code_system) err)                                  \
   {                                                                            \
-    struct WG14_RESULT_PREFIX(result_with_##name) ret;                         \
-    memset(&ret, 0, sizeof(ret));                                              \
+    WG14_RESULT_PREFIX(result_with_##name) ret;                                \
+    WG14_RESULT_NOT_CXX_MEMSET(&ret, 0, sizeof(ret));                          \
     ret.error = err;                                                           \
     ret._flags_.status = WG14_RESULT_PREFIX(result_status_flag_have_error);    \
     return ret;                                                                \
   }
+
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+//! \brief Declare a Result named `name` with successful type `T`
+#define WG14_RESULT_DECLARE(T, name)                                           \
+  WG14_RESULT_DECLARE_IMPL1(T, name, {})                                       \
+  struct WG14_RESULT_PREFIX(result_with_##name)                                \
+      : wg14_result::wg14_result_special_member_functions<WG14_RESULT_PREFIX(  \
+        result_with_##name##_s)>                                               \
+  {                                                                            \
+    using _base =                                                              \
+    wg14_result::wg14_result_special_member_functions<WG14_RESULT_PREFIX(      \
+    result_with_##name##_s)>;                                                  \
+    using _base::_base;                                                        \
+                                                                               \
+    using value_type = T;                                                      \
+    using error_type = WG14_RESULT_PREFIX(status_code_system);                 \
+                                                                               \
+    WG14_RESULT_CXX_CONSTEXPR20                                                \
+    WG14_RESULT_PREFIX(result_with_##name)() = default;                        \
+    WG14_RESULT_PREFIX(result_with_##name)                                     \
+    (const WG14_RESULT_PREFIX(result_with_##name) &) = default;                \
+    WG14_RESULT_PREFIX(result_with_##name)                                     \
+    (WG14_RESULT_PREFIX(result_with_##name) &&) = default;                     \
+    WG14_RESULT_PREFIX(result_with_##name) &                                   \
+    operator=(const WG14_RESULT_PREFIX(result_with_##name) &) = default;       \
+    WG14_RESULT_PREFIX(result_with_##name) &                                   \
+    operator=(WG14_RESULT_PREFIX(result_with_##name) &&) = default;            \
+    WG14_RESULT_CXX_CONSTEXPR20 ~WG14_RESULT_PREFIX(result_with_##name)() =    \
+    default;                                                                   \
+  };                                                                           \
+  WG14_RESULT_DECLARE_IMPL2(T, name)
+#else
+#define WG14_RESULT_DECLARE_IMPL(T, name)                                      \
+  WG14_RESULT_DECLARE_IMPL1(T, name, )                                         \
+  typedef struct WG14_RESULT_PREFIX(result_with_##name##_s)                    \
+  WG14_RESULT_PREFIX(result_with_##name);                                      \
+  WG14_RESULT_DECLARE_IMPL2(T, name)
+//! \brief Declare a Result named `name` with successful type `T`
+#define WG14_RESULT_DECLARE(T, name) WG14_RESULT_DECLARE_IMPL(T, name)
+#endif
+
+#define WG14_RESULT_IMPL(name) WG14_RESULT_PREFIX(result_with_##name)
 //! \brief The type of a Result named `name` previously declared.
-#define WG14_RESULT(name) struct WG14_RESULT_PREFIX(result_with_##name)
+#define WG14_RESULT(name) WG14_RESULT_IMPL(name)
+#define WG14_RESULT_MAKE_SUCCESS_IMPL(name, ...)                               \
+  WG14_RESULT_PREFIX(result_##name##_make_success)(__VA_ARGS__)
 //! \brief Make a successful named Result previously declared.
 #define WG14_RESULT_MAKE_SUCCESS(name, ...)                                    \
-  WG14_RESULT_PREFIX(result_##name##_make_success)(__VA_ARGS__)
+  WG14_RESULT_MAKE_SUCCESS_IMPL(name, __VA_ARGS__)
+#define WG14_RESULT_MAKE_FAILURE_IMPL(name, ...)                               \
+  WG14_RESULT_PREFIX(result_##name##_make_failure)(__VA_ARGS__)
 //! \brief Make a failed named Result previously declared.
 #define WG14_RESULT_MAKE_FAILURE(name, ...)                                    \
-  WG14_RESULT_PREFIX(result_##name##_make_failure)(__VA_ARGS__)
+  WG14_RESULT_MAKE_FAILURE_IMPL(name, __VA_ARGS__)
 //! \brief True if a Result is successful (and contains a value if not `void`)
 #define WG14_RESULT_HAS_VALUE(...)                                             \
   ((__VA_ARGS__)._flags_.status_bits &                                         \
@@ -247,6 +369,49 @@ disable : 4201)  // nonstandard extension used: nameless struct/union
 
 #ifdef __cplusplus
 }
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+namespace wg14_result
+{
+  template <class T> struct WG14_RESULT_PREFIX(result_storage)
+  {
+    T value{};
+    union WG14_RESULT_PREFIX(result_flags) _flags_;
+    WG14_RESULT_PREFIX(status_code_system) error;
+
+    using value_type = T;
+    using error_type = WG14_RESULT_PREFIX(status_code_system);
+  };
+  template <> struct WG14_RESULT_PREFIX(result_storage)<void>
+  {
+    union WG14_RESULT_PREFIX(result_flags) _flags_;
+    WG14_RESULT_PREFIX(status_code_system) error;
+
+    using value_type = void;
+    using error_type = WG14_RESULT_PREFIX(status_code_system);
+  };
+  template <class T>
+  struct WG14_RESULT_PREFIX(result)
+      : wg14_result::wg14_result_special_member_functions <
+      WG14_RESULT_PREFIX(result_storage) < T >>
+  {
+    using wg14_result::wg14_result_special_member_functions <
+    WG14_RESULT_PREFIX(result_storage) < T >>
+    ::wg14_result_special_member_functions;
+
+    WG14_RESULT_CXX_CONSTEXPR20
+    WG14_RESULT_PREFIX(result)() = default;
+    constexpr WG14_RESULT_PREFIX(result)(const WG14_RESULT_PREFIX(result) &) =
+    default;
+    constexpr WG14_RESULT_PREFIX(result)(WG14_RESULT_PREFIX(result) &&) =
+    default;
+    constexpr WG14_RESULT_PREFIX(result) &
+    operator=(const WG14_RESULT_PREFIX(result) &) = default;
+    constexpr WG14_RESULT_PREFIX(result) &
+    operator=(WG14_RESULT_PREFIX(result) &&) = default;
+    WG14_RESULT_CXX_CONSTEXPR20 ~WG14_RESULT_PREFIX(result)() = default;
+  };
+}  // namespace wg14_result
+#endif
 #endif
 
 #endif

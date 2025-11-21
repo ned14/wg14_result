@@ -27,10 +27,18 @@ limitations under the License.
 #ifdef __cplusplus
 extern "C"
 {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4190)  // C linkage
+#pragma warning(disable : 4996)  // use strerror_s instead
+#endif
 #endif
 
   //! The generic error coding (POSIX)
   enum WG14_RESULT_PREFIX(status_code_errc)
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+  : int
+#endif
   {
     WG14_RESULT_PREFIX(status_code_errc_success) = 0,
     WG14_RESULT_PREFIX(status_code_errc_unknown) = -1,
@@ -127,19 +135,44 @@ extern "C"
   WG14_RESULT_SINGLETON WG14_RESULT_PREFIX(status_code_domain) *
   WG14_RESULT_PREFIX(status_code_generic_domain)(void);
 
-  //! \brief A generic status code
-  typedef struct WG14_RESULT_PREFIX(status_code_generic_s)
+  struct WG14_RESULT_PREFIX(status_code_generic_s)
   {
     WG14_RESULT_PREFIX(status_code_untyped) base;
-    enum WG14_RESULT_PREFIX(status_code_errc) value;
-  } WG14_RESULT_PREFIX(status_code_generic);
+    enum WG14_RESULT_PREFIX(status_code_errc) value
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+    {
+    }
+#endif
+    ;
+  };
+  //! \brief A generic status code
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+  struct WG14_RESULT_PREFIX(status_code_generic)
+      : wg14_result::WG14_RESULT_PREFIX(status_code_special_member_functions)<
+        struct WG14_RESULT_PREFIX(status_code_generic_s)>
+  {
+    using wg14_result::WG14_RESULT_PREFIX(status_code_special_member_functions)<
+    struct WG14_RESULT_PREFIX(status_code_generic_s)>::
+    WG14_RESULT_PREFIX(status_code_special_member_functions);
+  };
+#else
+typedef struct WG14_RESULT_PREFIX(status_code_generic_s)
+WG14_RESULT_PREFIX(status_code_generic);
+#endif
+
+  //| \brief An empty `status_code_generic`
+  static WG14_RESULT_CONSTEXPR_OR_CONST WG14_RESULT_PREFIX(status_code_generic)
+  WG14_RESULT_PREFIX(status_code_generic_empty) = {
+  WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(
+  {WG14_RESULT_NULLPTR}, WG14_RESULT_PREFIX(status_code_errc_unknown))};
 
   //! \brief Make a `status_code_generic`
   WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_generic) WG14_RESULT_PREFIX(
   status_code_generic_make)(enum WG14_RESULT_PREFIX(status_code_errc) val)
   {
     const WG14_RESULT_PREFIX(status_code_generic)
-    ret = {{WG14_RESULT_PREFIX(status_code_generic_domain)()}, val};
+    ret = {WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(
+    {WG14_RESULT_PREFIX(status_code_generic_domain)()}, val)};
     return ret;
   }
 
@@ -148,15 +181,19 @@ extern "C"
   struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args)
   {
     WG14_RESULT_PREFIX(status_code_generic) ret;
-    const WG14_RESULT_PREFIX(status_code_untyped) * code;
+    const WG14_RESULT_PREFIX(status_code_untyped) * code
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+    {}
+#endif
+    ;
   };
 #endif
 
   //! \brief True if the status codes are semantically equivalent in any way
   //! (implementation). Guaranteed transitive. Firstly
-  //! `status_code_strictly_equivalent()` is run in both directions. If neither
-  //! succeeds, each domain is asked for the equivalent generic code, and those
-  //! are compared.
+  //! `status_code_strictly_equivalent()` is run in both directions. If
+  //! neither succeeds, each domain is asked for the equivalent generic
+  //! code, and those are compared.
   WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_equivalent)(
   const WG14_RESULT_PREFIX(status_code_untyped) * primary,
   const WG14_RESULT_PREFIX(status_code_untyped) * secondary)
@@ -178,18 +215,22 @@ extern "C"
       {
         return true;
       }
+      {
+        struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args)
+        args;
+        WG14_RESULT_NOT_CXX_MEMSET(&args, 0, sizeof(args));
+        args.code = secondary;
+        WG14_RESULT_VTABLE_INVOKE_API(secondary_domain, generic_code, &args);
+        if(args.ret.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
+           WG14_RESULT_VTABLE_INVOKE_API(primary->domain, equivalent, primary,
+                                         &args.ret.base))
+        {
+          return true;
+        }
+      }
       struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args)
       args;
-      memset(&args, 0, sizeof(args));
-      args.code = secondary;
-      WG14_RESULT_VTABLE_INVOKE_API(secondary_domain, generic_code, &args);
-      if(args.ret.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
-         WG14_RESULT_VTABLE_INVOKE_API(primary->domain, equivalent, primary,
-                                       &args.ret.base))
-      {
-        return true;
-      }
-      memset(&args, 0, sizeof(args));
+      WG14_RESULT_NOT_CXX_MEMSET(&args, 0, sizeof(args));
       args.code = primary;
       WG14_RESULT_VTABLE_INVOKE_API(primary_domain, generic_code, &args);
       if(args.ret.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
@@ -209,8 +250,8 @@ extern "C"
     return false;
   }
 
-  //! \brief True if the status code is semantically equivalent in any way to
-  //! the generic enum value (implementation).
+  //! \brief True if the status code is semantically equivalent in any way
+  //! to the generic enum value (implementation).
   WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_equivalent_errc)(
   const WG14_RESULT_PREFIX(status_code_untyped) * primary,
   enum WG14_RESULT_PREFIX(status_code_errc) errc)
@@ -219,6 +260,36 @@ extern "C"
     WG14_RESULT_PREFIX(status_code_generic_make)(errc);
     return WG14_RESULT_PREFIX(status_code_equivalent)(primary, &secondary.base);
   }
+
+#ifdef __cplusplus
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+}
+#endif
+
+
+#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
+namespace wg14_result
+{
+  template <class StorageType>
+  template <class T>
+  inline bool WG14_RESULT_PREFIX(status_code_special_member_functions)  //
+  <StorageType>::equivalent(
+  const status_code_special_member_functions<T> &o) const noexcept
+  {
+    return WG14_RESULT_PREFIX(status_code_equivalent)(&this->base, &o.base);
+  }
+  template <class StorageType>
+  inline bool WG14_RESULT_PREFIX(status_code_special_member_functions)  //
+  <StorageType>::equivalent(enum WG14_RESULT_PREFIX(status_code_errc)
+                            errc) const noexcept
+  {
+    return WG14_RESULT_PREFIX(status_code_equivalent_errc)(&this->base, errc);
+  }
+}  // namespace wg14_result
+#endif
+
 
 #ifndef WG14_RESULT_DISABLE_CONVENIENCE_MACROS
 //! \brief True if the status codes are semantically equivalent in any way
@@ -234,10 +305,6 @@ extern "C"
   WG14_RESULT_PREFIX(status_code_equivalent_errc)(&(primary).base, (errc))
 #endif
 
-
-#ifdef __cplusplus
-}
-#endif
 
 #if WG14_RESULT_ENABLE_HEADER_ONLY
 #include "../../src/wg14_result/status_code_generic.c"
