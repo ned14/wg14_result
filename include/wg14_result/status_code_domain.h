@@ -146,7 +146,7 @@ extern "C"
   };
 
   //! \brief Returns true if the string ref is empty
-  WG14_RESULT_INLINE bool
+  WG14_RESULT_EXTERN_INLINE bool
   WG14_RESULT_PREFIX(status_code_domain_string_ref_is_empty)(
   const WG14_RESULT_PREFIX(status_code_domain_string_ref) * s)
   {
@@ -155,7 +155,8 @@ extern "C"
 
   //! \brief Attempt to copy a string ref, returning an `errno` cause if it
   //! failed.
-  WG14_RESULT_INLINE int WG14_RESULT_PREFIX(status_code_domain_string_ref_copy)(
+  WG14_RESULT_EXTERN_INLINE int
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_copy)(
   WG14_RESULT_PREFIX(status_code_domain_string_ref) * dest,
   const WG14_RESULT_PREFIX(status_code_domain_string_ref) * src)
   {
@@ -171,7 +172,7 @@ extern "C"
   }
 
   //! \brief Attempt to move a string ref
-  WG14_RESULT_INLINE void
+  WG14_RESULT_EXTERN_INLINE void
   WG14_RESULT_PREFIX(status_code_domain_string_ref_move)(
   WG14_RESULT_PREFIX(status_code_domain_string_ref) * dest,
   WG14_RESULT_PREFIX(status_code_domain_string_ref) * src)
@@ -195,7 +196,7 @@ extern "C"
   }
 
   //! \brief Destroy a string ref
-  WG14_RESULT_INLINE void
+  WG14_RESULT_EXTERN_INLINE void
   WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(
   const WG14_RESULT_PREFIX(status_code_domain_string_ref) * _src)
   {
@@ -247,7 +248,7 @@ extern "C"
 
   //! \brief Make a string ref which refers to a null terminated static string
   //! slice
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
   WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string_slice)(
   const char *s, size_t len)
   {
@@ -261,7 +262,7 @@ extern "C"
   }
 
   //! \brief Make a string ref which refers to a null terminated static string
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
   WG14_RESULT_PREFIX(status_code_domain_string_ref_from_static_string)(
   const char *s)
   {
@@ -288,7 +289,7 @@ extern "C"
 
   //! \brief Make an atomic refcounted string ref which copies the input null
   //! terminated static string
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
   WG14_RESULT_PREFIX(
   status_code_domain_string_ref_atomic_refcounted_from_string)(const char *s)
   {
@@ -325,7 +326,8 @@ extern "C"
   {STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT_INNARDS(T)}
 
   //! \brief Make a `status_code_domain_payload_info_t`
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
+  WG14_RESULT_EXTERN_INLINE
+  WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
   WG14_RESULT_PREFIX(status_code_domain_payload_info_make)(
   size_t payload_size, size_t total_size, size_t total_alignment)
   {
@@ -717,7 +719,7 @@ extern "C"
 #ifndef SWIG
   //! \brief The default implementation for
   //! `status_code_domain_vtable.erased_copy()`.
-  WG14_RESULT_INLINE int
+  WG14_RESULT_EXTERN_INLINE int
   WG14_RESULT_VTABLE_API(WG14_RESULT_PREFIX(default_erased_copy_impl),
                          WG14_RESULT_PREFIX(status_code_untyped) * dst,
                          const WG14_RESULT_PREFIX(status_code_untyped) * src,
@@ -742,7 +744,7 @@ extern "C"
 
   //! \brief The default implementation for
   //! `status_code_domain_vtable.erased_destroy()`.
-  WG14_RESULT_INLINE void
+  WG14_RESULT_EXTERN_INLINE void
   WG14_RESULT_VTABLE_API(WG14_RESULT_PREFIX(default_erased_destroy_impl),
                          WG14_RESULT_PREFIX(status_code_untyped) * code,
                          WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
@@ -828,7 +830,7 @@ extern "C"
   //! \brief Retrieves the name of the status code domain (implementation). Make
   //! sure you call `status_code_domain_string_ref_destroy()` when you are done
   //! with the returned string reference.
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
   WG14_RESULT_PREFIX(status_code_domain_name)(
   WG14_RESULT_PREFIX(status_code_domain) * domain)
   {
@@ -847,7 +849,8 @@ extern "C"
 
   //! \brief Retrieves the payload info of the status code domain
   //! (implementation).
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
+  WG14_RESULT_EXTERN_INLINE
+  WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
   WG14_RESULT_PREFIX(status_code_domain_payload_info)(
   WG14_RESULT_PREFIX(status_code_domain) * domain)
   {
@@ -861,14 +864,14 @@ extern "C"
   /**************************************************************************/
 
   //! \brief True if the status code is empty (implementation)
-  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_empty)(
+  WG14_RESULT_EXTERN_INLINE bool WG14_RESULT_PREFIX(status_code_is_empty)(
   const WG14_RESULT_PREFIX(status_code_untyped) * r)
   {
     return r->domain == WG14_RESULT_NULLPTR;
   }
 
   //! \brief True if the status code is a success (implementation)
-  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_success)(
+  WG14_RESULT_EXTERN_INLINE bool WG14_RESULT_PREFIX(status_code_is_success)(
   const WG14_RESULT_PREFIX(status_code_untyped) * r)
   {
     return (r->domain != WG14_RESULT_NULLPTR) ?
@@ -877,7 +880,7 @@ extern "C"
   }
 
   //! \brief True if the status code is a failure (implementation)
-  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_is_failure)(
+  WG14_RESULT_EXTERN_INLINE bool WG14_RESULT_PREFIX(status_code_is_failure)(
   const WG14_RESULT_PREFIX(status_code_untyped) * r)
   {
     return (r->domain != WG14_RESULT_NULLPTR) ?
@@ -888,7 +891,7 @@ extern "C"
   //! \brief Retrieves the message of the status code (implementation). Make
   //! sure you call `status_code_domain_string_ref_destroy()` when you are done
   //! with the returned string reference.
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_domain_string_ref)
   WG14_RESULT_PREFIX(status_code_message)(
   const WG14_RESULT_PREFIX(status_code_untyped) * r)
   {
@@ -915,7 +918,8 @@ extern "C"
   //! `secondary` is semantically equivalent to it. Note that for most status
   //! codes, if the codes have the same domain, a pure value equality is
   //! performed. This operation may not be transitive.
-  WG14_RESULT_INLINE bool WG14_RESULT_PREFIX(status_code_strictly_equivalent)(
+  WG14_RESULT_EXTERN_INLINE bool
+  WG14_RESULT_PREFIX(status_code_strictly_equivalent)(
   const WG14_RESULT_PREFIX(status_code_untyped) * primary,
   const WG14_RESULT_PREFIX(status_code_untyped) * secondary)
   {
@@ -936,7 +940,7 @@ extern "C"
   }
 
   //! \brief Destroys the status code (erased)
-  WG14_RESULT_INLINE void WG14_RESULT_PREFIX(status_code_erased_destroy)(
+  WG14_RESULT_EXTERN_INLINE void WG14_RESULT_PREFIX(status_code_erased_destroy)(
   WG14_RESULT_PREFIX(status_code_untyped) * r)
   {
     if(r->domain != WG14_RESULT_NULLPTR &&
@@ -954,7 +958,7 @@ extern "C"
 
   //! \brief Clones the status code (erased), returning an `errno` value
   //! if failed.
-  WG14_RESULT_INLINE int WG14_RESULT_PREFIX(status_code_erased_clone)(
+  WG14_RESULT_EXTERN_INLINE int WG14_RESULT_PREFIX(status_code_erased_clone)(
   WG14_RESULT_PREFIX(status_code_untyped) * dest,
   const WG14_RESULT_PREFIX(status_code_untyped) * src,
   WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo)

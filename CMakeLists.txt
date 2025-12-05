@@ -20,6 +20,8 @@ set(LIBRARY_SOURCES
 )
 if(BUILD_POSIX_SUPPORT)
   list(APPEND LIBRARY_SOURCES "src/wg14_result/status_code_posix.c")
+  set_property(SOURCE "src/wg14_result/status_code_posix.c"
+               APPEND PROPERTY "COMPILE_DEFINITIONS" "WG14_RESULT_SOURCE_INLINES")
 endif()
 
 set(all_targets)
@@ -116,7 +118,7 @@ if(BUILD_RUST_WRAPPERS)
   if(BINDGEN_PROGRAM)
     add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/bindings/rust/raw_bindings.rs"
       COMMAND "${BINDGEN_PROGRAM}" -o "${CMAKE_CURRENT_SOURCE_DIR}/bindings/rust/raw_bindings.rs"
-      "${CMAKE_CURRENT_SOURCE_DIR}/include/wg14_result/all.hpp"
+      "${CMAKE_CURRENT_SOURCE_DIR}/include/wg14_result/all.h"
       --allowlist-function 'result.*'
       --allowlist-function 'status_code.*'
       --allowlist-function 'wg14_result.*'
@@ -130,8 +132,12 @@ if(BUILD_RUST_WRAPPERS)
       --no-layout-tests
       --with-derive-default
       --must-use-type result
+      --no-copy 'status_code_domain_string_ref_s|status_code_system_s|status_code_posix_s'
+      --no-debug 'status_code_system_s'
       --
       -I ${CMAKE_CURRENT_LIST_DIR}/include
+      -D WG14_RESULT_SOURCE_INLINES
+      -D WG14_RESULT_HAVE_POSIX_SUPPORT
       DEPENDS ${LIBRARY_SOURCES}
     )
     add_custom_target(${PROJECT_NAME}_regenerate_rust_bindings DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/bindings/rust/raw_bindings.rs")
@@ -169,5 +175,26 @@ if(PROJECT_IS_TOP_LEVEL AND (NOT DEFINED BUILD_TESTING OR BUILD_TESTING))
   endfunction()
 
   add_subdirectory("test")
+
+  if(BUILD_RUST_WRAPPERS AND RUSTC_PROGRAM AND NOT CMAKE_C_FLAGS_INIT MATCHES "fsanitize=")
+    file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bindings" RESULT ignored)
+    function(add_rust_test name)
+      add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/bin/rust_${name}"
+        COMMAND "${RUSTC_PROGRAM}" --edition 2021 --test -g
+        -o "${CMAKE_CURRENT_BINARY_DIR}/bin/rust_${name}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/bindings/rust/${name}.rs"
+        -L "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+        -l $<TARGET_NAME:${PROJECT_NAME}>
+        DEPENDS
+          "${CMAKE_CURRENT_SOURCE_DIR}/bindings/rust/raw_bindings.rs"
+          "${CMAKE_CURRENT_SOURCE_DIR}/bindings/rust/${PROJECT_NAME}.rs"
+          "${CMAKE_CURRENT_SOURCE_DIR}/bindings/rust/${name}.rs"
+      )
+      add_custom_target(${PROJECT_NAME}_rust_${name} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/bin/rust_${name}")
+      add_dependencies(${PROJECT_NAME}_rust_${name} ${PROJECT_NAME})
+      add_test(NAME ${PROJECT_NAME}_rust_${name} COMMAND "${CMAKE_CURRENT_BINARY_DIR}/bin/rust_${name}" --nocapture)
+    endfunction()
+    add_rust_test("bindings_test")
+  endif()
 endif()
 

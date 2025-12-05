@@ -73,7 +73,7 @@ WG14_RESULT_PREFIX(status_code_posix);
 #endif
 
   //! \brief Make a `status_code_posix`
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_posix)
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_posix)
   WG14_RESULT_PREFIX(status_code_posix_make)(int val)
   {
     const WG14_RESULT_PREFIX(status_code_posix)

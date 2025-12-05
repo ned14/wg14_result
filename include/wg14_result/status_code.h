@@ -42,7 +42,8 @@ extern "C"
     WG14_RESULT_PREFIX(status_code_untyped) base;                              \
     T value
 #define STATUS_CODE_WITH_PAYLOAD_DECLARE_IMPL2(T, name)                        \
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_with_payload_##name)       \
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(                                \
+  status_code_with_payload_##name)                                             \
   WG14_RESULT_PREFIX(status_code_with_payload_##name##_make)(T val)            \
   {                                                                            \
     WG14_RESULT_PREFIX(status_code_with_payload_##name)                        \
@@ -50,7 +51,8 @@ extern "C"
     {&name##_domain}, val)};                                                   \
     return ret;                                                                \
   }                                                                            \
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_with_payload_##name)       \
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(                                \
+  status_code_with_payload_##name)                                             \
   WG14_RESULT_PREFIX(status_code_with_payload_##name##_make_empty)(void)       \
   {                                                                            \
     WG14_RESULT_PREFIX(status_code_with_payload_##name) ret;                   \

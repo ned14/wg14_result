@@ -62,14 +62,6 @@ limitations under the License.
 #endif
 #endif
 
-#ifndef WG14_RESULT_INLINE
-#if __STDC_VERSION__ >= 201100L
-#define WG14_RESULT_INLINE static inline
-#else
-#define WG14_RESULT_INLINE static
-#endif
-#endif
-
 #ifndef WG14_RESULT_TYPEOF
 #if __STDC_VERSION__ >= 202300L
 #define WG14_RESULT_TYPEOF(...) typeof(__VA_ARGS__)
@@ -126,6 +118,25 @@ limitations under the License.
 #endif
 #endif
 
+#ifndef WG14_RESULT_PURE_INLINE
+#if __STDC_VERSION__ >= 201100L || defined(SWIG)
+#define WG14_RESULT_PURE_INLINE static inline
+#else
+#define WG14_RESULT_PURE_INLINE static __inline
+#endif
+#endif
+
+#ifndef WG14_RESULT_EXTERN_INLINE
+#if WG14_RESULT_SOURCE_INLINES
+// We need inlined functions to export if building the library
+#define WG14_RESULT_EXTERN_INLINE WG14_RESULT_EXTERN
+#else
+// Other, pure inline
+#define WG14_RESULT_EXTERN_INLINE WG14_RESULT_PURE_INLINE
+#endif
+#endif
+
+
 #ifndef WG14_RESULT_SINGLETON
 #if defined(__GNUC__) || defined(__clang__)
 #define WG14_RESULT_SINGLETON __attribute__((const))
@@ -163,7 +174,7 @@ limitations under the License.
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-WG14_RESULT_INLINE unsigned
+WG14_RESULT_EXTERN_INLINE unsigned
 #if !defined(_MSC_VER) && !defined(SWIG)
 __attribute__((noreturn))
 #endif

@@ -254,7 +254,7 @@ WG14_RESULT_PREFIX(result_with_void);
 #endif
 
   //! \brief Makes a successful Result with type `void`.
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(result_with_void)
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(result_with_void)
   WG14_RESULT_PREFIX(result_void_make_success)(void)
   {
     const struct WG14_RESULT_PREFIX(result_with_void_s)
@@ -265,8 +265,9 @@ WG14_RESULT_PREFIX(result_with_void);
     return ret2;
   }
   //! \brief Makes an unsuccessful Result with type `void`.
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(result_with_void) WG14_RESULT_PREFIX(
-  result_void_make_failure)(WG14_RESULT_PREFIX(status_code_system) err)
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(result_with_void)
+  WG14_RESULT_PREFIX(result_void_make_failure)(
+  WG14_RESULT_PREFIX(status_code_system) err)
   {
     const struct WG14_RESULT_PREFIX(result_with_void_s)
     ret1 = {{WG14_RESULT_PREFIX(result_status_flag_have_error)}, err};
@@ -283,7 +284,7 @@ WG14_RESULT_PREFIX(result_with_void);
     WG14_RESULT_PREFIX(status_code_system) error;                              \
   };
 #define WG14_RESULT_DECLARE_IMPL2(T, name)                                     \
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(result_with_##name)                    \
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(result_with_##name)             \
   WG14_RESULT_PREFIX(result_##name##_make_success)(T val)                      \
   {                                                                            \
     struct WG14_RESULT_PREFIX(result_with_##name##_s)                          \
@@ -294,7 +295,7 @@ WG14_RESULT_PREFIX(result_with_void);
     ret2 = WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(ret1); \
     return ret2;                                                               \
   }                                                                            \
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(result_with_##name)                    \
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(result_with_##name)             \
   WG14_RESULT_PREFIX(result_##name##_make_failure)(                            \
   WG14_RESULT_PREFIX(status_code_system) err)                                  \
   {                                                                            \

@@ -40,7 +40,36 @@ Tcl/Tk. And FORTRAN via a special fork of SWIG.
 ## Example of use
 
 ```c
-todo
+// To declare to C a Result with an int value type, we use the
+// WG14_RESULT_DECLARE(T, name) macro. This declares the type
+// and any support functions for that type.
+WG14_RESULT_DECLARE(int, int)
+
+// We then typedef it to something concrete
+typedef WG14_RESULT(int) result_int;
+
+// A Result with a void (i.e. none) value type is predeclared. 
+typedef wg14_result_with_void result_void;
+
+// Some function returning a Result with int value type.
+result_int test2(int x);
+
+result_void test3(int x)
+{
+  // This is an example of a four macro argument TRY operation:
+  // out, rettype, cleanup, expression.
+  WG14_RESULT_TRY(
+    int r /* variable to extract any successful value into */,
+    void /* override the return result type */,
+    printf(
+      "test3 finds test1 returns failure.\n") /* cleanup to perform if TRY fails */,
+    test1(x) /* result returning expression to TRY */);
+
+  printf("test3 finds test1 returns successful value %d.\n", r);
+
+  // This is how to return a successful Result with no value type.
+  return WG14_RESULT_MAKE_SUCCESS(void, );
+}
 ```
 
 ## Supported targets
@@ -94,11 +123,12 @@ todo
 
 # Todo
 
-- Ought to generate some sort of reference docs
+- Ought to write how to use documentation
 - Ought to generate examples to ensure optimised codegen
 - Convenience functions for serialising and printing.
+- Rust bindings missing wrapping a Rust Result into a C Result i.e. going the
+other direction.
 - Need example bindings for:
-    - Rust
     - FORTRAN
     - Swift
 

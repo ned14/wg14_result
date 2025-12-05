@@ -68,7 +68,7 @@ WG14_RESULT_PREFIX(status_code_system);
   //! \brief Make a system code from an untyped input status code, this will
   //! fail if the input status cannot fit into a system code or if alignment
   //! requirements are not met.
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_system)
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_system)
   WG14_RESULT_PREFIX(status_code_system_make)(
   const WG14_RESULT_PREFIX(status_code_untyped) * src,
   WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo)
@@ -94,7 +94,7 @@ WG14_RESULT_PREFIX(status_code_system);
   }
 
   //! \brief Make a system code from an `enum status_code_errc`
-  WG14_RESULT_INLINE WG14_RESULT_PREFIX(status_code_system)
+  WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_system)
   WG14_RESULT_PREFIX(status_code_system_make_from_errc)(
   enum WG14_RESULT_PREFIX(status_code_errc) errc)
   {
