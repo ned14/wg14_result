@@ -154,6 +154,25 @@ extern "C"
     using wg14_result::WG14_RESULT_PREFIX(status_code_special_member_functions)<
     struct WG14_RESULT_PREFIX(status_code_generic_s)>::
     WG14_RESULT_PREFIX(status_code_special_member_functions);
+
+    WG14_RESULT_PREFIX(status_code_generic)() = default;
+    WG14_RESULT_PREFIX(status_code_generic)
+    (WG14_RESULT_PREFIX(status_code_untyped) base,
+     enum WG14_RESULT_PREFIX(status_code_errc) value)
+        : wg14_result::WG14_RESULT_PREFIX(status_code_special_member_functions)<
+          struct WG14_RESULT_PREFIX(status_code_generic_s)>(
+          WG14_RESULT_PREFIX(status_code_generic_s){base, value})
+    {
+    }
+    WG14_RESULT_PREFIX(status_code_generic)
+    (const WG14_RESULT_PREFIX(status_code_generic) &) = default;
+    WG14_RESULT_PREFIX(status_code_generic)
+    (WG14_RESULT_PREFIX(status_code_generic) &&) = default;
+    WG14_RESULT_PREFIX(status_code_generic) &
+    operator=(const WG14_RESULT_PREFIX(status_code_generic) &) = default;
+    WG14_RESULT_PREFIX(status_code_generic) &
+    operator=(WG14_RESULT_PREFIX(status_code_generic) &&) = default;
+    ~WG14_RESULT_PREFIX(status_code_generic)() = default;
   };
 #else
 typedef struct WG14_RESULT_PREFIX(status_code_generic_s)

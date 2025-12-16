@@ -159,19 +159,25 @@ extern "C"
     (WG14_RESULT_PREFIX(_dest_code_type_) *) (&(*(dest)));                     \
     WG14_RESULT_PREFIX(_src_code_type_) * WG14_RESULT_PREFIX(_src_code_ptr_) = \
     (WG14_RESULT_PREFIX(_src_code_type_) *) (&(*(src)));                       \
-    typedef WG14_RESULT_TYPEOF(WG14_RESULT_PREFIX(_dest_code_ptr_)->value)     \
-    WG14_RESULT_PREFIX(_dest_value_type_);                                     \
-    status_code_destroy(_dest_code_ptr_);                                      \
     int WG14_RESULT_PREFIX(ret) = 0;                                           \
-    if(WG14_RESULT_PREFIX(_src_code_ptr_)->base.domain != WG14_RESULT_NULLPTR) \
+    if(WG14_RESULT_PREFIX(_dest_code_ptr_) !=                                  \
+       WG14_RESULT_PREFIX(_src_code_ptr_))                                     \
     {                                                                          \
-      const WG14_RESULT_PREFIX(status_code_domain_payload_info_t)              \
-      WG14_RESULT_PREFIX(_info_) = STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT(       \
-      WG14_RESULT_PREFIX(_dest_value_type_));                                  \
-      WG14_RESULT_PREFIX(ret) = WG14_RESULT_VTABLE_INVOKE_API(                 \
-      WG14_RESULT_PREFIX(_src_code_ptr_)->base.domain, erased_copy,            \
-      &WG14_RESULT_PREFIX(_dest_code_ptr_)->base,                              \
-      &WG14_RESULT_PREFIX(_src_code_ptr_)->base, WG14_RESULT_PREFIX(_info_));  \
+      status_code_destroy(_dest_code_ptr_);                                    \
+      typedef WG14_RESULT_TYPEOF(WG14_RESULT_PREFIX(_dest_code_ptr_)->value)   \
+      WG14_RESULT_PREFIX(_dest_value_type_);                                   \
+      if(WG14_RESULT_PREFIX(_src_code_ptr_)->base.domain !=                    \
+         WG14_RESULT_NULLPTR)                                                  \
+      {                                                                        \
+        const WG14_RESULT_PREFIX(status_code_domain_payload_info_t)            \
+        WG14_RESULT_PREFIX(_info_) = STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT(     \
+        WG14_RESULT_PREFIX(_dest_value_type_));                                \
+        WG14_RESULT_PREFIX(ret) = WG14_RESULT_VTABLE_INVOKE_API(               \
+        WG14_RESULT_PREFIX(_src_code_ptr_)->base.domain, erased_copy,          \
+        &WG14_RESULT_PREFIX(_dest_code_ptr_)->base,                            \
+        &WG14_RESULT_PREFIX(_src_code_ptr_)->base,                             \
+        WG14_RESULT_PREFIX(_info_));                                           \
+      }                                                                        \
     }                                                                          \
     WG14_RESULT_PREFIX(ret);                                                   \
   })

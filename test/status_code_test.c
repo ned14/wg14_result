@@ -295,7 +295,8 @@ int main(void)
     WG14_RESULT_PREFIX(status_code_domain_string_ref)
     shared_str1 = WG14_RESULT_PREFIX(
     status_code_domain_string_ref_atomic_refcounted_from_string)(msg);
-    WG14_RESULT_PREFIX(status_code_domain_string_ref) shared_str2;
+    WG14_RESULT_PREFIX(status_code_domain_string_ref)
+    shared_str2 = WG14_RESULT_PREFIX(status_code_domain_string_ref_empty);
     CHECK(0 == WG14_RESULT_PREFIX(status_code_domain_string_ref_copy)(
                &shared_str2, &shared_str1));
 
@@ -305,7 +306,8 @@ int main(void)
     CHECK(0 == strcmp(shared_str1.c_str, msg));
     CHECK(0 == strcmp(shared_str2.c_str, msg));
 
-    WG14_RESULT_PREFIX(status_code_domain_string_ref) shared_str3;
+    WG14_RESULT_PREFIX(status_code_domain_string_ref)
+    shared_str3 = WG14_RESULT_PREFIX(status_code_domain_string_ref_empty);
     WG14_RESULT_PREFIX(status_code_domain_string_ref_move)
     (&shared_str3, &shared_str1);
     CHECK(status_code_domain_string_ref_is_empty(&shared_str1));

@@ -145,54 +145,21 @@ extern "C"
 #endif
   };
 
+  //! \brief An empty `status_code_domain_string_ref`
+  static WG14_RESULT_CONSTEXPR_OR_CONST
+  WG14_RESULT_PREFIX(status_code_domain_string_ref)
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_empty) = {
+  WG14_RESULT_NULLPTR,
+  WG14_RESULT_NULLPTR,
+  {WG14_RESULT_NULLPTR, WG14_RESULT_NULLPTR, WG14_RESULT_NULLPTR},
+  WG14_RESULT_NULLPTR};
+
   //! \brief Returns true if the string ref is empty
   WG14_RESULT_EXTERN_INLINE bool
   WG14_RESULT_PREFIX(status_code_domain_string_ref_is_empty)(
   const WG14_RESULT_PREFIX(status_code_domain_string_ref) * s)
   {
     return s->c_str == WG14_RESULT_NULLPTR;
-  }
-
-  //! \brief Attempt to copy a string ref, returning an `errno` cause if it
-  //! failed.
-  WG14_RESULT_EXTERN_INLINE int
-  WG14_RESULT_PREFIX(status_code_domain_string_ref_copy)(
-  WG14_RESULT_PREFIX(status_code_domain_string_ref) * dest,
-  const WG14_RESULT_PREFIX(status_code_domain_string_ref) * src)
-  {
-    if(src->thunk != WG14_RESULT_NULLPTR)
-    {
-      const WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args)
-      args = {dest, (WG14_RESULT_PREFIX(status_code_domain_string_ref) *) src,
-              WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_copy)};
-      return src->thunk(&args);
-    }
-    memcpy(dest, src, sizeof(*dest));
-    return 0;
-  }
-
-  //! \brief Attempt to move a string ref
-  WG14_RESULT_EXTERN_INLINE void
-  WG14_RESULT_PREFIX(status_code_domain_string_ref_move)(
-  WG14_RESULT_PREFIX(status_code_domain_string_ref) * dest,
-  WG14_RESULT_PREFIX(status_code_domain_string_ref) * src)
-  {
-    if(src->thunk != WG14_RESULT_NULLPTR)
-    {
-      const WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args)
-      args = {dest, src,
-              WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_move)};
-      const int errcode = src->thunk(&args);
-      if(errcode != 0)
-      {
-        WG14_RESULT_ABORTF(
-        "status_code_domain_string_ref_move failed due to %d (%s)", errcode,
-        strerror(errcode));
-      }
-      return;
-    }
-    memcpy(dest, src, sizeof(*dest));
-    memset(src, 0, sizeof(*src));
   }
 
   //! \brief Destroy a string ref
@@ -220,6 +187,63 @@ extern "C"
     memset(src, 0, sizeof(*src));
   }
 
+  //! \brief Attempt to copy a string ref, returning an `errno` cause if it
+  //! failed.
+  WG14_RESULT_EXTERN_INLINE int
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_copy)(
+  WG14_RESULT_PREFIX(status_code_domain_string_ref) * dest,
+  const WG14_RESULT_PREFIX(status_code_domain_string_ref) * src)
+  {
+    if(dest != src)
+    {
+      if(dest->thunk != WG14_RESULT_NULLPTR)
+      {
+        WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(dest);
+      }
+      memcpy(dest, src, sizeof(*dest));
+      if(src->thunk != WG14_RESULT_NULLPTR)
+      {
+        const WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args)
+        args = {
+        dest, (WG14_RESULT_PREFIX(status_code_domain_string_ref) *) src,
+        WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_copy)};
+        return src->thunk(&args);
+      }
+    }
+    return 0;
+  }
+
+  //! \brief Attempt to move a string ref
+  WG14_RESULT_EXTERN_INLINE void
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_move)(
+  WG14_RESULT_PREFIX(status_code_domain_string_ref) * dest,
+  WG14_RESULT_PREFIX(status_code_domain_string_ref) * src)
+  {
+    if(dest != src)
+    {
+      if(dest->thunk != WG14_RESULT_NULLPTR)
+      {
+        WG14_RESULT_PREFIX(status_code_domain_string_ref_destroy)(dest);
+      }
+      memcpy(dest, src, sizeof(*dest));
+      if(src->thunk != WG14_RESULT_NULLPTR)
+      {
+        const WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_args)
+        args = {
+        dest, src,
+        WG14_RESULT_PREFIX(status_code_domain_string_ref_thunk_op_move)};
+        const int errcode = src->thunk(&args);
+        if(errcode != 0)
+        {
+          WG14_RESULT_ABORTF(
+          "status_code_domain_string_ref_move failed due to %d (%s)", errcode,
+          strerror(errcode));
+        }
+      }
+      memset(src, 0, sizeof(*src));
+    }
+  }
+
 #if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS) &&    \
 !defined(SWIG)
   inline bool
@@ -230,12 +254,14 @@ extern "C"
   inline WG14_RESULT_PREFIX(status_code_domain_string_ref_s)::
   WG14_RESULT_PREFIX(status_code_domain_string_ref_s)(
   const WG14_RESULT_PREFIX(status_code_domain_string_ref_s) & o)
+      : WG14_RESULT_PREFIX(status_code_domain_string_ref_s)()
   {
     WG14_RESULT_PREFIX(status_code_domain_string_ref_copy)(this, &o);
   }
   inline WG14_RESULT_PREFIX(status_code_domain_string_ref_s)::
   WG14_RESULT_PREFIX(status_code_domain_string_ref_s)(
   WG14_RESULT_PREFIX(status_code_domain_string_ref_s) && o) noexcept
+      : WG14_RESULT_PREFIX(status_code_domain_string_ref_s)()
   {
     WG14_RESULT_PREFIX(status_code_domain_string_ref_move)(this, &o);
   }
@@ -328,8 +354,8 @@ extern "C"
   //! \brief Make a `status_code_domain_payload_info_t`
   WG14_RESULT_EXTERN_INLINE
   WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-  WG14_RESULT_PREFIX(status_code_domain_payload_info_make)(
-  size_t payload_size, size_t total_size, size_t total_alignment)
+  WG14_RESULT_PREFIX(status_code_domain_payload_info_make)
+  (size_t payload_size, size_t total_size, size_t total_alignment)
   {
     const WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
     ret = {payload_size, total_size, total_alignment};
@@ -535,10 +561,10 @@ extern "C"
 #else
 #define WG14_RESULT_VTABLE_INVOKE_API(domain, name, ...)                       \
   (_Generic((domain)->vptr->name(__VA_ARGS__),                                 \
-  bool: WG14_RESULT_PREFIX(win32_invoke_with_this_bool)(                       \
+   bool: WG14_RESULT_PREFIX(win32_invoke_with_this_bool)(                      \
             &WG14_RESULT_PREFIX(win32_invoke_with_this_storage),               \
             (void *) (domain)->vptr->name, (domain), __VA_ARGS__),             \
-  default: WG14_RESULT_PREFIX(win32_invoke_with_this)(                         \
+   default: WG14_RESULT_PREFIX(win32_invoke_with_this)(                        \
             &WG14_RESULT_PREFIX(win32_invoke_with_this_storage),               \
             (void *) (domain)->vptr->name, (domain), __VA_ARGS__)))
 #endif
@@ -663,10 +689,12 @@ extern "C"
     //! implementation uses `memcpy()`. Returns an `errno` if it failed. You
     //! should return an error code here if your payload is not trivially
     //! copyable or would not fit.
-    int WG14_RESULT_VTABLE_DECL(
-    *const erased_copy, WG14_RESULT_PREFIX(status_code_untyped) * dst,
-    const WG14_RESULT_PREFIX(status_code_untyped) * src,
-    WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo);
+    int WG14_RESULT_VTABLE_DECL(*const erased_copy,
+                                WG14_RESULT_PREFIX(status_code_untyped) * dst,
+                                const WG14_RESULT_PREFIX(status_code_untyped) *
+                                src,
+                                WG14_RESULT_PREFIX(
+                                status_code_domain_payload_info_t) dstinfo);
     //! For a `status_code<erased<T>>` only, destroy the erased value type.
     //! Default implementation does nothing.
     void WG14_RESULT_VTABLE_DECL(*const erased_destroy,
@@ -851,8 +879,8 @@ extern "C"
   //! (implementation).
   WG14_RESULT_EXTERN_INLINE
   WG14_RESULT_PREFIX(status_code_domain_payload_info_t)
-  WG14_RESULT_PREFIX(status_code_domain_payload_info)(
-  WG14_RESULT_PREFIX(status_code_domain) * domain)
+  WG14_RESULT_PREFIX(status_code_domain_payload_info)
+  (WG14_RESULT_PREFIX(status_code_domain) * domain)
   {
     struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args) args;
     memset(&args, 0, sizeof(args));
@@ -963,11 +991,14 @@ extern "C"
   const WG14_RESULT_PREFIX(status_code_untyped) * src,
   WG14_RESULT_PREFIX(status_code_domain_payload_info_t) dstinfo)
   {
-    WG14_RESULT_PREFIX(status_code_erased_destroy)(dest);
-    if(src->domain != WG14_RESULT_NULLPTR)
+    if(dest != src)
     {
-      return WG14_RESULT_VTABLE_INVOKE_API(src->domain, erased_copy, dest, src,
-                                           dstinfo);
+      WG14_RESULT_PREFIX(status_code_erased_destroy)(dest);
+      if(src->domain != WG14_RESULT_NULLPTR)
+      {
+        return WG14_RESULT_VTABLE_INVOKE_API(src->domain, erased_copy, dest,
+                                             src, dstinfo);
+      }
     }
     return 0;
   }
@@ -1078,7 +1109,7 @@ namespace wg14_result
       {
         auto temp(o);
         *this = static_cast<WG14_RESULT_PREFIX(
-                            status_code_special_member_functions) &&>(temp);
+        status_code_special_member_functions) &&>(temp);
       }
       return *this;
     }
@@ -1092,7 +1123,7 @@ namespace wg14_result
         this->~WG14_RESULT_PREFIX(status_code_special_member_functions)();
         new(this) WG14_RESULT_PREFIX(status_code_special_member_functions)(
         static_cast<WG14_RESULT_PREFIX(
-                    status_code_special_member_functions) &&>(o));
+        status_code_special_member_functions) &&>(o));
       }
       return *this;
     }
