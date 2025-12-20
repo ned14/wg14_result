@@ -2,7 +2,7 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-include! {"wg14_result.rs"}
+include!("wg14_result.rs");
 
 #[cfg(test)]
 mod tests {
@@ -32,6 +32,6 @@ mod tests {
         println!("test(42) returns {}", res1_str);
         println!("test(-42) returns {}", res2_str);
         assert_eq!(res1_str, "Ok(\"42\")");
-        assert_eq!(res2_str, "Err(Numerical result out of range)");
+        assert_eq!(res2_str, "Err(Result too large)");
     }
 }
