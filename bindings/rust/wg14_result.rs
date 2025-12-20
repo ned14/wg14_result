@@ -1,8 +1,7 @@
-#![allow(non_camel_case_types, non_upper_case_globals)]
-include!("raw_bindings.rs");
-
 use std::ffi::{CStr, c_int};
 use std::mem::MaybeUninit;
+
+include!("raw_bindings.rs");
 
 #[doc = "A Rust Result, use to_result(WG14Result) to construct"]
 pub type WG14Result<T> = Result<T, status_code_system>;

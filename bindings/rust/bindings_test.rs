@@ -32,6 +32,6 @@ mod tests {
         println!("test(42) returns {}", res1_str);
         println!("test(-42) returns {}", res2_str);
         assert_eq!(res1_str, "Ok(\"42\")");
-        assert_eq!(res2_str, "Err(Numerical result out of range)");
+        assert_eq!(res2_str, "Err(Result too large)");
     }
 }
