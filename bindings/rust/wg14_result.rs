@@ -3,7 +3,7 @@ use std::mem::MaybeUninit;
 
 include!("raw_bindings.rs");
 
-#[doc = "A Rust Result, use to_result(WG14Result) to construct"]
+/// A Rust Result, use to_result(WG14Result) to construct
 pub type WG14Result<T> = Result<T, status_code_system>;
 
 // Fill in some stuff bindgen does not
@@ -97,7 +97,7 @@ impl From<status_code_system> for std::io::Error {
 
 /*****************************************************************************/
 
-#[doc = "A C compatible Result with T as successful value"]
+/// A C compatible Result with T as successful value
 #[repr(C)]
 pub struct result_with<T> {
     pub value: MaybeUninit<T>,
@@ -114,7 +114,7 @@ impl<T> Default for result_with<T> {
     }
 }
 impl<T> result_with<T> {
-    #[doc = "A C Result with successful T"]
+    /// A C Result with successful T
     #[inline]
     pub fn success(v: T) -> Self {
         Self {
@@ -125,7 +125,7 @@ impl<T> result_with<T> {
             error: status_code_system::default(),
         }
     }
-    #[doc = "A C Result with failure"]
+    /// A C Result with failure
     #[inline]
     pub fn failure(v: status_code_system) -> Self {
         Self {
@@ -136,7 +136,7 @@ impl<T> result_with<T> {
             error: v,
         }
     }
-    #[doc = "A C Result with failure from errno"]
+    /// A C Result with failure from errno
     #[inline]
     pub fn failure_from_errno(v: c_int) -> Self {
         Self {
@@ -151,7 +151,7 @@ impl<T> result_with<T> {
             },
         }
     }
-    #[doc = "True if it has a value"]
+    /// True if it has a value
     #[inline]
     pub fn has_value(&self) -> bool {
         unsafe {
@@ -169,7 +169,7 @@ impl<T: std::fmt::Debug> std::fmt::Debug for result_with<T> {
 
 /*****************************************************************************/
 
-#[doc = "From a C Result to a Rust Result"]
+/// From a C Result to a Rust Result
 #[inline]
 pub fn to_result<T>(res: result_with<T>) -> WG14Result<T> {
     if res.has_value() {
@@ -184,7 +184,7 @@ impl<T> From<result_with<T>> for WG14Result<T> {
     }
 }
 
-#[doc = "From a C Result to a Rust Result, by reference"]
+/// From a C Result to a Rust Result, by reference
 #[inline]
 pub fn to_result_ref<T>(res: &result_with<T>) -> WG14Result<&T> {
     if res.has_value() {
@@ -194,7 +194,7 @@ pub fn to_result_ref<T>(res: &result_with<T>) -> WG14Result<&T> {
     }
 }
 
-#[doc = "From a C Result to a Rust Result, by mutable reference"]
+/// From a C Result to a Rust Result, by mutable reference
 #[inline]
 pub fn to_result_mut<T>(res: &mut result_with<T>) -> WG14Result<&mut T> {
     if res.has_value() {
@@ -204,19 +204,19 @@ pub fn to_result_mut<T>(res: &mut result_with<T>) -> WG14Result<&mut T> {
     }
 }
 
-#[doc = "A successful C Result"]
+/// A successful C Result
 #[inline]
 pub fn success<T>(val: T) -> result_with<T> {
     result_with::<T>::success(val)
 }
 
-#[doc = "A failed C Result from an errno value"]
+/// A failed C Result from an errno value
 #[inline]
 pub fn failure_from_errno<T>(val: c_int) -> result_with<T> {
     result_with::<T>::failure_from_errno(val)
 }
 
-#[doc = "From a Rust Result to a C Result"]
+/// From a Rust Result to a C Result
 pub fn from_result<T>(res: WG14Result<T>) -> result_with<T> {
     match res {
         Ok(s) => result_with::<T>::success(s),

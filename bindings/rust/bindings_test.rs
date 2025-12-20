@@ -2,7 +2,7 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-include! {"wg14_result.rs"}
+include!("wg14_result.rs");
 
 #[cfg(test)]
 mod tests {
