@@ -65,6 +65,41 @@ jobs:
       shell: bash
       run: cd build && ctest --output-on-failure --timeout 300 -E benchmark
       
+  BigEndian:
+    name: s390x big endian (qemu)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        debug: [Debug, Release]
+    env:
+      NAME: s390x-${{ matrix.debug }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # The status word's two halves swap places on a big endian machine, and an
+    # x86 runner can never see that, so it is built for s390x and run under
+    # qemu user emulation. The emulator is wired in through the toolchain file,
+    # so `ctest` executes the cross built binaries.
+    - name: Install the s390x cross toolchain and qemu
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-s390x-linux-gnu g++-s390x-linux-gnu qemu-user-static
+
+    - name: Configure and build s390x
+      shell: bash
+      run: |
+        cmake -B build -DCMAKE_TOOLCHAIN_FILE=$PWD/cmake/qemu-s390x-toolchain.cmake \
+          -DCMAKE_BUILD_TYPE=${{ matrix.debug }} \
+          -DBUILD_SWIG_WRAPPERS=OFF -DBUILD_RUST_WRAPPERS=OFF
+        cmake --build build --parallel
+
+    - name: CMake tests s390x
+      shell: bash
+      run: ctest --test-dir build --output-on-failure --timeout 300
+
   MacOS:
     name: Mac OS
     runs-on: macos-latest

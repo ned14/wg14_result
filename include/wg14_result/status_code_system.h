@@ -22,15 +22,15 @@ limitations under the License.
 
 #include "status_code_generic.h"
 
-#include <stdint.h>  // for intptr_t
+#include <stdint.h>  /* for intptr_t */
 
 #ifdef __cplusplus
 extern "C"
 {
 #ifdef _MSC_VER
 #pragma warning(push)
-#pragma warning(disable : 4190)  // C linkage
-#pragma warning(disable : 4996)  // use strerror_s instead
+#pragma warning(disable : 4190)  /* C linkage */
+#pragma warning(disable : 4996)  /* use strerror_s instead */
 #endif
 #endif
 
@@ -42,9 +42,31 @@ extern "C"
     {}
 #endif
     ;
+/* A default member initialiser keeps these storage structs from being aggregates
+   in C++11, so there the brace initialisers the headers use need constructors.
+   Before C++11 and from C++14 onwards they are aggregates and need none - in
+   C++98 declaring one would take aggregate initialisation away, which is exactly
+   what the headers rely on there. */
+#if defined(__cplusplus) && WG14_RESULT_CXX_VERSION >= 201103L &&              \
+WG14_RESULT_CXX_VERSION < 201402L && !defined(SWIG)
+    /* C++11 only. A default member initialiser is C++11, but a class with one is
+       not an aggregate until C++14, and these storage structs are initialised
+       with braces from both the C and the C++ spelling of the headers
+       (`status_code_system_s{{NULL}, 0}`). One constructor puts that spelling
+       back; defaulting the default constructor keeps the NSDMI above doing its
+       job (a default constructed `value` is zero). C++14 and later need none of
+       this, because there the struct is still an aggregate. */
+    WG14_RESULT_CXX_CONSTEXPR WG14_RESULT_PREFIX(status_code_system_s)() = default;
+    WG14_RESULT_CXX_CONSTEXPR WG14_RESULT_PREFIX(status_code_system_s)(
+    const WG14_RESULT_PREFIX(status_code_untyped) & b, intptr_t v)
+        : base(b)
+        , value(v)
+    {
+    }
+#endif
   };
-  //! \brief A `status_code` guaranteed to be able to hold any system error code
-  //! in full. The payload is always an `intptr_t`.
+  /*! \brief A `status_code` guaranteed to be able to hold any system error code
+     in full. The payload is always an `intptr_t`. */
 #if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
   struct WG14_RESULT_PREFIX(status_code_system)
       : wg14_result::WG14_RESULT_PREFIX(status_code_special_member_functions)<
@@ -59,15 +81,15 @@ typedef struct WG14_RESULT_PREFIX(status_code_system_s)
 WG14_RESULT_PREFIX(status_code_system);
 #endif
 
-  //| \brief An empty `status_code_system`
+  /*| \brief An empty `status_code_system` */
   static WG14_RESULT_CONSTEXPR_OR_CONST WG14_RESULT_PREFIX(status_code_system)
   WG14_RESULT_PREFIX(status_code_system_empty) = {
   WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(
   {WG14_RESULT_NULLPTR}, 0)};
 
-  //! \brief Make a system code from an untyped input status code, this will
-  //! fail if the input status cannot fit into a system code or if alignment
-  //! requirements are not met.
+  /*! \brief Make a system code from an untyped input status code, this will
+     fail if the input status cannot fit into a system code or if alignment
+     requirements are not met. */
   WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_system)
   WG14_RESULT_PREFIX(status_code_system_make)(
   const WG14_RESULT_PREFIX(status_code_untyped) * src,
@@ -93,12 +115,12 @@ WG14_RESULT_PREFIX(status_code_system);
     return ret;
   }
 
-  //! \brief Make a system code from an `enum status_code_errc`
+  /*! \brief Make a system code from an `enum status_code_errc` */
   WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_system)
   WG14_RESULT_PREFIX(status_code_system_make_from_errc)(
   enum WG14_RESULT_PREFIX(status_code_errc) errc)
   {
-    const union punner
+    union punner
     {
       WG14_RESULT_PREFIX(status_code_generic) gen;
       WG14_RESULT_PREFIX(status_code_system) sys;
@@ -106,7 +128,9 @@ WG14_RESULT_PREFIX(status_code_system);
 #if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
       ~punner() {}
 #endif
-    } ret = {WG14_RESULT_PREFIX(status_code_generic_make)(errc)};
+    } ret = {{{WG14_RESULT_NULLPTR},
+              WG14_RESULT_PREFIX(status_code_errc_unknown)}};
+    ret.gen = WG14_RESULT_PREFIX(status_code_generic_make)(errc);
     return ret.sys;
   }
 
@@ -125,9 +149,9 @@ WG14_RESULT_PREFIX(status_code_system);
   STATUS_CODE_SYSTEM_MAKE_IMPL2((src), __VA_ARGS__)
 
 #ifndef WG14_RESULT_DISABLE_CONVENIENCE_MACROS
-  //! \brief Make a system code from a typed input status code, this will
-  //! fail if the input status cannot fit into a system code or if alignment
-  //! requirements are not met.
+  /*! \brief Make a system code from a typed input status code, this will
+     fail if the input status cannot fit into a system code or if alignment
+     requirements are not met. */
 #define status_code_system_make(...)                                           \
   STATUS_CODE_SYSTEM_MAKE_IMPL(                                                \
   &(__VA_ARGS__).base, STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT_INNARDS(           \
@@ -141,7 +165,7 @@ WG14_RESULT_PREFIX(status_code_system);
 }
 #endif
 
-// This annoyingly must be here to please SWIG
+/* This annoyingly must be here to please SWIG */
 #if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
 #include <new>
 
@@ -170,35 +194,35 @@ namespace wg14_result
     {
     }
 
-    //! \brief Permits boolean testing for success.
+    /*! \brief Permits boolean testing for success. */
     constexpr explicit operator bool() const noexcept { return has_value(); }
-    //! \brief Returns true if the result is successful.
+    /*! \brief Returns true if the result is successful. */
     constexpr bool has_value() const noexcept
     {
       return this->_flags_.have_value();
     }
-    //! \brief Returns true if the result has failed with an error.
+    /*! \brief Returns true if the result has failed with an error. */
     constexpr bool has_error() const noexcept
     {
       return this->_flags_.have_error();
     }
-    //! \brief Returns true if the result has failed with a C++ exception.
+    /*! \brief Returns true if the result has failed with a C++ exception. */
     constexpr bool has_exception() const noexcept
     {
       return this->_flags_.have_exception();
     }
-    //! \brief Returns true if the result has failed in any way.
+    /*! \brief Returns true if the result has failed in any way. */
     constexpr bool has_failure() const noexcept
     {
       return has_error() || has_exception();
     }
-    //! \brief Returns true if the result has lost internal consistency.
+    /*! \brief Returns true if the result has lost internal consistency. */
     constexpr bool has_lost_consistency() const noexcept
     {
       return this->_flags_.have_lost_consistency();
     }
   };
-}  // namespace wg14_result
+}  /* namespace wg14_result */
 #define WG14_RESULT_SPECIAL_MEMBER_FUNCTIONS_INITIALISER {},
 #else
 #define WG14_RESULT_SPECIAL_MEMBER_FUNCTIONS_INITIALISER

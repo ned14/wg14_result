@@ -29,12 +29,12 @@ extern "C"
 {
 #ifdef _MSC_VER
 #pragma warning(push)
-#pragma warning(disable : 4190)  // C linkage
-#pragma warning(disable : 4996)  // use strerror_s instead
+#pragma warning(disable : 4190)  /* C linkage */
+#pragma warning(disable : 4996)  /* use strerror_s instead */
 #endif
 #endif
 
-  //! The generic error coding (POSIX)
+  /*! The generic error coding (POSIX) */
   enum WG14_RESULT_PREFIX(status_code_errc)
 #if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
   : int
@@ -130,7 +130,7 @@ extern "C"
     WG14_RESULT_PREFIX(status_code_errc_wrong_protocol_type) = EPROTOTYPE
   };
 
-  //! \brief Retrieve the domain for `status_code_generic`
+  /*! \brief Retrieve the domain for `status_code_generic` */
   WG14_RESULT_EXTERN
   WG14_RESULT_SINGLETON WG14_RESULT_PREFIX(status_code_domain) *
   WG14_RESULT_PREFIX(status_code_generic_domain)(void);
@@ -144,8 +144,31 @@ extern "C"
     }
 #endif
     ;
+/* A default member initialiser keeps these storage structs from being aggregates
+   in C++11, so there the brace initialisers the headers use need constructors.
+   Before C++11 and from C++14 onwards they are aggregates and need none - in
+   C++98 declaring one would take aggregate initialisation away, which is exactly
+   what the headers rely on there. */
+#if defined(__cplusplus) && WG14_RESULT_CXX_VERSION >= 201103L &&              \
+WG14_RESULT_CXX_VERSION < 201402L && !defined(SWIG)
+    /* C++11 only, see status_code_system.h: the NSDMI above keeps this from
+       being an aggregate until C++14, so the brace initialisers need one
+       constructor to spell, and a defaulted one so the NSDMI still applies.
+
+       Hidden from SWIG, which parses at a language version where they exist and
+       would then emit constructors that the wrapper's own compilation (C++14 or
+       later) cannot see. */
+    WG14_RESULT_CXX_CONSTEXPR WG14_RESULT_PREFIX(status_code_generic_s)() = default;
+    WG14_RESULT_CXX_CONSTEXPR WG14_RESULT_PREFIX(status_code_generic_s)(
+    const WG14_RESULT_PREFIX(status_code_untyped) & b,
+    enum WG14_RESULT_PREFIX(status_code_errc) v)
+        : base(b)
+        , value(v)
+    {
+    }
+#endif
   };
-  //! \brief A generic status code
+  /*! \brief A generic status code */
 #if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
   struct WG14_RESULT_PREFIX(status_code_generic)
       : wg14_result::WG14_RESULT_PREFIX(status_code_special_member_functions)<
@@ -179,25 +202,26 @@ typedef struct WG14_RESULT_PREFIX(status_code_generic_s)
 WG14_RESULT_PREFIX(status_code_generic);
 #endif
 
-  //| \brief An empty `status_code_generic`
+  /*| \brief An empty `status_code_generic` */
   static WG14_RESULT_CONSTEXPR_OR_CONST WG14_RESULT_PREFIX(status_code_generic)
   WG14_RESULT_PREFIX(status_code_generic_empty) = {
   WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(
   {WG14_RESULT_NULLPTR}, WG14_RESULT_PREFIX(status_code_errc_unknown))};
 
-  //! \brief Make a `status_code_generic`
+  /*! \brief Make a `status_code_generic` */
   WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_generic)
   WG14_RESULT_PREFIX(status_code_generic_make)(
   enum WG14_RESULT_PREFIX(status_code_errc) val)
   {
-    const WG14_RESULT_PREFIX(status_code_generic)
-    ret = {WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(
-    {WG14_RESULT_PREFIX(status_code_generic_domain)()}, val)};
+    WG14_RESULT_PREFIX(status_code_generic) ret;
+    WG14_RESULT_NOT_CXX_MEMSET(&ret, 0, sizeof(ret));
+    ret.base.domain = WG14_RESULT_PREFIX(status_code_generic_domain)();
+    ret.value = val;
     return ret;
   }
 
 #ifndef SWIG
-  //! \brief The arguments for `status_code_domain_vtable.generic_code`
+  /*! \brief The arguments for `status_code_domain_vtable.generic_code` */
   struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args)
   {
     WG14_RESULT_PREFIX(status_code_generic) ret;
@@ -209,11 +233,11 @@ WG14_RESULT_PREFIX(status_code_generic);
   };
 #endif
 
-  //! \brief True if the status codes are semantically equivalent in any way
-  //! (implementation). Guaranteed transitive. Firstly
-  //! `status_code_strictly_equivalent()` is run in both directions. If
-  //! neither succeeds, each domain is asked for the equivalent generic
-  //! code, and those are compared.
+  /*! \brief True if the status codes are semantically equivalent in any way
+     (implementation). Guaranteed transitive. Firstly
+     `status_code_strictly_equivalent()` is run in both directions. If
+     neither succeeds, each domain is asked for the equivalent generic
+     code, and those are compared. */
   WG14_RESULT_EXTERN_INLINE bool WG14_RESULT_PREFIX(status_code_equivalent)(
   const WG14_RESULT_PREFIX(status_code_untyped) * primary,
   const WG14_RESULT_PREFIX(status_code_untyped) * secondary)
@@ -260,18 +284,18 @@ WG14_RESULT_PREFIX(status_code_generic);
         return true;
       }
     }
-    // If we are both empty, we are equivalent
+    /* If we are both empty, we are equivalent */
     if(WG14_RESULT_NULLPTR == primary->domain &&
        WG14_RESULT_NULLPTR == secondary->domain)
     {
-      return true;  // NOLINT
+      return true;  /* NOLINT */
     }
-    // Otherwise not equivalent
+    /* Otherwise not equivalent */
     return false;
   }
 
-  //! \brief True if the status code is semantically equivalent in any way
-  //! to the generic enum value (implementation).
+  /*! \brief True if the status code is semantically equivalent in any way
+     to the generic enum value (implementation). */
   WG14_RESULT_EXTERN_INLINE bool WG14_RESULT_PREFIX(
   status_code_equivalent_errc)(const WG14_RESULT_PREFIX(status_code_untyped) *
                                primary,
@@ -295,33 +319,33 @@ namespace wg14_result
 {
   template <class StorageType>
   template <class T>
-  inline bool WG14_RESULT_PREFIX(status_code_special_member_functions)  //
+  inline bool WG14_RESULT_PREFIX(status_code_special_member_functions)  /**/
   <StorageType>::equivalent(
   const status_code_special_member_functions<T> &o) const noexcept
   {
     return WG14_RESULT_PREFIX(status_code_equivalent)(&this->base, &o.base);
   }
   template <class StorageType>
-  inline bool WG14_RESULT_PREFIX(status_code_special_member_functions)  //
+  inline bool WG14_RESULT_PREFIX(status_code_special_member_functions)  /**/
   <StorageType>::equivalent(enum WG14_RESULT_PREFIX(status_code_errc)
                             errc) const noexcept
   {
     return WG14_RESULT_PREFIX(status_code_equivalent_errc)(&this->base, errc);
   }
-}  // namespace wg14_result
+}  /* namespace wg14_result */
 #endif
 
 
 #ifndef WG14_RESULT_DISABLE_CONVENIENCE_MACROS
-//! \brief True if the status codes are semantically equivalent in any way
-//! (convenience macro). Guaranteed transitive. Firstly
-//! `status_code_strictly_equivalent()` is run in both directions. If neither
-//! succeeds, each domain is asked for the equivalent generic code, and those
-//! are compared.
+/*! \brief True if the status codes are semantically equivalent in any way
+   (convenience macro). Guaranteed transitive. Firstly
+   `status_code_strictly_equivalent()` is run in both directions. If neither
+   succeeds, each domain is asked for the equivalent generic code, and those
+   are compared. */
 #define status_code_equivalent(primary, secondary)                             \
   WG14_RESULT_PREFIX(status_code_equivalent)(&(primary).base, &(secondary).base)
-//! \brief True if the status code is semantically equivalent in any way to the
-//! generic enum value (convenience macro). Guaranteed transitive.
+/*! \brief True if the status code is semantically equivalent in any way to the
+   generic enum value (convenience macro). Guaranteed transitive. */
 #define status_code_equivalent_errc(primary, errc)                             \
   WG14_RESULT_PREFIX(status_code_equivalent_errc)(&(primary).base, (errc))
 #endif

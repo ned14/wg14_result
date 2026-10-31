@@ -77,7 +77,10 @@ extern "C"
                              (__VA_ARGS__))
 
 #if !defined(OUTCOME_TRY_LIKELY_IF) && defined(__has_cpp_attribute)
-#if __has_cpp_attribute(likely) && (__cplusplus >= 202000L || _HAS_CXX20)
+#if __has_cpp_attribute(likely) &&                                             \
+((defined(__cplusplus) && __cplusplus >= 202002L) ||                          \
+(defined(_MSVC_LANG) && _MSVC_LANG >= 202002L) ||                            \
+(defined(_HAS_CXX20) && _HAS_CXX20))
 #define OUTCOME_TRY_LIKELY_IF(...) if(__VA_ARGS__) [[likely]]
 #endif
 #endif

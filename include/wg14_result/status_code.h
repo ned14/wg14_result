@@ -29,11 +29,11 @@ extern "C"
 #endif
 #ifdef _MSC_VER
 #pragma warning(push)
-#pragma warning(disable : 4996)  // use strerror_s instead
+#pragma warning(disable : 4996)  /* use strerror_s instead */
 #endif
 
-//! \brief The type of a status code with named payload. You must call
-//! `STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)` first.
+/*! \brief The type of a status code with named payload. You must call
+   `STATUS_CODE_WITH_PAYLOAD_DECLARE(T, name)` first. */
 #define STATUS_CODE_WITH_PAYLOAD(name)                                         \
   WG14_RESULT_PREFIX(status_code_with_payload_##name)
 #define STATUS_CODE_WITH_PAYLOAD_DECLARE_IMPL1(T, name)                        \
@@ -90,39 +90,39 @@ extern "C"
   STATUS_CODE_WITH_PAYLOAD_DECLARE_IMPL2(T, name)
 #endif
 
-//! \brief Make a named status code previously declared.
+/*! \brief Make a named status code previously declared. */
 #define STATUS_CODE_WITH_PAYLOAD_MAKE(name, ...)                               \
   WG14_RESULT_PREFIX(status_code_with_payload_##name##_make)(__VA_ARGS__)
 
-//! \brief Make an empty named status code previously declared.
+/*! \brief Make an empty named status code previously declared. */
 #define STATUS_CODE_WITH_PAYLOAD_MAKE_EMPTY(name)                              \
   WG14_RESULT_PREFIX(status_code_with_payload_##name##_make_empty)()
 
 
 #ifndef WG14_RESULT_DISABLE_CONVENIENCE_MACROS
-//! \brief True if the status code is empty (convenience macro)
+/*! \brief True if the status code is empty (convenience macro) */
 #define status_code_is_empty(...)                                              \
   WG14_RESULT_PREFIX(status_code_is_empty)(&(__VA_ARGS__).base)
-//! \brief True if the status code is a success (convenience macro)
+/*! \brief True if the status code is a success (convenience macro) */
 #define status_code_is_success(...)                                            \
   WG14_RESULT_PREFIX(status_code_is_success)(&(__VA_ARGS__).base)
-//! \brief True if the status code is a failure (convenience macro)
+/*! \brief True if the status code is a failure (convenience macro) */
 #define status_code_is_failure(...)                                            \
   WG14_RESULT_PREFIX(status_code_is_failure)(&(__VA_ARGS__).base)
-//! \brief Retrieves the message of the status code (convenience macro). Make
-//! sure you call `status_code_domain_string_ref_destroy()` when you are done
-//! with the returned string reference.
+/*! \brief Retrieves the message of the status code (convenience macro). Make
+   sure you call `status_code_domain_string_ref_destroy()` when you are done
+   with the returned string reference. */
 #define status_code_message(...)                                               \
   WG14_RESULT_PREFIX(status_code_message)(&(__VA_ARGS__).base)
-//! \brief True if the status codes are strictly semantically equivalent
-//! (convenience macro). `primary`'s domain's equivalence function decides if
-//! `secondary` is semantically equivalent to it. Note that for most status
-//! codes, if the codes have the same domain, a pure value equality is
-//! performed. This operation may not be transitive.
+/*! \brief True if the status codes are strictly semantically equivalent
+   (convenience macro). `primary`'s domain's equivalence function decides if
+   `secondary` is semantically equivalent to it. Note that for most status
+   codes, if the codes have the same domain, a pure value equality is
+   performed. This operation may not be transitive. */
 #define status_code_strictly_equivalent(primary, secondary)                    \
   WG14_RESULT_PREFIX(status_code_strictly_equivalent)                          \
   (&(primary).base, &(secondary).base)
-//! \brief Destroys the status code (type aware)
+/*! \brief Destroys the status code (type aware) */
 #define status_code_destroy(...)                                               \
   {                                                                            \
     typedef WG14_RESULT_TYPEOF_UNQUAL(*(__VA_ARGS__))                          \
@@ -149,7 +149,7 @@ extern "C"
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpedantic"
 #endif
-//! \brief Clones the status code (type aware)
+/*! \brief Clones the status code (type aware) */
 #define status_code_clone(dest, src)                                           \
   ({                                                                           \
     typedef WG14_RESULT_TYPEOF(*(dest)) WG14_RESULT_PREFIX(_dest_code_type_);  \

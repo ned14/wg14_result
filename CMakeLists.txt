@@ -171,7 +171,9 @@ if(PROJECT_IS_TOP_LEVEL AND (NOT DEFINED BUILD_TESTING OR BUILD_TESTING))
   endfunction()
   function(add_code_test target)
     add_code_example(${target} ${ARGN})
-    add_test(NAME ${target} COMMAND $<TARGET_FILE:${target}>)
+    # Target name, not $<TARGET_FILE:...>, so a cross build gets
+    # CMAKE_CROSSCOMPILING_EMULATOR prepended (see the s390x lane).
+    add_test(NAME ${target} COMMAND ${target})
   endfunction()
 
   add_subdirectory("test")
