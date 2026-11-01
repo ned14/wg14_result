@@ -5,8 +5,13 @@ set(CMAKE_C_VISIBILITY_PRESET "hidden" CACHE STRING "Only make explicitly export
 set(CMAKE_C_STANDARD "11" CACHE STRING "C standard to use")
 option(HEADER_ONLY_BUILD "Build using header only (unity build)" OFF)
 option(BUILD_POSIX_SUPPORT "Build POSIX code support" ON)
-option(BUILD_SWIG_WRAPPERS "Build SWIG wrappers" ON)
-option(BUILD_RUST_WRAPPERS "Build RUST wrappers" ON)
+# Off by default: a wrapper needs SWIG, Python development headers and
+# bindgen-style tooling that a plain build of the library does not. Asking for it
+# explicitly makes a missing tool a hard error instead of a silently skipped gate.
+option(BUILD_SWIG_WRAPPERS "Build SWIG wrappers" OFF)
+# Off by default for the same reason: rustc and bindgen are not what a build of the
+# library needs.
+option(BUILD_RUST_WRAPPERS "Build RUST wrappers" OFF)
 option(BUILD_TESTS_AS_CXX "Build tests as C++" ON)
 option(BUILD_SWIG_AS_CXX "Build SWIG wrappers as C++" ON)
 
@@ -78,7 +83,7 @@ install(EXPORT ${PROJECT_NAME}Exports
 )
 
 if(BUILD_SWIG_WRAPPERS)
-  find_package(SWIG COMPONENTS python)
+  find_package(SWIG COMPONENTS python REQUIRED)
   include(UseSWIG)
   foreach(language python)
     if(language MATCHES python)

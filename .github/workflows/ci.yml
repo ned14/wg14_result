@@ -11,7 +11,7 @@ on:
 jobs:
   ESP32:
     name: ESP32
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -33,7 +33,7 @@ jobs:
 
   Linux:
     name: Linux
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -42,24 +42,55 @@ jobs:
         standard: [90, 11, 23]
         shared: [OFF, ON]
         build_as_cxx: [OFF, ON]
+        # Quoted: unquoted OFF/ON are YAML booleans, and this one is compared to a string.
+        swig: ["OFF"]
+        include:
+        - compiler: gcc
+          debug: Release
+          standard: 23
+          shared: OFF
+          build_as_cxx: ON
+          swig: "ON"
+        - compiler: clang
+          debug: Release
+          standard: 23
+          shared: OFF
+          build_as_cxx: ON
+          swig: "ON"
     env:
-      NAME: Linux-${{ matrix.compiler }}-${{ matrix.debug }}-${{ matrix.standard }}-${{ matrix.shared }}-${{ matrix.build_as_cxx }}
+      NAME: Linux-${{ matrix.compiler }}-${{ matrix.debug }}-${{ matrix.standard }}-${{ matrix.shared }}-${{ matrix.build_as_cxx }}-swig${{ matrix.swig }}
       CC: ${{ matrix.compiler }}
           
     steps:
     - uses: actions/checkout@v4
     - uses: actions-rust-lang/setup-rust-toolchain@v1
 
+    - name: Install the wrapper toolchain
+      if: matrix.swig == 'ON'
+      shell: bash
+      run: sudo apt-get update && sudo apt-get install -y swig python3-dev
+
+    - name: Show the compilers in use
+      shell: bash
+      run: |
+        ${CC} --version | head -1
+        ${CC/cc/}++ --version | head -1
+
     - name: Configure Linux
       shell: bash
       run: |
         mkdir build && cd build
         export CXX=${CC/cc/}++
-        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_SHARED_LIBS=${{ matrix.shared }} -DBUILD_TESTS_AS_CXX=${{ matrix.build_as_cxx }} -DCMAKE_TOOLCHAIN_FILE=$PWD/../cmake/sanitize-toolchain.cmake
+        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_SHARED_LIBS=${{ matrix.shared }} -DBUILD_TESTS_AS_CXX=${{ matrix.build_as_cxx }} -DCMAKE_TOOLCHAIN_FILE=$PWD/../cmake/sanitize-toolchain.cmake -DBUILD_SWIG_WRAPPERS=${{ matrix.swig }}
 
     - name: Build Linux
       shell: bash
-      run: cd build && cmake --build . --parallel
+      run: cd build && cmake --build . --parallel 2>&1 | tee build.log
+
+    - name: First build errors
+      if: failure()
+      shell: bash
+      run: grep -m 20 -E 'error:|Error' build/build.log || tail -40 build/build.log
 
     - name: CMake tests Linux
       shell: bash
@@ -67,7 +98,7 @@ jobs:
       
   BigEndian:
     name: s390x big endian (qemu)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -86,7 +117,12 @@ jobs:
       shell: bash
       run: |
         sudo apt-get update
-        sudo apt-get install -y gcc-s390x-linux-gnu g++-s390x-linux-gnu qemu-user-static
+        sudo apt-get install -y qemu-user-static
+        # The unversioned cross package names are not on every image; the versioned
+        # ones are, and the toolchain file takes whichever compiler it is given.
+        sudo apt-get install -y gcc-s390x-linux-gnu g++-s390x-linux-gnu ||
+          sudo apt-get install -y gcc-13-s390x-linux-gnu g++-13-s390x-linux-gnu ||
+          sudo apt-get install -y gcc-14-s390x-linux-gnu g++-14-s390x-linux-gnu
 
     - name: Configure and build s390x
       shell: bash
