@@ -97,7 +97,7 @@ extern "C"
     {
     }
     /*! \brief As if aggregate constructor for C compatibility */
-    WG14_RESULT_CXX_CONSTEXPR WG14_RESULT_PREFIX(status_code_domain_string_ref_s)(
+    WG14_RESULT_CXX_CONSTEXPR14 WG14_RESULT_PREFIX(status_code_domain_string_ref_s)(
     const char *c_str, const char *end, std::initializer_list<void *> state,
     status_code_domain_string_ref_thunk_spec thunk)
         : c_str(c_str)

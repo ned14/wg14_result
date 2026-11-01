@@ -23,26 +23,32 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    # The esp-idf container is entered explicitly rather than through a third-party
+    # action, because an action's container cannot hand its output back to the
+    # runner: a failure inside it arrived here as "exit code 2" with nothing to
+    # annotate. With `docker run` the log is a file in the workspace, so the same
+    # annotation step the other lanes use can read it.
     - name: Configure and Build ESP32
-      uses: espressif/esp-idf-ci-action@v1
-      with:
-        esp_idf_version: latest
-        target: esp32c3
-        path: .
-        # The build runs inside the container, so the errors are turned into
-        # annotations by the command itself: nothing on the runner can read that
-        # filesystem, and the job log is not reachable from this project. The
-        # configure and the build share one log, because either can be the one that
-        # fails and a short-circuit would lose the diagnosis.
-        command: |
-          mkdir -p build && cd build
-          cst=0
-          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_TESTS_AS_CXX=OFF -DBUILD_SWIG_WRAPPERS=OFF -DBUILD_RUST_WRAPPERS=OFF > /tmp/esp32.log 2>&1 || cst=$?
-          bst=0
-          cmake --build . --parallel >> /tmp/esp32.log 2>&1 || bst=$?
-          hits=$(grep -m 20 -iE 'error|Error' /tmp/esp32.log || true)
-          if [ -n "$hits" ]; then echo "$hits" | sed 's/^/::error::/'; else tail -5 /tmp/esp32.log | sed 's/^/::error::log tail: /'; fi
-          [ "$cst" -eq 0 ] && [ "$bst" -eq 0 ]
+      shell: bash
+      run: |
+        set -o pipefail
+        docker run --rm -v "$PWD":/project -w /project espressif/idf:release-v5.4 \
+          bash -lc '. /opt/esp/idf/export.sh > /dev/null && idf.py set-target esp32c3 && idf.py build' \
+          2>&1 | tee esp32.log
+
+    - name: Annotate the errors
+      if: failure()
+      shell: bash
+      run: |
+        hits=0
+        for f in esp32.log; do
+          [ -f "$f" ] || continue
+          out=$(grep -m 10 -iE 'error|FAILED|CMake Error' "$f" || true)
+          if [ -n "$out" ]; then echo "$out" | sed 's/^/::error::/'; hits=1; fi
+        done
+        if [ "$hits" -eq 0 ]; then
+          [ -f esp32.log ] && tail -10 esp32.log | sed 's/^/::error::log tail: /' || echo "::error::the container produced no log at all: the failure is before the build starts"
+        fi
 
   Linux:
     name: Linux

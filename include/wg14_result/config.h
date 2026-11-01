@@ -169,6 +169,17 @@ limitations under the License.
 #endif
 #endif
 
+/* The same for a member a C++11 compiler cannot make constexpr: a constructor with
+   a `std::initializer_list` parameter, because that type is not a literal type
+   until C++14 (AppleClang rejects it outright, gcc tolerates it). */
+#ifndef WG14_RESULT_CXX_CONSTEXPR14
+#if defined(__cplusplus) && WG14_RESULT_CXX_VERSION >= 201402L
+#define WG14_RESULT_CXX_CONSTEXPR14 constexpr
+#else
+#define WG14_RESULT_CXX_CONSTEXPR14
+#endif
+#endif
+
 #if WG14_RESULT_ENABLE_HEADER_ONLY || WG14_RESULT_SOURCE
 #if defined(__cplusplus)
 #if !((defined(__cplusplus) && __cplusplus >= 202002L) ||               \
@@ -187,8 +198,24 @@ limitations under the License.
 #define WG14_RESULT_PREFIX(x) x
 #endif
 
+/* Whether the C23 keywords these headers use - `nullptr`, `constexpr`, `typeof` -
+   are actually available. MSVC announces a C23 mode (C_STANDARD 23 is accepted and
+   __STDC_VERSION__ is 202311L) but its C front end has neither keyword: it reports
+   `error C2065: 'nullptr': undeclared identifier` and "expected '(' to follow
+   'constexpr'". Asking for the keywords and being told yes is not the same as
+   having them, so MSVC's answer is discounted and the portable arms are used
+   there. */
+#ifndef WG14_RESULT_C23_KEYWORDS
+#if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202311L) &&              \
+!defined(_MSC_VER)
+#define WG14_RESULT_C23_KEYWORDS 1
+#else
+#define WG14_RESULT_C23_KEYWORDS 0
+#endif
+#endif
+
 #ifndef WG14_RESULT_NULLPTR
-#if __STDC_VERSION__ >= 202311L
+#if WG14_RESULT_C23_KEYWORDS
 #define WG14_RESULT_NULLPTR nullptr
 #else
 #define WG14_RESULT_NULLPTR NULL
@@ -196,7 +223,7 @@ limitations under the License.
 #endif
 
 #ifndef WG14_RESULT_CONSTEXPR
-#if __STDC_VERSION__ >= 202311L && (!defined(__clang__) || __clang_major >= 19)
+#if WG14_RESULT_C23_KEYWORDS && (!defined(__clang__) || __clang_major >= 19)
 #define WG14_RESULT_CONSTEXPR constexpr
 #else
 #define WG14_RESULT_CONSTEXPR
@@ -204,7 +231,7 @@ limitations under the License.
 #endif
 
 #ifndef WG14_RESULT_TYPEOF
-#if __STDC_VERSION__ >= 202311L
+#if WG14_RESULT_C23_KEYWORDS
 #define WG14_RESULT_TYPEOF(...) typeof(__VA_ARGS__)
 #else
 #define WG14_RESULT_TYPEOF(...) __typeof__(__VA_ARGS__)
