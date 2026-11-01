@@ -81,7 +81,13 @@ jobs:
           
     steps:
     - uses: actions/checkout@v4
+    # The toolchain step caches with Swatinem/rust-cache, whose post step wants a
+    # `target/` directory to save. Nothing here builds Rust - the wrappers are off by
+    # default - so that post step failed path validation and left a failure-level
+    # annotation on jobs that had otherwise passed. The cache is redundant here.
     - uses: actions-rust-lang/setup-rust-toolchain@v1
+      with:
+        cache: false
 
     - name: Install the wrapper toolchain
       if: matrix.swig == 'ON'
@@ -228,7 +234,13 @@ jobs:
           
     steps:
     - uses: actions/checkout@v4
+    # The toolchain step caches with Swatinem/rust-cache, whose post step wants a
+    # `target/` directory to save. Nothing here builds Rust - the wrappers are off by
+    # default - so that post step failed path validation and left a failure-level
+    # annotation on jobs that had otherwise passed. The cache is redundant here.
     - uses: actions-rust-lang/setup-rust-toolchain@v1
+      with:
+        cache: false
 
     - name: Configure Mac OS
       shell: bash
@@ -292,7 +304,13 @@ jobs:
           
     steps:
     - uses: actions/checkout@v4
+    # The toolchain step caches with Swatinem/rust-cache, whose post step wants a
+    # `target/` directory to save. Nothing here builds Rust - the wrappers are off by
+    # default - so that post step failed path validation and left a failure-level
+    # annotation on jobs that had otherwise passed. The cache is redundant here.
     - uses: actions-rust-lang/setup-rust-toolchain@v1
+      with:
+        cache: false
 
     - name: Configure WinVS2022
       shell: bash
