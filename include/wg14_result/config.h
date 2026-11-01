@@ -250,7 +250,15 @@ limitations under the License.
 #endif
 
 #ifndef WG14_RESULT_TYPEOF
-#if WG14_RESULT_C23_KEYWORDS
+#if defined(__cplusplus) && WG14_RESULT_CXX_VERSION >= 201103L
+/* C++ spells it decltype, and MSVC has neither typeof nor __typeof__ in any mode -
+   the tests are compiled as C++ there, which is how this was found. decltype of a
+   dereference is a reference where typeof of it is a value, so the reference is
+   removed: every use is a typedef for declaring pointers to it. */
+#include <type_traits>
+#define WG14_RESULT_TYPEOF(...)                                                \
+  typename std::remove_reference<decltype(__VA_ARGS__)>::type
+#elif WG14_RESULT_C23_KEYWORDS
 #define WG14_RESULT_TYPEOF(...) typeof(__VA_ARGS__)
 #else
 #define WG14_RESULT_TYPEOF(...) __typeof__(__VA_ARGS__)
