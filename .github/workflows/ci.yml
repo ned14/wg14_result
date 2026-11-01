@@ -22,6 +22,9 @@ jobs:
           
     steps:
     - uses: actions/checkout@v7
+      with:
+        persist-credentials: true
+        fetch-depth: 0
 
     # The esp-idf container is entered explicitly rather than through a third-party
     # action, because an action's container cannot hand its output back to the
@@ -81,6 +84,9 @@ jobs:
           
     steps:
     - uses: actions/checkout@v7
+      with:
+        persist-credentials: true
+        fetch-depth: 0
     # The toolchain step caches with Swatinem/rust-cache, whose post step wants a
     # `target/` directory to save. Nothing here builds Rust - the wrappers are off by
     # default - so that post step failed path validation and left a failure-level
@@ -159,6 +165,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v7
+      with:
+        persist-credentials: true
+        fetch-depth: 0
 
     # The status word's two halves swap places on a big endian machine, and an
     # x86 runner can never see that, so it is built for s390x and run under
@@ -234,6 +243,9 @@ jobs:
           
     steps:
     - uses: actions/checkout@v7
+      with:
+        persist-credentials: true
+        fetch-depth: 0
     # The toolchain step caches with Swatinem/rust-cache, whose post step wants a
     # `target/` directory to save. Nothing here builds Rust - the wrappers are off by
     # default - so that post step failed path validation and left a failure-level
@@ -304,6 +316,9 @@ jobs:
           
     steps:
     - uses: actions/checkout@v7
+      with:
+        persist-credentials: true
+        fetch-depth: 0
     # The toolchain step caches with Swatinem/rust-cache, whose post step wants a
     # `target/` directory to save. Nothing here builds Rust - the wrappers are off by
     # default - so that post step failed path validation and left a failure-level
