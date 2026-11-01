@@ -440,6 +440,11 @@ disable : 4201) /* nonstandard extension used: nameless struct/union */
 
   struct WG14_RESULT_PREFIX(result_with_void_s)
   {
+    /* The void Result still has a value member, of the same size as the empty
+       value storage `status_result<void>` uses: one byte. Without it the status
+       word would sit at offset 0 here and at offset 2 in the C++ ABI, and the two
+       would be the same size without being the same bytes. */
+    char value[1];
     union WG14_RESULT_PREFIX(result_flags) _flags_;
     WG14_RESULT_PREFIX(status_code_system) error;
   };
@@ -469,19 +474,24 @@ typedef struct WG14_RESULT_PREFIX(result_with_void_s)
 WG14_RESULT_PREFIX(result_with_void);
 #endif
   /*
-     The same invariant for the void Result, which has no value: the status word
-     is at offset 0, then alignment padding if the status code needs it, then the
-     status code. Checked in every language mode, including C++, so that the C++
-     view of a void Result is the same bytes as the C one. */
+     The same invariant for the void Result: its one byte value storage at offset
+     0, the status word at align_up(sizeof(value), 2) - offset 2, as
+     `status_result<void>` has it - then alignment padding if the status code needs
+     it, then the status code. Checked in every language mode, including C++, so
+     that the C++ view of a void Result is the same bytes as the C one and as
+     `status_result<void>`. */
   WG14_RESULT_STATIC_ASSERT(
-  (offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) == 0),
-  "the status word of the void Result is not at offset 0!")
+  (offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) ==
+   ((sizeof(((struct WG14_RESULT_PREFIX(result_with_void_s) *) 0)->value) + 1) /
+    2 * 2)),
+  "the status word of the void Result is not where status_result<void> keeps it!")
   WG14_RESULT_STATIC_ASSERT(
   (offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), error) ==
-   (sizeof(union WG14_RESULT_PREFIX(result_flags)) +
-    __alignof(WG14_RESULT_PREFIX(status_code_system)) - 1) /
-       __alignof(WG14_RESULT_PREFIX(status_code_system)) *
-       __alignof(WG14_RESULT_PREFIX(status_code_system))),
+   ((offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) +
+     sizeof(union WG14_RESULT_PREFIX(result_flags)) +
+     __alignof(WG14_RESULT_PREFIX(status_code_system)) - 1) /
+    __alignof(WG14_RESULT_PREFIX(status_code_system)) *
+    __alignof(WG14_RESULT_PREFIX(status_code_system)))),
   "the status code of the void Result is not where status_result<void> keeps "
   "it!")
   WG14_RESULT_STATIC_ASSERT(
