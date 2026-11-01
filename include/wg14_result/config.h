@@ -272,7 +272,7 @@ limitations under the License.
 (defined(__clang__) && __clang_major__ < 19)
 /* Not much else we can do here */
 #define WG14_RESULT_TYPEOF_UNQUAL(...) __typeof__(__VA_ARGS__)
-#elif defined(__cplusplus) && __cplusplus < 201103L
+#elif defined(__cplusplus) && WG14_RESULT_CXX_VERSION < 201103L
 /* C++98 has no <type_traits> (and libstdc++'s errors out if asked), and it has
    no decltype either, so __typeof__ is the only spelling available. Only the
    C-only part of these headers is usable from C++98 - config.h requires
