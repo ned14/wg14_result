@@ -177,16 +177,16 @@ LT_ROW(a16, struct lt_a16_s, ((struct lt_a16_s){{7, 8}}))
    at 0. This is the row the matrix was missing: without it the void Result could
    differ from `status_result<void>` byte for byte and every other row would still
    pass. */
-_Static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), value) == 0,
+_Static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _value_) == 0,
                "the void Result's value storage is not at offset 0");
-_Static_assert(sizeof(((struct WG14_RESULT_PREFIX(result_with_void_s) *) 0)->value) ==
+_Static_assert(sizeof(((struct WG14_RESULT_PREFIX(result_with_void_s) *) 0)->_value_) ==
                    1,
                "the void Result's value storage is not one byte, so its status "
                "word is not where status_result<void> keeps it");
 _Static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) ==
                    LT_ALIGN_UP(
                    sizeof(((struct WG14_RESULT_PREFIX(result_with_void_s) *) 0)
-                              ->value),
+                              ->_value_),
                    2),
                "the void Result's status word is not at align_up(sizeof(value), 2)");
 _Static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), error) ==
@@ -280,7 +280,7 @@ int main(void)
   printf("%-6s %3zu %2zu %2zu %2zu %2zu\n", "void",
          sizeof(struct WG14_RESULT_PREFIX(result_with_void_s)),
          __alignof(struct WG14_RESULT_PREFIX(result_with_void_s)),
-         offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), value),
+         offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _value_),
          offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_),
          offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), error));
   if(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) != 2)

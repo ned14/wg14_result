@@ -249,10 +249,10 @@ static int lt_numeric_layout()
    the status word is at align_up(1, 2) = 2 rather than at 0. That is the layout
    `status_result<void>` has, and Outcome's test/tests/cabi-layout.cpp asserts the
    identity against that type from the other side. */
-static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), value) == 0,
+static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _value_) == 0,
               "the void Result's value storage is not at offset 0");
 static_assert(sizeof(((struct WG14_RESULT_PREFIX(result_with_void_s) *) nullptr)
-                        ->value) == 1,
+                        ->_value_) == 1,
               "the void Result's value storage is not one byte, so its status word "
               "is not where status_result<void> keeps it");
 static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) == 2,

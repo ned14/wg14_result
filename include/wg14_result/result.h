@@ -444,7 +444,7 @@ disable : 4201) /* nonstandard extension used: nameless struct/union */
        value storage `status_result<void>` uses: one byte. Without it the status
        word would sit at offset 0 here and at offset 2 in the C++ ABI, and the two
        would be the same size without being the same bytes. */
-    char value[1];
+    char _value_[1];
     union WG14_RESULT_PREFIX(result_flags) _flags_;
     WG14_RESULT_PREFIX(status_code_system) error;
   };
@@ -482,7 +482,7 @@ WG14_RESULT_PREFIX(result_with_void);
      `status_result<void>`. */
   WG14_RESULT_STATIC_ASSERT(
   (offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) ==
-   ((sizeof(((struct WG14_RESULT_PREFIX(result_with_void_s) *) 0)->value) + 1) /
+   ((sizeof(((struct WG14_RESULT_PREFIX(result_with_void_s) *) 0)->_value_) + 1) /
     2 * 2)),
   "the status word of the void Result is not where status_result<void> keeps it!")
   WG14_RESULT_STATIC_ASSERT(
