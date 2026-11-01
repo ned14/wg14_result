@@ -21,7 +21,7 @@ jobs:
       NAME: ESP32
           
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     # The esp-idf container is entered explicitly rather than through a third-party
     # action, because an action's container cannot hand its output back to the
@@ -80,12 +80,12 @@ jobs:
       CC: ${{ matrix.compiler }}
           
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     # The toolchain step caches with Swatinem/rust-cache, whose post step wants a
     # `target/` directory to save. Nothing here builds Rust - the wrappers are off by
     # default - so that post step failed path validation and left a failure-level
     # annotation on jobs that had otherwise passed. The cache is redundant here.
-    - uses: actions-rust-lang/setup-rust-toolchain@v1
+    - uses: actions-rust-lang/setup-rust-toolchain@v2
       with:
         cache: false
 
@@ -158,7 +158,7 @@ jobs:
       NAME: s390x-${{ matrix.debug }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     # The status word's two halves swap places on a big endian machine, and an
     # x86 runner can never see that, so it is built for s390x and run under
@@ -233,12 +233,12 @@ jobs:
       NAME: MacOS-${{ matrix.debug }}-${{ matrix.standard }}-${{ matrix.shared }}-${{ matrix.build_as_cxx }}
           
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     # The toolchain step caches with Swatinem/rust-cache, whose post step wants a
     # `target/` directory to save. Nothing here builds Rust - the wrappers are off by
     # default - so that post step failed path validation and left a failure-level
     # annotation on jobs that had otherwise passed. The cache is redundant here.
-    - uses: actions-rust-lang/setup-rust-toolchain@v1
+    - uses: actions-rust-lang/setup-rust-toolchain@v2
       with:
         cache: false
 
@@ -303,12 +303,12 @@ jobs:
       NAME: Windows-${{ matrix.debug }}-${{ matrix.standard }}-${{ matrix.shared }}-${{ matrix.build_as_cxx }}
           
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     # The toolchain step caches with Swatinem/rust-cache, whose post step wants a
     # `target/` directory to save. Nothing here builds Rust - the wrappers are off by
     # default - so that post step failed path validation and left a failure-level
     # annotation on jobs that had otherwise passed. The cache is redundant here.
-    - uses: actions-rust-lang/setup-rust-toolchain@v1
+    - uses: actions-rust-lang/setup-rust-toolchain@v2
       with:
         cache: false
 
