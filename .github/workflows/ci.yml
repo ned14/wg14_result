@@ -31,11 +31,18 @@ jobs:
         path: .
         # The build runs inside the container, so the errors are turned into
         # annotations by the command itself: nothing on the runner can read that
-        # filesystem, and the job log is not reachable from this project.
+        # filesystem, and the job log is not reachable from this project. The
+        # configure and the build share one log, because either can be the one that
+        # fails and a short-circuit would lose the diagnosis.
         command: |
-          mkdir -p build && cd build &&
-          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_TESTS_AS_CXX=OFF -DBUILD_SWIG_WRAPPERS=OFF -DBUILD_RUST_WRAPPERS=OFF &&
-          { cmake --build . --parallel > /tmp/esp32-build.log 2>&1; st=$?; grep -m 20 -iE 'error[: ]' /tmp/esp32-build.log | sed 's/^/::error::/'; [ $st -eq 0 ] || exit $st; }
+          mkdir -p build && cd build
+          cst=0
+          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_TESTS_AS_CXX=OFF -DBUILD_SWIG_WRAPPERS=OFF -DBUILD_RUST_WRAPPERS=OFF > /tmp/esp32.log 2>&1 || cst=$?
+          bst=0
+          cmake --build . --parallel >> /tmp/esp32.log 2>&1 || bst=$?
+          hits=$(grep -m 20 -iE 'error|Error' /tmp/esp32.log || true)
+          if [ -n "$hits" ]; then echo "$hits" | sed 's/^/::error::/'; else tail -5 /tmp/esp32.log | sed 's/^/::error::log tail: /'; fi
+          [ "$cst" -eq 0 ] && [ "$bst" -eq 0 ]
 
   Linux:
     name: Linux
@@ -101,18 +108,33 @@ jobs:
       run: |
         set -o pipefail
         cd build && ctest --output-on-failure --timeout 300 -E benchmark 2>&1 | tee ctest.log
-
-    # The job log lives on storage this project's own tooling cannot reach, so the
-    # first errors are re-emitted as workflow commands: those become check-run
-    # annotations, which are readable through the API.
+    # The job log lives on storage this project's own tooling cannot reach (and the
+    # annotations endpoint does not), so the first errors are re-emitted as
+    # workflow commands, which GitHub records as check-run annotations that the API
+    # will serve. If nothing matches, the tail of the log is annotated instead: a
+    # failure that reports only "exit code 1" costs a human round trip.
     - name: Annotate the errors
       if: failure()
       shell: bash
       run: |
-        for f in build/build.log build.log build/ctest.log; do
+        logs="build/build.log build.log build/ctest.log"
+        hits=0
+        for f in $logs; do
           [ -f "$f" ] || continue
-          grep -m 10 -iE 'error[: ]|Failed|tests failed' "$f" | sed 's/^/::error::/' || true
+          out=$(grep -m 10 -iE 'error|FAILED|undefined symbol|tests failed|assertion' "$f" || true)
+          if [ -n "$out" ]; then
+            echo "$out" | sed 's/^/::error::/'
+            hits=1
+          fi
         done
+        if [ "$hits" -eq 0 ]; then
+          for f in $logs; do
+            [ -f "$f" ] || continue
+            tail -5 "$f" | sed 's/^/::error::log tail: /'
+            break
+          done
+          echo "::error::no log file matched; the failing step produced no build log (check the step order)"
+        fi
       
   BigEndian:
     name: s390x big endian (qemu)
@@ -158,18 +180,33 @@ jobs:
       run: |
         set -o pipefail
         ctest --test-dir build --output-on-failure --timeout 300 2>&1 | tee build/ctest.log
-
-    # The job log lives on storage this project's own tooling cannot reach, so the
-    # first errors are re-emitted as workflow commands: those become check-run
-    # annotations, which are readable through the API.
+    # The job log lives on storage this project's own tooling cannot reach (and the
+    # annotations endpoint does not), so the first errors are re-emitted as
+    # workflow commands, which GitHub records as check-run annotations that the API
+    # will serve. If nothing matches, the tail of the log is annotated instead: a
+    # failure that reports only "exit code 1" costs a human round trip.
     - name: Annotate the errors
       if: failure()
       shell: bash
       run: |
-        for f in build/build.log build.log build/ctest.log; do
+        logs="build/build.log build.log build/ctest.log"
+        hits=0
+        for f in $logs; do
           [ -f "$f" ] || continue
-          grep -m 10 -iE 'error[: ]|Failed|tests failed' "$f" | sed 's/^/::error::/' || true
+          out=$(grep -m 10 -iE 'error|FAILED|undefined symbol|tests failed|assertion' "$f" || true)
+          if [ -n "$out" ]; then
+            echo "$out" | sed 's/^/::error::/'
+            hits=1
+          fi
         done
+        if [ "$hits" -eq 0 ]; then
+          for f in $logs; do
+            [ -f "$f" ] || continue
+            tail -5 "$f" | sed 's/^/::error::log tail: /'
+            break
+          done
+          echo "::error::no log file matched; the failing step produced no build log (check the step order)"
+        fi
 
   MacOS:
     name: Mac OS
@@ -207,18 +244,33 @@ jobs:
       run: |
         set -o pipefail
         cd build && ctest --output-on-failure --timeout 300 -E benchmark 2>&1 | tee ctest.log
-
-    # The job log lives on storage this project's own tooling cannot reach, so the
-    # first errors are re-emitted as workflow commands: those become check-run
-    # annotations, which are readable through the API.
+    # The job log lives on storage this project's own tooling cannot reach (and the
+    # annotations endpoint does not), so the first errors are re-emitted as
+    # workflow commands, which GitHub records as check-run annotations that the API
+    # will serve. If nothing matches, the tail of the log is annotated instead: a
+    # failure that reports only "exit code 1" costs a human round trip.
     - name: Annotate the errors
       if: failure()
       shell: bash
       run: |
-        for f in build/build.log build.log build/ctest.log; do
+        logs="build/build.log build.log build/ctest.log"
+        hits=0
+        for f in $logs; do
           [ -f "$f" ] || continue
-          grep -m 10 -iE 'error[: ]|Failed|tests failed' "$f" | sed 's/^/::error::/' || true
+          out=$(grep -m 10 -iE 'error|FAILED|undefined symbol|tests failed|assertion' "$f" || true)
+          if [ -n "$out" ]; then
+            echo "$out" | sed 's/^/::error::/'
+            hits=1
+          fi
         done
+        if [ "$hits" -eq 0 ]; then
+          for f in $logs; do
+            [ -f "$f" ] || continue
+            tail -5 "$f" | sed 's/^/::error::log tail: /'
+            break
+          done
+          echo "::error::no log file matched; the failing step produced no build log (check the step order)"
+        fi
       
   Windows:
     name: Windows VS2022
@@ -256,15 +308,30 @@ jobs:
       run: |
         set -o pipefail
         cd build && ctest -C ${{ matrix.debug }} --output-on-failure --timeout 300 -E benchmark 2>&1 | tee ctest.log
-
-    # The job log lives on storage this project's own tooling cannot reach, so the
-    # first errors are re-emitted as workflow commands: those become check-run
-    # annotations, which are readable through the API.
+    # The job log lives on storage this project's own tooling cannot reach (and the
+    # annotations endpoint does not), so the first errors are re-emitted as
+    # workflow commands, which GitHub records as check-run annotations that the API
+    # will serve. If nothing matches, the tail of the log is annotated instead: a
+    # failure that reports only "exit code 1" costs a human round trip.
     - name: Annotate the errors
       if: failure()
       shell: bash
       run: |
-        for f in build/build.log build.log build/ctest.log; do
+        logs="build/build.log build.log build/ctest.log"
+        hits=0
+        for f in $logs; do
           [ -f "$f" ] || continue
-          grep -m 10 -iE 'error[: ]|Failed|tests failed' "$f" | sed 's/^/::error::/' || true
+          out=$(grep -m 10 -iE 'error|FAILED|undefined symbol|tests failed|assertion' "$f" || true)
+          if [ -n "$out" ]; then
+            echo "$out" | sed 's/^/::error::/'
+            hits=1
+          fi
         done
+        if [ "$hits" -eq 0 ]; then
+          for f in $logs; do
+            [ -f "$f" ] || continue
+            tail -5 "$f" | sed 's/^/::error::log tail: /'
+            break
+          done
+          echo "::error::no log file matched; the failing step produced no build log (check the step order)"
+        fi

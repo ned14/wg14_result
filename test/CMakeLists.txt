@@ -10,7 +10,15 @@ add_code_test(status_code_test SOURCES "status_code_test.c")
 # the C++ side and the identity with status_result<R>; this covers C11, C17 and
 # C23. BUILD_TESTS_AS_CXX is deliberately not honoured here - these targets are
 # the C compilation.
-foreach(WG14_LAYOUT_C_STANDARD 11 17 23)
+# The C23 lane exists only where CMake reports that the compiler has a C23 mode.
+# MSVC answers `C_STANDARD 23` but has neither a real C23 mode nor the C23
+# keywords - it announced __STDC_VERSION__ 202311L and then rejected `nullptr` in
+# C (C2065) - so it is asked first rather than being told.
+set(WG14_LAYOUT_C_STANDARDS 11 17)
+if("c_std_23" IN_LIST CMAKE_C_COMPILE_FEATURES)
+  list(APPEND WG14_LAYOUT_C_STANDARDS 23)
+endif()
+foreach(WG14_LAYOUT_C_STANDARD ${WG14_LAYOUT_C_STANDARDS})
   set(WG14_LAYOUT_TARGET "layout_test_c${WG14_LAYOUT_C_STANDARD}")
   set_source_files_properties("layout_test.c" PROPERTIES LANGUAGE C)
   add_executable(${WG14_LAYOUT_TARGET} "layout_test.c")
