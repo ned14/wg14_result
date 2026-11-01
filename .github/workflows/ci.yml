@@ -29,7 +29,13 @@ jobs:
         esp_idf_version: latest
         target: esp32c3
         path: .
-        command: mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_TESTS_AS_CXX=OFF -DBUILD_SWIG_WRAPPERS=OFF -DBUILD_RUST_WRAPPERS=OFF && cmake --build . --parallel
+        # The build runs inside the container, so the errors are turned into
+        # annotations by the command itself: nothing on the runner can read that
+        # filesystem, and the job log is not reachable from this project.
+        command: |
+          mkdir -p build && cd build &&
+          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_TESTS_AS_CXX=OFF -DBUILD_SWIG_WRAPPERS=OFF -DBUILD_RUST_WRAPPERS=OFF &&
+          { cmake --build . --parallel > /tmp/esp32-build.log 2>&1; st=$?; grep -m 20 -iE 'error[: ]' /tmp/esp32-build.log | sed 's/^/::error::/'; [ $st -eq 0 ] || exit $st; }
 
   Linux:
     name: Linux
@@ -85,16 +91,28 @@ jobs:
 
     - name: Build Linux
       shell: bash
-      run: cd build && cmake --build . --parallel 2>&1 | tee build.log
+      run: |
+        set -o pipefail
+        cd build && cmake --build . --parallel 2>&1 | tee build.log
 
-    - name: First build errors
-      if: failure()
-      shell: bash
-      run: grep -m 20 -E 'error:|Error' build/build.log || tail -40 build/build.log
 
     - name: CMake tests Linux
       shell: bash
-      run: cd build && ctest --output-on-failure --timeout 300 -E benchmark
+      run: |
+        set -o pipefail
+        cd build && ctest --output-on-failure --timeout 300 -E benchmark 2>&1 | tee ctest.log
+
+    # The job log lives on storage this project's own tooling cannot reach, so the
+    # first errors are re-emitted as workflow commands: those become check-run
+    # annotations, which are readable through the API.
+    - name: Annotate the errors
+      if: failure()
+      shell: bash
+      run: |
+        for f in build/build.log build.log build/ctest.log; do
+          [ -f "$f" ] || continue
+          grep -m 10 -iE 'error[: ]|Failed|tests failed' "$f" | sed 's/^/::error::/' || true
+        done
       
   BigEndian:
     name: s390x big endian (qemu)
@@ -127,14 +145,31 @@ jobs:
     - name: Configure and build s390x
       shell: bash
       run: |
+        set -o pipefail
         cmake -B build -DCMAKE_TOOLCHAIN_FILE=$PWD/cmake/qemu-s390x-toolchain.cmake \
           -DCMAKE_BUILD_TYPE=${{ matrix.debug }} \
           -DBUILD_SWIG_WRAPPERS=OFF -DBUILD_RUST_WRAPPERS=OFF
-        cmake --build build --parallel
+        cmake --build build --parallel 2>&1 | tee build.log
+
+
 
     - name: CMake tests s390x
       shell: bash
-      run: ctest --test-dir build --output-on-failure --timeout 300
+      run: |
+        set -o pipefail
+        ctest --test-dir build --output-on-failure --timeout 300 2>&1 | tee build/ctest.log
+
+    # The job log lives on storage this project's own tooling cannot reach, so the
+    # first errors are re-emitted as workflow commands: those become check-run
+    # annotations, which are readable through the API.
+    - name: Annotate the errors
+      if: failure()
+      shell: bash
+      run: |
+        for f in build/build.log build.log build/ctest.log; do
+          [ -f "$f" ] || continue
+          grep -m 10 -iE 'error[: ]|Failed|tests failed' "$f" | sed 's/^/::error::/' || true
+        done
 
   MacOS:
     name: Mac OS
@@ -161,11 +196,29 @@ jobs:
 
     - name: Build Mac OS
       shell: bash
-      run: cd build && cmake --build . --parallel
+      run: |
+        set -o pipefail
+        cd build && cmake --build . --parallel 2>&1 | tee build.log
+
+
 
     - name: CMake tests Mac OS
       shell: bash
-      run: cd build && ctest --output-on-failure --timeout 300 -E benchmark
+      run: |
+        set -o pipefail
+        cd build && ctest --output-on-failure --timeout 300 -E benchmark 2>&1 | tee ctest.log
+
+    # The job log lives on storage this project's own tooling cannot reach, so the
+    # first errors are re-emitted as workflow commands: those become check-run
+    # annotations, which are readable through the API.
+    - name: Annotate the errors
+      if: failure()
+      shell: bash
+      run: |
+        for f in build/build.log build.log build/ctest.log; do
+          [ -f "$f" ] || continue
+          grep -m 10 -iE 'error[: ]|Failed|tests failed' "$f" | sed 's/^/::error::/' || true
+        done
       
   Windows:
     name: Windows VS2022
@@ -192,8 +245,26 @@ jobs:
 
     - name: Build WinVS2022
       shell: bash
-      run: cd build && cmake --build . --config ${{ matrix.debug }} --parallel
+      run: |
+        set -o pipefail
+        cd build && cmake --build . --config ${{ matrix.debug }} --parallel 2>&1 | tee build.log
+
+
 
     - name: CMake tests WinVS2022
       shell: bash
-      run: cd build && ctest -C ${{ matrix.debug }} --output-on-failure --timeout 300 -E benchmark
+      run: |
+        set -o pipefail
+        cd build && ctest -C ${{ matrix.debug }} --output-on-failure --timeout 300 -E benchmark 2>&1 | tee ctest.log
+
+    # The job log lives on storage this project's own tooling cannot reach, so the
+    # first errors are re-emitted as workflow commands: those become check-run
+    # annotations, which are readable through the API.
+    - name: Annotate the errors
+      if: failure()
+      shell: bash
+      run: |
+        for f in build/build.log build.log build/ctest.log; do
+          [ -f "$f" ] || continue
+          grep -m 10 -iE 'error[: ]|Failed|tests failed' "$f" | sed 's/^/::error::/' || true
+        done
