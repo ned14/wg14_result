@@ -54,7 +54,7 @@ limitations under the License.
 #ifndef WG14_RESULT_SIZED_ENUMS_SUPPORTED
 #if(defined(__cplusplus) && __cplusplus >= 201103L) ||                         \
 (defined(_MSVC_LANG) && _MSVC_LANG >= 201103L) ||                             \
-(defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202311L)
+(defined(__STDC_VERSION__) && WG14_RESULT_C_VERSION >= 202311L)
 #define WG14_RESULT_SIZED_ENUMS_SUPPORTED 1
 #else
 #define WG14_RESULT_SIZED_ENUMS_SUPPORTED 0
@@ -99,7 +99,7 @@ limitations under the License.
 #ifndef WG14_RESULT_STATIC_ASSERT_SUPPORTED
 #if(defined(__cplusplus) && __cplusplus >= 201103L) ||                         \
 (defined(_MSVC_LANG) && _MSVC_LANG >= 201103L) ||                             \
-(defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L)
+(defined(__STDC_VERSION__) && WG14_RESULT_C_VERSION >= 201112L)
 #define WG14_RESULT_STATIC_ASSERT_SUPPORTED 1
 #else
 #define WG14_RESULT_STATIC_ASSERT_SUPPORTED 0
@@ -152,7 +152,7 @@ limitations under the License.
 /* Whether this language mode has `constexpr` at all: C++11 and later, or C23. */
 #ifndef WG14_RESULT_CONSTEXPR_AVAILABLE
 #if (defined(__cplusplus) && WG14_RESULT_CXX_VERSION >= 201103L) ||            \
-(defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202311L)
+(defined(__STDC_VERSION__) && WG14_RESULT_C_VERSION >= 202311L)
 #define WG14_RESULT_CONSTEXPR_AVAILABLE 1
 #else
 #define WG14_RESULT_CONSTEXPR_AVAILABLE 0
@@ -188,7 +188,7 @@ limitations under the License.
 #error                                                                         \
 "If being compiled as C++, the source code requires a minimum of a C++ 20 compiler for decent C11 support."
 #endif
-#elif __STDC_VERSION__ < 201112L
+#elif WG14_RESULT_C_VERSION < 201112L
 #error                                                                         \
 "The source code requires a minimum of a C11 compiler for atomics support."
 #endif
@@ -196,6 +196,25 @@ limitations under the License.
 
 #ifndef WG14_RESULT_PREFIX
 #define WG14_RESULT_PREFIX(x) x
+#endif
+
+/* The C standard in use, as a number, with MSVC's C23 announcement discounted.
+   MSVC accepts `C_STANDARD 23`, reports __STDC_VERSION__ as 202311L, and then has
+   neither `nullptr`, `constexpr`, `typeof` nor a fixed enum underlying type in C
+   (it reports "error C2065: 'nullptr': undeclared identifier", "expected '(' to
+   follow 'constexpr'" and "syntax error: ':'" against the C23 spelling). Every
+   C23 test in these headers therefore goes through this value rather than through
+   __STDC_VERSION__ directly, and MSVC takes the C17 arms. */
+#ifndef WG14_RESULT_C_VERSION
+#if defined(__STDC_VERSION__)
+#if __STDC_VERSION__ >= 202311L && defined(_MSC_VER)
+#define WG14_RESULT_C_VERSION 201710L
+#else
+#define WG14_RESULT_C_VERSION __STDC_VERSION__
+#endif
+#else
+#define WG14_RESULT_C_VERSION 0
+#endif
 #endif
 
 /* Whether the C23 keywords these headers use - `nullptr`, `constexpr`, `typeof` -
@@ -206,8 +225,7 @@ limitations under the License.
    having them, so MSVC's answer is discounted and the portable arms are used
    there. */
 #ifndef WG14_RESULT_C23_KEYWORDS
-#if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202311L) &&              \
-!defined(_MSC_VER)
+#if WG14_RESULT_C_VERSION >= 202311L
 #define WG14_RESULT_C23_KEYWORDS 1
 #else
 #define WG14_RESULT_C23_KEYWORDS 0
@@ -239,7 +257,7 @@ limitations under the License.
 #endif
 
 #ifndef WG14_RESULT_TYPEOF_UNQUAL
-#if __STDC_VERSION__ >= 202311L
+#if WG14_RESULT_C_VERSION >= 202311L
 #define WG14_RESULT_TYPEOF_UNQUAL(...) typeof_unqual(__VA_ARGS__)
 #elif(defined(__GNUC__) && !defined(__clang__) && __GNUC__ < 14) ||            \
 (defined(__clang__) && __clang_major__ < 19)
@@ -264,7 +282,7 @@ limitations under the License.
 #endif
 
 #ifndef WG14_RESULT_CONSTEXPR_OR_CONST
-#if __STDC_VERSION__ >= 202311L && (!defined(__clang__) || __clang_major >= 19)
+#if WG14_RESULT_C_VERSION >= 202311L && (!defined(__clang__) || __clang_major >= 19)
 #define WG14_RESULT_CONSTEXPR_OR_CONST constexpr
 #else
 #define WG14_RESULT_CONSTEXPR_OR_CONST const
@@ -294,7 +312,7 @@ limitations under the License.
 #endif
 
 #ifndef WG14_RESULT_PURE_INLINE
-#if __STDC_VERSION__ >= 201112L || defined(SWIG)
+#if WG14_RESULT_C_VERSION >= 201112L || defined(SWIG)
 #define WG14_RESULT_PURE_INLINE static inline
 #else
 #define WG14_RESULT_PURE_INLINE static __inline
@@ -324,7 +342,7 @@ limitations under the License.
 #if defined(__cplusplus)
 #define WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR(pred, msg, ...)                  \
   ((void) [] { static_assert((pred), msg); }, (__VA_ARGS__))
-#elif __STDC_VERSION__ >= 202311L
+#elif WG14_RESULT_C_VERSION >= 202311L
 #define WG14_RESULT_STATIC_ASSERT_WITHIN_EXPR(pred, msg, ...)                  \
   ((__VA_ARGS__) + 0 * sizeof(struct {                                         \
                      static_assert((pred), msg);                               \
@@ -366,7 +384,7 @@ WG14_RESULT_PREFIX(abortf_impl)(const char *msg, ...)
 #if defined(_MSC_VER) && !defined(__clang__)
 #define WG14_RESULT_ABORTF(X, ...)                                             \
   WG14_RESULT_PREFIX(abortf_impl)("FATAL: " X "\n", ##__VA_ARGS__)
-#elif __STDC_VERSION__ >= 202311L && !defined(__clang__)
+#elif WG14_RESULT_C_VERSION >= 202311L && !defined(__clang__)
 #define WG14_RESULT_ABORTF(X, ...)                                             \
   WG14_RESULT_PREFIX(abortf_impl)("FATAL: " X "\n" __VA_OPT(, ) __VA_ARGS__)
 #else

@@ -33,9 +33,8 @@ jobs:
       run: |
         set -o pipefail
         docker run --rm -v "$PWD":/project -w /project espressif/idf:release-v5.4 \
-          bash -lc '. /opt/esp/idf/export.sh > /dev/null && idf.py set-target esp32c3 && idf.py build' \
+          bash -lc '. /opt/esp/idf/export.sh > /dev/null && mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DCMAKE_C_STANDARD=${{ matrix.standard }} -DBUILD_TESTS_AS_CXX=OFF -DBUILD_SWIG_WRAPPERS=OFF -DBUILD_RUST_WRAPPERS=OFF && cmake --build . --parallel' \
           2>&1 | tee esp32.log
-
     - name: Annotate the errors
       if: failure()
       shell: bash

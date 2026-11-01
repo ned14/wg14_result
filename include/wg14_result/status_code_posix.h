@@ -84,7 +84,7 @@ typedef struct WG14_RESULT_PREFIX(status_code_posix_s)
 WG14_RESULT_PREFIX(status_code_posix);
 #endif
 
-#if __STDC_VERSION__ >= 201112L
+#if WG14_RESULT_C_VERSION >= 201112L
   _Static_assert(sizeof(WG14_RESULT_PREFIX(status_code_posix)) <=
                  sizeof(WG14_RESULT_PREFIX(status_code_system)),
                  "A POSIX status code is too large for status_code_system!");
