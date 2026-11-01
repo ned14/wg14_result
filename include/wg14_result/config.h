@@ -21,6 +21,26 @@ limitations under the License.
 #ifndef WG14_RESULT_CONFIG_H
 #define WG14_RESULT_CONFIG_H
 
+/* The C standard in use, as a number, with MSVC's C23 announcement discounted.
+   MSVC accepts `C_STANDARD 23`, reports __STDC_VERSION__ as 202311L, and then has
+   neither `nullptr`, `constexpr`, `typeof` nor a fixed enum underlying type in C
+   (it reports "error C2065: 'nullptr': undeclared identifier", "expected '(' to
+   follow 'constexpr'" and "syntax error: ':'" against the C23 spelling). Every
+   C23 test in these headers therefore goes through this value rather than through
+   __STDC_VERSION__ directly, and MSVC takes the C17 arms. */
+#ifndef WG14_RESULT_C_VERSION
+#if defined(__STDC_VERSION__)
+#if __STDC_VERSION__ >= 202311L && defined(_MSC_VER)
+#define WG14_RESULT_C_VERSION 201710L
+#else
+#define WG14_RESULT_C_VERSION __STDC_VERSION__
+#endif
+#else
+#define WG14_RESULT_C_VERSION 0
+#endif
+#endif
+
+
 #if defined(__cplusplus)
 #if __cplusplus < 201103L && _MSVC_LANG < 201103L &&                           \
 !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS) && !defined(SWIG)
@@ -196,25 +216,6 @@ limitations under the License.
 
 #ifndef WG14_RESULT_PREFIX
 #define WG14_RESULT_PREFIX(x) x
-#endif
-
-/* The C standard in use, as a number, with MSVC's C23 announcement discounted.
-   MSVC accepts `C_STANDARD 23`, reports __STDC_VERSION__ as 202311L, and then has
-   neither `nullptr`, `constexpr`, `typeof` nor a fixed enum underlying type in C
-   (it reports "error C2065: 'nullptr': undeclared identifier", "expected '(' to
-   follow 'constexpr'" and "syntax error: ':'" against the C23 spelling). Every
-   C23 test in these headers therefore goes through this value rather than through
-   __STDC_VERSION__ directly, and MSVC takes the C17 arms. */
-#ifndef WG14_RESULT_C_VERSION
-#if defined(__STDC_VERSION__)
-#if __STDC_VERSION__ >= 202311L && defined(_MSC_VER)
-#define WG14_RESULT_C_VERSION 201710L
-#else
-#define WG14_RESULT_C_VERSION __STDC_VERSION__
-#endif
-#else
-#define WG14_RESULT_C_VERSION 0
-#endif
 #endif
 
 /* Whether the C23 keywords these headers use - `nullptr`, `constexpr`, `typeof` -
