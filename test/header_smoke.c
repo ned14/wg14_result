@@ -82,7 +82,9 @@ int main(void)
   {
     return 6;
   }
-  if(offsetof(WG14_RESULT(l), _flags_) != 8)
+  /* align_up(sizeof(long), 2), not a literal: long is 4 bytes on Windows (LLP64)
+     and 8 on LP64, and the status word follows whichever it is. */
+  if(offsetof(WG14_RESULT(l), _flags_) != ((sizeof(long) + 1) / 2 * 2))
   {
     return 7;
   }
