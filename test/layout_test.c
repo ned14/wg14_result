@@ -172,6 +172,31 @@ LT_ROW(s5, struct lt_s5_s, ((struct lt_s5_s){{1, 2, 3, 4, 5}}))
 LT_ROW(s6, struct lt_s6_s, ((struct lt_s6_s){{1, 2, 3, 4, 5, 6}}))
 LT_ROW(a16, struct lt_a16_s, ((struct lt_a16_s){{7, 8}}))
 
+/* The void Result, which has no value of its own but still has the one byte of
+   value storage the C++ ABI has, so its status word is at align_up(1, 2) and not
+   at 0. This is the row the matrix was missing: without it the void Result could
+   differ from `status_result<void>` byte for byte and every other row would still
+   pass. */
+_Static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), value) == 0,
+               "the void Result's value storage is not at offset 0");
+_Static_assert(sizeof(((struct WG14_RESULT_PREFIX(result_with_void_s) *) 0)->value) ==
+                   1,
+               "the void Result's value storage is not one byte, so its status "
+               "word is not where status_result<void> keeps it");
+_Static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) ==
+                   LT_ALIGN_UP(
+                   sizeof(((struct WG14_RESULT_PREFIX(result_with_void_s) *) 0)
+                              ->value),
+                   2),
+               "the void Result's status word is not at align_up(sizeof(value), 2)");
+_Static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), error) ==
+                   LT_ALIGN_UP(
+                   offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) +
+                       sizeof(union WG14_RESULT_PREFIX(result_flags)),
+                   __alignof(WG14_RESULT_PREFIX(status_code_system))),
+               "the void Result's status code is not where status_result<void> "
+               "keeps it");
+
 /* The flags word itself, in every language mode: four bytes, two byte aligned,
    whose low half is two bytes of flags whether that half is typed as the enum
    (C23 and C++) or as plain `unsigned short` (C11 and C17). */
@@ -250,6 +275,19 @@ int main(void)
   failures += lt_row_s5();
   failures += lt_row_s6();
   failures += lt_row_a16();
+  /* The void Result: value 0, status word 2, status code 8 on LP64 and LLP64
+     alike, because the one byte of value storage is what shifts the word. */
+  printf("%-6s %3zu %2zu %2zu %2zu %2zu\n", "void",
+         sizeof(struct WG14_RESULT_PREFIX(result_with_void_s)),
+         __alignof(struct WG14_RESULT_PREFIX(result_with_void_s)),
+         offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), value),
+         offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_),
+         offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), error));
+  if(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) != 2)
+  {
+    printf("FAILED void: the status word is not at offset 2\n");
+    failures++;
+  }
   failures += lt_numeric_layout();
   if(failures != 0)
   {

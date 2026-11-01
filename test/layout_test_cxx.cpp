@@ -245,6 +245,19 @@ static int lt_numeric_layout()
   return (word == 0xABCD0123U) ? 0 : 1;
 }
 
+/* The void Result, as in the C half of this test: one byte of value storage, so
+   the status word is at align_up(1, 2) = 2 rather than at 0. That is the layout
+   `status_result<void>` has, and Outcome's test/tests/cabi-layout.cpp asserts the
+   identity against that type from the other side. */
+static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), value) == 0,
+              "the void Result's value storage is not at offset 0");
+static_assert(sizeof(((struct WG14_RESULT_PREFIX(result_with_void_s) *) nullptr)
+                        ->value) == 1,
+              "the void Result's value storage is not one byte, so its status word "
+              "is not where status_result<void> keeps it");
+static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) == 2,
+              "the void Result's status word is not at offset 2");
+
 int main()
 {
   int failures = 0;
