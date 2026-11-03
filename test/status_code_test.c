@@ -204,7 +204,7 @@ struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args) * args)
     return 0;
   }
   WG14_RESULT_PREFIX(status_code_domain_string_ref) ret;
-  WG14_RESULT_NOT_CXX_MEMSET(&ret, 0, sizeof(ret));
+  WG14_RESULT_MEMZERO(ret);
   args->ret = ret;
   return 0;
 }

@@ -955,7 +955,7 @@ extern "C"
     if(r->domain != WG14_RESULT_NULLPTR)
     {
       struct WG14_RESULT_PREFIX(status_code_domain_vtable_message_args) args;
-      WG14_RESULT_NOT_CXX_MEMSET(&args, 0, sizeof(args));
+      WG14_RESULT_MEMZERO(args);
       args.code = r;
       const int errcode =
       WG14_RESULT_VTABLE_INVOKE_API(r->domain, message, &args);
@@ -1005,7 +1005,7 @@ extern "C"
     {
       struct WG14_RESULT_PREFIX(status_code_domain_vtable_payload_info_args)
       args;
-      WG14_RESULT_NOT_CXX_MEMSET(&args, 0, sizeof(args));
+      WG14_RESULT_MEMZERO(args);
       args.domain = r->domain;
       WG14_RESULT_VTABLE_INVOKE_API(r->domain, payload_info, &args);
       WG14_RESULT_VTABLE_INVOKE_API(r->domain, erased_destroy, r, args.ret);

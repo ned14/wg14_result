@@ -505,7 +505,7 @@ WG14_RESULT_PREFIX(result_with_void);
   WG14_RESULT_PREFIX(result_void_make_success)(void)
   {
     struct WG14_RESULT_PREFIX(result_with_void_s) ret1;
-    WG14_RESULT_NOT_CXX_MEMSET(&ret1, 0, sizeof(ret1));
+    WG14_RESULT_MEMZERO(ret1);
     ret1._flags_.status = WG14_RESULT_PREFIX(result_status_flag_have_value);
     ret1.error = WG14_RESULT_PREFIX(status_code_system_empty);
     const WG14_RESULT_PREFIX(result_with_void) ret2 =
@@ -518,7 +518,7 @@ WG14_RESULT_PREFIX(result_with_void);
   WG14_RESULT_PREFIX(status_code_system) err)
   {
     struct WG14_RESULT_PREFIX(result_with_void_s) ret1;
-    WG14_RESULT_NOT_CXX_MEMSET(&ret1, 0, sizeof(ret1));
+    WG14_RESULT_MEMZERO(ret1);
     ret1._flags_.status = WG14_RESULT_PREFIX(result_status_flag_have_error);
     ret1.error = err;
     const WG14_RESULT_PREFIX(result_with_void) ret2 =
@@ -557,7 +557,7 @@ WG14_RESULT_PREFIX(result_with_void);
     halves of the flags word are declared in endianness order, so a brace      \
     initialiser would set whichever member happens to come first instead of    \
     the flags. `status` always aliases `status_bits`. */                       \
-    WG14_RESULT_NOT_CXX_MEMSET(&ret1, 0, sizeof(ret1));                        \
+    WG14_RESULT_MEMZERO(ret1);                                                 \
     ret1.value = val;                                                          \
     ret1._flags_.status = WG14_RESULT_PREFIX(result_status_flag_have_value);   \
     ret1.error = WG14_RESULT_PREFIX(status_code_system_empty);                 \
@@ -570,7 +570,7 @@ WG14_RESULT_PREFIX(result_with_void);
   WG14_RESULT_PREFIX(status_code_system) err)                                  \
   {                                                                            \
     WG14_RESULT_PREFIX(result_with_##name) ret;                                \
-    WG14_RESULT_NOT_CXX_MEMSET(&ret, 0, sizeof(ret));                          \
+    WG14_RESULT_MEMZERO(ret);                                                  \
     ret.error = err;                                                           \
     ret._flags_.status = WG14_RESULT_PREFIX(result_status_flag_have_error);    \
     return ret;                                                                \

@@ -56,7 +56,7 @@ extern "C"
   WG14_RESULT_PREFIX(status_code_with_payload_##name##_make_empty)(void)       \
   {                                                                            \
     WG14_RESULT_PREFIX(status_code_with_payload_##name) ret;                   \
-    WG14_RESULT_NOT_CXX_MEMSET(&ret, 0, sizeof(ret));                          \
+    WG14_RESULT_MEMZERO(ret);                                                  \
     return ret;                                                                \
   }
   /* \brief Declare a status code with payload of type `T` named `name`.

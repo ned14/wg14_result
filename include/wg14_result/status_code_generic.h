@@ -214,7 +214,7 @@ WG14_RESULT_PREFIX(status_code_generic);
   enum WG14_RESULT_PREFIX(status_code_errc) val)
   {
     WG14_RESULT_PREFIX(status_code_generic) ret;
-    WG14_RESULT_NOT_CXX_MEMSET(&ret, 0, sizeof(ret));
+    WG14_RESULT_MEMZERO(ret);
     ret.base.domain = WG14_RESULT_PREFIX(status_code_generic_domain)();
     ret.value = val;
     return ret;
@@ -262,7 +262,7 @@ WG14_RESULT_PREFIX(status_code_generic);
       {
         struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args)
         args;
-        WG14_RESULT_NOT_CXX_MEMSET(&args, 0, sizeof(args));
+        WG14_RESULT_MEMZERO(args);
         args.code = secondary;
         WG14_RESULT_VTABLE_INVOKE_API(secondary_domain, generic_code, &args);
         if(args.ret.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&
@@ -274,7 +274,7 @@ WG14_RESULT_PREFIX(status_code_generic);
       }
       struct WG14_RESULT_PREFIX(status_code_domain_vtable_generic_code_args)
       args;
-      WG14_RESULT_NOT_CXX_MEMSET(&args, 0, sizeof(args));
+      WG14_RESULT_MEMZERO(args);
       args.code = primary;
       WG14_RESULT_VTABLE_INVOKE_API(primary_domain, generic_code, &args);
       if(args.ret.value != WG14_RESULT_PREFIX(status_code_errc_unknown) &&

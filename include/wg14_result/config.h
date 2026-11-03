@@ -427,14 +427,16 @@ _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, ...)     \
 #endif
 #endif
 
-/* Zeroes the plain C struct a maker is about to fill in. This used to be a no-op
-in C++ ("NOT_CXX"), which left those structs UNINITIALISED there - so a maker
-returned a Result whose spare-storage half was whatever had been on the stack, and
-a caller comparing it against a freshly made success saw garbage. Every object this
-is applied to is a C struct with no constructor, so memsetting it in C++ as well is
-well defined and is what the name now says. */
-#ifndef WG14_RESULT_NOT_CXX_MEMSET
-#define WG14_RESULT_NOT_CXX_MEMSET(mem, val, len) memset((mem), (val), (len))
+/* Zeroes `x` before a maker fills in the fields it cares about. Every object this
+is applied to is a plain C struct (or a wrapper around one) with no constructor,
+so this is well defined in C++ as well as in C, and it is done in both.
+
+Taking the object rather than a pointer and a length means the type being zeroed
+and the size being zeroed can never disagree, which is the mistake this used to
+invite at every call site. Overridable because a freestanding target may want a
+different zeroing primitive than memset(). */
+#ifndef WG14_RESULT_MEMZERO
+#define WG14_RESULT_MEMZERO(x) memset(&(x), 0, sizeof(x))
 #endif
 
 #ifdef __cplusplus
