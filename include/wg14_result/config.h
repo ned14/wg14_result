@@ -427,12 +427,14 @@ _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, ...)     \
 #endif
 #endif
 
+/* Zeroes the plain C struct a maker is about to fill in. This used to be a no-op
+in C++ ("NOT_CXX"), which left those structs UNINITIALISED there - so a maker
+returned a Result whose spare-storage half was whatever had been on the stack, and
+a caller comparing it against a freshly made success saw garbage. Every object this
+is applied to is a C struct with no constructor, so memsetting it in C++ as well is
+well defined and is what the name now says. */
 #ifndef WG14_RESULT_NOT_CXX_MEMSET
-#if defined(__cplusplus) && !defined(WG14_RESULT_DISABLE_CXX_EXTENSIONS)
-#define WG14_RESULT_NOT_CXX_MEMSET(mem, val, len)
-#else
 #define WG14_RESULT_NOT_CXX_MEMSET(mem, val, len) memset((mem), (val), (len))
-#endif
 #endif
 
 #ifdef __cplusplus
