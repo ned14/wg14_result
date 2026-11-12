@@ -152,7 +152,104 @@ jobs:
           done
           echo "::error::no log file matched; the failing step produced no build log (check the step order)"
         fi
-      
+
+  # The one ABI property a 64-bit-only CI cannot see: what this header does when
+  # pointers are 4 bytes. On i386 GCC's preferred alignment for `long long` and
+  # `double` is 8 while the required alignment - and the alignment the compiler
+  # actually gives a struct holding one - is 4, so an assertion asking the wrong
+  # one of those two questions passes everywhere except here. That is not
+  # hypothetical: this header shipped such an assertion, Outcome's new `-m32`
+  # lane failed on it, and nothing in this repository's matrix (x86_64, s390x,
+  # macOS, ESP32) could have found it - ESP32 is 32-bit but xtensa is where the
+  # two alignments agree.
+  #
+  # Both languages, because the header is a C ABI and a C++ ABI at once: the C
+  # layout matrix runs in every C standard the compiler has, and layout_test_cxx
+  # pins the C++11 spelling. The matrix otherwise stays out of this lane - one
+  # gcc, one standard, one shared/static choice - because what is unusual here is
+  # the target, not the build.
+  Linux32:
+    name: Linux 32-bit (-m32)
+    runs-on: ubuntu-24.04
+    env:
+      NAME: Linux-gcc-Release-32bit
+      CC: gcc
+
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: true
+        fetch-depth: 0
+
+    # g++-multilib is what makes -m32 work at all: it brings the 32-bit libc,
+    # libstdc++ and libgcc, without which the configure succeeds and every link
+    # fails against a 64-bit archive.
+    - name: Install the 32-bit multilib toolchain
+      shell: bash
+      run: sudo apt-get update && sudo apt-get install -y g++-multilib
+
+    # A toolchain file that silently failed to take effect would leave a green lane
+    # that tested nothing, so assert the target before building: a 32-bit build has
+    # 4 byte pointers, and the configure step cannot tell you it ignored -m32.
+    - name: Show the compilers in use and prove the target is 32-bit
+      shell: bash
+      run: |
+        gcc --version | head -1
+        g++ --version | head -1
+        printf '#include <stdint.h>\nint main(void){return sizeof(void*) == 4 && sizeof(intptr_t) == 4 ? 0 : 1;}\n' > ptr.c
+        if ! gcc -m32 ptr.c -o ptr; then
+          echo "::error::-m32 does not build: g++-multilib is missing, or the flags never reached the compiler"
+          exit 1
+        fi
+        if ! ./ptr; then
+          echo "::error::a -m32 build does not have 4 byte pointers and intptr_t: the target did not switch"
+          exit 1
+        fi
+        echo "-m32 works: pointers and intptr_t are 4 bytes"
+
+    - name: Configure 32-bit
+      shell: bash
+      run: |
+        mkdir build && cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release \
+                 -DCMAKE_TOOLCHAIN_FILE=$PWD/../cmake/m32-toolchain.cmake \
+                 -DBUILD_TESTS_AS_CXX=OFF -DBUILD_SWIG_WRAPPERS=OFF
+
+    - name: Build 32-bit
+      shell: bash
+      run: |
+        set -o pipefail
+        cd build && cmake --build . --parallel 2>&1 | tee build.log
+
+    - name: CMake tests 32-bit
+      shell: bash
+      run: |
+        set -o pipefail
+        cd build && ctest --output-on-failure --timeout 300 -E benchmark 2>&1 | tee ctest.log
+
+    - name: Annotate the errors
+      if: failure()
+      shell: bash
+      run: |
+        logs="build/build.log build.log build/ctest.log"
+        hits=0
+        for f in $logs; do
+          [ -f "$f" ] || continue
+          out=$(grep -m 10 -iE 'error|FAILED|undefined symbol|tests failed|assertion' "$f" || true)
+          if [ -n "$out" ]; then
+            echo "$out" | sed 's/^/::error::/'
+            hits=1
+          fi
+        done
+        if [ "$hits" -eq 0 ]; then
+          for f in $logs; do
+            [ -f "$f" ] || continue
+            tail -5 "$f" | sed 's/^/::error::log tail: /'
+            break
+          done
+          echo "::error::no log file matched; the failing step produced no build log (check the step order)"
+        fi
+
   BigEndian:
     name: s390x big endian (qemu)
     runs-on: ubuntu-24.04
