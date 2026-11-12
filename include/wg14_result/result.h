@@ -295,7 +295,8 @@ disable : 4201) /* nonstandard extension used: nameless struct/union */
   (sizeof(union WG14_RESULT_PREFIX(result_flags)) == sizeof(uint32_t)),
   "result_flags is not the size it is supposed to be!")
   WG14_RESULT_STATIC_ASSERT(
-  (__alignof(union WG14_RESULT_PREFIX(result_flags)) == __alignof(uint16_t)),
+  (WG14_RESULT_ALIGNOF(union WG14_RESULT_PREFIX(result_flags)) ==              \
+   WG14_RESULT_ALIGNOF(uint16_t)),
   "result_flags must be aligned like the two uint16_t it is made of!")
 #if WG14_RESULT_BIG_ENDIAN
   /*
@@ -329,8 +330,8 @@ disable : 4201) /* nonstandard extension used: nameless struct/union */
   "the flags enum is not 2 bytes, so a Result's status word cannot be typed "
   "with it")
   WG14_RESULT_STATIC_ASSERT(
-  (__alignof(enum WG14_RESULT_PREFIX(result_status_flags)) ==
-   __alignof(uint16_t)),
+  (WG14_RESULT_ALIGNOF(enum WG14_RESULT_PREFIX(result_status_flags)) ==        \
+   WG14_RESULT_ALIGNOF(uint16_t)),
   "the flags enum is not aligned like a uint16_t!")
 #endif
 #if !(defined(SWIG) && __cplusplus)
@@ -391,7 +392,7 @@ disable : 4201) /* nonstandard extension used: nameless struct/union */
 #define WG14_RESULT_ASSERT_TAIL(sname)                                         \
   WG14_RESULT_STATIC_ASSERT(                                                   \
   (sizeof(struct WG14_RESULT_PREFIX(sname)) %                                  \
-   __alignof(struct WG14_RESULT_PREFIX(sname)) == 0),                          \
+   WG14_RESULT_ALIGNOF(struct WG14_RESULT_PREFIX(sname)) == 0),                \
   "the Result's size is not a multiple of its alignment")                    \
   WG14_RESULT_STATIC_ASSERT(                                                   \
   (sizeof(struct WG14_RESULT_PREFIX(sname)) >=                                 \
@@ -402,7 +403,7 @@ disable : 4201) /* nonstandard extension used: nameless struct/union */
   (sizeof(struct WG14_RESULT_PREFIX(sname)) <                                  \
    offsetof(struct WG14_RESULT_PREFIX(sname), error) +                         \
    sizeof(WG14_RESULT_PREFIX(status_code_system)) +                            \
-   __alignof(struct WG14_RESULT_PREFIX(sname))),                               \
+   WG14_RESULT_ALIGNOF(struct WG14_RESULT_PREFIX(sname))),                     \
   "the Result is padded beyond what its alignment requires")
 
 #define WG14_RESULT_ASSERT_LAYOUT(T, sname)                                    \
@@ -415,17 +416,13 @@ disable : 4201) /* nonstandard extension used: nameless struct/union */
   "the status word is not where status_result<T> keeps it")                  \
   WG14_RESULT_STATIC_ASSERT(                                                   \
   (offsetof(struct WG14_RESULT_PREFIX(sname), error) ==                        \
-   (offsetof(struct WG14_RESULT_PREFIX(sname), _flags_) +                      \
-    sizeof(union WG14_RESULT_PREFIX(result_flags)) +                           \
-    __alignof(WG14_RESULT_PREFIX(status_code_system)) - 1) /                   \
-       __alignof(WG14_RESULT_PREFIX(status_code_system)) *                     \
-       __alignof(WG14_RESULT_PREFIX(status_code_system))),                     \
+   WG14_RESULT_ALIGN_UP(offsetof(struct WG14_RESULT_PREFIX(sname), _flags_) +  \
+                        sizeof(union WG14_RESULT_PREFIX(result_flags)),        \
+                        WG14_RESULT_PREFIX(status_code_system))),              \
   "the status code is not where status_result<T> keeps it")                  \
   WG14_RESULT_STATIC_ASSERT(                                                   \
-  (__alignof(struct WG14_RESULT_PREFIX(sname)) ==                              \
-   (__alignof(T) > __alignof(WG14_RESULT_PREFIX(status_code_system))           \
-    ? __alignof(T)                                                             \
-    : __alignof(WG14_RESULT_PREFIX(status_code_system)))),                     \
+  (WG14_RESULT_ALIGNOF(struct WG14_RESULT_PREFIX(sname)) ==                    \
+   WG14_RESULT_ALIGNOF_MAX(T, WG14_RESULT_PREFIX(status_code_system))),        \
   "the Result is not aligned like its most aligned member")                  \
   WG14_RESULT_ASSERT_TAIL(sname)
 #ifdef _MSC_VER
@@ -487,11 +484,10 @@ WG14_RESULT_PREFIX(result_with_void);
   "the status word of the void Result is not where status_result<void> keeps it!")
   WG14_RESULT_STATIC_ASSERT(
   (offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), error) ==
-   ((offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) +
-     sizeof(union WG14_RESULT_PREFIX(result_flags)) +
-     __alignof(WG14_RESULT_PREFIX(status_code_system)) - 1) /
-    __alignof(WG14_RESULT_PREFIX(status_code_system)) *
-    __alignof(WG14_RESULT_PREFIX(status_code_system)))),
+   WG14_RESULT_ALIGN_UP(
+   offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) +
+   sizeof(union WG14_RESULT_PREFIX(result_flags)),
+   WG14_RESULT_PREFIX(status_code_system))),
   "the status code of the void Result is not where status_result<void> keeps "
   "it!")
   WG14_RESULT_STATIC_ASSERT(

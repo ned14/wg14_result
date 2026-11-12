@@ -346,9 +346,7 @@ extern "C"
 
 #define STATUS_CODE_DOMAIN_PAYLOAD_INFO_INIT_INNARDS(T)                        \
   sizeof(T), sizeof(WG14_RESULT_PREFIX(status_code_domain) *) + sizeof(T),     \
-  (__alignof(T) > __alignof(WG14_RESULT_PREFIX(status_code_domain) *)) ?       \
-  __alignof(T) :                                                               \
-  __alignof(WG14_RESULT_PREFIX(status_code_domain) *)
+  WG14_RESULT_ALIGNOF_MAX(T, WG14_RESULT_PREFIX(status_code_domain) *)
 
   /*! \brief A default initialiser for a `status_code_domain_payload_info_t` for */
 /*! most types */

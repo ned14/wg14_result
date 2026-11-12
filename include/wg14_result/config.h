@@ -169,6 +169,44 @@ limitations under the License.
 #endif
 #endif
 
+/*! \brief The REQUIRED alignment of a type, in whichever spelling this language
+    has.
+    Not `__alignof`, which on GCC is the *preferred* alignment: on i386 that
+    is 8 for `long long` and `double`, while their required alignment - and the
+    alignment the compiler actually gives a struct containing one - is 4. The
+    layout assertions in result.h compare against what the compiler really does,
+    so they must ask for the required alignment, or they fire on a struct whose
+    layout is correct, which is exactly what a 32-bit build found. Where neither
+    spelling exists (C++98, C89) the assertions which use this expand to
+    nothing, so the fallback never decides anything. */
+#ifndef WG14_RESULT_ALIGNOF
+#if(defined(__cplusplus) && WG14_RESULT_CXX_VERSION >= 201103L) ||             \
+(defined(__STDC_VERSION__) && WG14_RESULT_C_VERSION >= 201112L)
+#if defined(__cplusplus)
+#define WG14_RESULT_ALIGNOF(x) alignof(x)
+#else
+#define WG14_RESULT_ALIGNOF(x) _Alignof(x)
+#endif
+#else
+#define WG14_RESULT_ALIGNOF(x) __alignof(x)
+#endif
+#endif
+
+/*! \brief The larger of two types' required alignments: the alignment a struct
+    holding both must have. */
+#ifndef WG14_RESULT_ALIGNOF_MAX
+#define WG14_RESULT_ALIGNOF_MAX(a, b)                                          \
+  (WG14_RESULT_ALIGNOF(a) > WG14_RESULT_ALIGNOF(b) ? WG14_RESULT_ALIGNOF(a)    \
+                                                   : WG14_RESULT_ALIGNOF(b))
+#endif
+
+/*! \brief `x` rounded up to a multiple of the required alignment of `T`. */
+#ifndef WG14_RESULT_ALIGN_UP
+#define WG14_RESULT_ALIGN_UP(x, T)                                             \
+  (((x) + WG14_RESULT_ALIGNOF(T) - 1) / WG14_RESULT_ALIGNOF(T) *               \
+   WG14_RESULT_ALIGNOF(T))
+#endif
+
 /* Whether this language mode has `constexpr` at all: C++11 and later, or C23. */
 #ifndef WG14_RESULT_CONSTEXPR_AVAILABLE
 #if (defined(__cplusplus) && WG14_RESULT_CXX_VERSION >= 201103L) ||            \
