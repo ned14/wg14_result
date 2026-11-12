@@ -24,8 +24,8 @@ offsets as `status_result<R>` for every shape it declares, and that
 
     value    at offset 0
     _flags_  at align_up(sizeof(T), 2)   - the status word, two uint16_t
-    error    at align_up(_flags_ + 4, __alignof(status_code_system))
-    alignof  == max(__alignof(T), __alignof(status_code_system))
+    error    at align_up(_flags_ + 4, _Alignof(status_code_system))
+    alignof  == max(_Alignof(T), _Alignof(status_code_system))
     sizeof   == align_up(error + sizeof(status_code_system), alignof(result))
 
 cabi-layout.cpp can only speak C++, and status_result cannot be named from C at
@@ -99,7 +99,7 @@ WG14_RESULT_DECLARE(struct lt_a16_s, a16)
   _Static_assert(offsetof(WG14_RESULT(name), error) ==                         \
                  LT_ALIGN_UP(offsetof(WG14_RESULT(name), _flags_) +            \
                                  sizeof(union WG14_RESULT_PREFIX(result_flags)),\
-                             __alignof(WG14_RESULT_PREFIX(                     \
+                             _Alignof(WG14_RESULT_PREFIX(                      \
                              status_code_system))),                            \
                  #name ": the status code is not where status_result<R> keeps "\
                  "it");                                                        \
@@ -107,13 +107,13 @@ WG14_RESULT_DECLARE(struct lt_a16_s, a16)
                  LT_ALIGN_UP(offsetof(WG14_RESULT(name), error) +              \
                                  sizeof(WG14_RESULT_PREFIX(                    \
                                  status_code_system)),                         \
-                             __alignof(WG14_RESULT(name))),                    \
+                             _Alignof(WG14_RESULT(name))),                     \
                  #name ": the Result is not the size status_result<R> is");    \
-  _Static_assert(__alignof(WG14_RESULT(name)) ==                               \
-                 (__alignof(T) > __alignof(WG14_RESULT_PREFIX(                 \
+  _Static_assert(_Alignof(WG14_RESULT(name)) ==                                \
+                 (_Alignof(T) > _Alignof(WG14_RESULT_PREFIX(                   \
                                  status_code_system))                          \
-                      ? __alignof(T)                                           \
-                      : __alignof(WG14_RESULT_PREFIX(                          \
+                      ? _Alignof(T)                                            \
+                      : _Alignof(WG14_RESULT_PREFIX(                           \
                       status_code_system))),                                   \
                  #name ": the Result is not aligned like its most aligned "\
                  "member");                                                    \
@@ -123,7 +123,7 @@ WG14_RESULT_DECLARE(struct lt_a16_s, a16)
     const WG14_RESULT(name) fail =                                             \
     WG14_RESULT_MAKE_FAILURE(name, WG14_RESULT_PREFIX(status_code_system_empty));\
     printf("%-6s %3zu %2zu %2zu %2zu %2zu\n", #name,                           \
-           sizeof(WG14_RESULT(name)), __alignof(WG14_RESULT(name)),            \
+           sizeof(WG14_RESULT(name)), _Alignof(WG14_RESULT(name)),             \
            offsetof(WG14_RESULT(name), value),                                 \
            offsetof(WG14_RESULT(name), _flags_),                               \
            offsetof(WG14_RESULT(name), error));                                \
@@ -193,7 +193,7 @@ _Static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), error) ==
                    LT_ALIGN_UP(
                    offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_) +
                        sizeof(union WG14_RESULT_PREFIX(result_flags)),
-                   __alignof(WG14_RESULT_PREFIX(status_code_system))),
+                   _Alignof(WG14_RESULT_PREFIX(status_code_system))),
                "the void Result's status code is not where status_result<void> "
                "keeps it");
 
@@ -202,7 +202,7 @@ _Static_assert(offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), error) ==
    (C23 and C++) or as plain `unsigned short` (C11 and C17). */
 _Static_assert(sizeof(union WG14_RESULT_PREFIX(result_flags)) == 4,
                "the flags word is not 4 bytes");
-_Static_assert(__alignof(union WG14_RESULT_PREFIX(result_flags)) == 2,
+_Static_assert(_Alignof(union WG14_RESULT_PREFIX(result_flags)) == 2,
                "the flags word is not 2 byte aligned, so the status word sits "
                "in the wrong place");
 /* The member order follows the endianness (see result.h): the low half of the
@@ -258,7 +258,7 @@ int main(void)
   printf("sizeof(enum result_status_flags)=%zu __alignof=%zu (the storage is "
          "2 bytes in every mode)\n",
          sizeof(enum WG14_RESULT_PREFIX(result_status_flags)),
-         __alignof(enum WG14_RESULT_PREFIX(result_status_flags)));
+         _Alignof(enum WG14_RESULT_PREFIX(result_status_flags)));
   printf("%-6s %3s %2s %2s %2s %2s\n", "R", "sz", "al", "val", "flg", "err");
   failures += lt_row_b();
   failures += lt_row_c();
@@ -279,7 +279,7 @@ int main(void)
      alike, because the one byte of value storage is what shifts the word. */
   printf("%-6s %3zu %2zu %2zu %2zu %2zu\n", "void",
          sizeof(struct WG14_RESULT_PREFIX(result_with_void_s)),
-         __alignof(struct WG14_RESULT_PREFIX(result_with_void_s)),
+         _Alignof(struct WG14_RESULT_PREFIX(result_with_void_s)),
          offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _value_),
          offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), _flags_),
          offsetof(struct WG14_RESULT_PREFIX(result_with_void_s), error));
