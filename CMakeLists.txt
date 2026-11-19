@@ -86,8 +86,14 @@ install(EXPORT ${PROJECT_NAME}Exports
 )
 
 if(BUILD_SWIG_WRAPPERS)
+  # The generated Python module and wrapper source are written into the build
+  # directory and are not checked in: they depend on the SWIG version, and the
+  # checked in copies went stale with every SWIG upgrade.
   find_package(SWIG COMPONENTS python REQUIRED)
   include(UseSWIG)
+  set(SWIG_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/bindings/SWIG")
+  file(GLOB_RECURSE SWIG_BINDING_HEADERS CONFIGURE_DEPENDS
+       "${CMAKE_CURRENT_SOURCE_DIR}/include/wg14_result/*.h")
   foreach(language python)
     if(language MATCHES python)
       find_package(Python COMPONENTS Development.Module REQUIRED)
@@ -101,9 +107,9 @@ if(BUILD_SWIG_WRAPPERS)
       set_property(SOURCE "bindings/SWIG/${PROJECT_NAME}.i" PROPERTY CPLUSPLUS OFF)
     endif()
     #set_property(SOURCE "bindings/SWIG/${PROJECT_NAME}.i" PROPERTY COMPILE_OPTIONS "-E")
-    set_property(SOURCE "bindings/SWIG/${PROJECT_NAME}.i" APPEND PROPERTY OBJECT_DEPENDS ${LIBRARY_SOURCES})
+    set_property(SOURCE "bindings/SWIG/${PROJECT_NAME}.i" APPEND PROPERTY OBJECT_DEPENDS ${LIBRARY_SOURCES} ${SWIG_BINDING_HEADERS})
     swig_add_library(${PROJECT_NAME}_${language} TYPE SHARED LANGUAGE ${language}
-      OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/bindings/SWIG/${language}/"
+      OUTPUT_DIR "${SWIG_OUTPUT_DIR}/${language}/"
       SOURCES "bindings/SWIG/${PROJECT_NAME}.i"
     )
     target_compile_definitions(${PROJECT_NAME}_${language} PUBLIC WG14_RESULT_DISABLE_CONVENIENCE_MACROS)

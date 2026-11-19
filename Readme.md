@@ -34,7 +34,10 @@ for the target platform at build time into the build directory (configure with
 `-DBUILD_RUST_WRAPPERS=ON`), which requires `bindgen` and `libclang`. Nothing
 generated is checked in, because the errno derived constants differ per platform.
     - SWIG
-        - Python (`bindings/SWIG/python`)
+        - Python (`bindings/SWIG/wg14_result.i`), generated at build time into
+the build directory with `-DBUILD_SWIG_WRAPPERS=ON`; requires SWIG and the
+Python development headers. Nothing generated is checked in, because it depends
+on the SWIG version.
         - Other languages SWIG supports should be trivial to add: C#, D, Go,
 Guile, Java, Javascript, Lua, OCaml, Octave, Perl, PHP, R, Ruby, Scilab,
 Tcl/Tk. And FORTRAN via a special fork of SWIG.

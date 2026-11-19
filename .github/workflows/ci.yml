@@ -475,6 +475,73 @@ jobs:
           echo "::error::no log file matched; the failing step produced no build log (check the step order)"
         fi
 
+  SWIG:
+    name: SWIG Python bindings
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        debug: [Debug, Release]
+        swig_as_cxx: [ON, OFF]
+    env:
+      NAME: SWIG-${{ matrix.debug }}-${{ matrix.swig_as_cxx }}
+
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: true
+        fetch-depth: 0
+
+    - name: Install SWIG and Python
+      shell: bash
+      run: sudo apt-get update && sudo apt-get install -y swig python3-dev
+
+    - name: Configure SWIG bindings
+      shell: bash
+      run: |
+        mkdir build && cd build
+        cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.debug }} -DBUILD_SWIG_WRAPPERS=ON -DBUILD_SWIG_AS_CXX=${{ matrix.swig_as_cxx }}
+
+    - name: Build SWIG bindings
+      shell: bash
+      run: |
+        set -o pipefail
+        cd build && cmake --build . --parallel 2>&1 | tee build.log
+
+    - name: Import the Python module
+      shell: bash
+      run: |
+        set -o pipefail
+        cd build
+        PYTHONPATH="$PWD/bindings/SWIG/python:$PWD/lib" python3 -c 'import wg14_result as w; assert w.status_code_errc_success == 0; assert hasattr(w, "status_code_errc_result_out_of_range"); print("SWIG bindings import ok")' 2>&1 | tee swig_test.log
+
+    - name: The build must not write into the source tree
+      shell: bash
+      run: test -z "$(git status --porcelain)"
+
+    - name: Annotate the errors
+      if: failure()
+      shell: bash
+      run: |
+        logs="build/build.log build/swig_test.log"
+        hits=0
+        for f in $logs; do
+          [ -f "$f" ] || continue
+          out=$(grep -m 10 -iE 'error|FAILED|undefined symbol|tests failed|assertion|Traceback' "$f" || true)
+          if [ -n "$out" ]; then
+            echo "$out" | sed 's/^/::error::/'
+            hits=1
+          fi
+        done
+        if [ "$hits" -eq 0 ]; then
+          for f in $logs; do
+            [ -f "$f" ] || continue
+            tail -5 "$f" | sed 's/^/::error::log tail: /'
+            break
+          done
+          echo "::error::no log file matched; the failing step produced no build log (check the step order)"
+        fi
+
   Windows:
     name: Windows VS2022
     runs-on: windows-latest

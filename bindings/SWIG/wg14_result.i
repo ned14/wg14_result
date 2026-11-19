@@ -9,16 +9,20 @@
 %include "wg14_result/config.h"
 %include "wg14_result/status_code_domain.h"
 
+#ifdef __cplusplus
 %template(wg14_result_status_code_special_member_functions) wg14_result::status_code_special_member_functions< struct status_code_generic_s >;
 %template(wg14_result_status_code_special_member_functions) wg14_result::status_code_special_member_functions< struct status_code_system_s >;
 %template(wg14_result_status_code_special_member_functions) wg14_result::status_code_special_member_functions< struct status_code_posix_s >;
+#endif
 
 %include "wg14_result/status_code_generic.h"
 %include "wg14_result/status_code_system.h"
 %include "wg14_result/status_code_posix.h"
 %include "wg14_result/status_code.h"
 
+#ifdef __cplusplus
 %template(wg14_result_special_member_functions) wg14_result::wg14_result_special_member_functions< result_with_void_s >;
+#endif
 
 %include "wg14_result/result.h"
 %include "wg14_result/try.h"

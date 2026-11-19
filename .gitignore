@@ -1,3 +1,6 @@
 /build/
 /.vscode/
 bindings/rust/raw_bindings.rs
+/bindings/SWIG/python/wg14_result.py
+/bindings/SWIG/python/wg14_resultPYTHON_wrap.c
+/bindings/SWIG/python/wg14_resultPYTHON_wrap.cxx
