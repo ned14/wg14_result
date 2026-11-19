@@ -126,8 +126,6 @@ todo
 - Ought to write how to use documentation
 - Ought to generate examples to ensure optimised codegen
 - Convenience functions for serialising and printing.
-- Rust bindings missing wrapping a Rust Result into a C Result i.e. going the
-other direction.
 - Need example bindings for:
     - FORTRAN
     - Swift
