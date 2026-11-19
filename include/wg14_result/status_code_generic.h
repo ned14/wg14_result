@@ -203,10 +203,20 @@ WG14_RESULT_PREFIX(status_code_generic);
 #endif
 
   /*| \brief An empty `status_code_generic` */
+#define WG14_RESULT_STATUS_CODE_GENERIC_EMPTY_INITIALISER                      \
+  {WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(               \
+  {WG14_RESULT_NULLPTR}, WG14_RESULT_PREFIX(status_code_errc_unknown))}
+#if defined(WG14_RESULT_SOURCE_INLINES)
+  /* Defined out of line by src/wg14_result/inlines.c, so the library exports
+  it for the language bindings. */
+  WG14_RESULT_EXTERN WG14_RESULT_CONSTEXPR_OR_CONST
+  WG14_RESULT_PREFIX(status_code_generic)
+  WG14_RESULT_PREFIX(status_code_generic_empty);
+#else
   static WG14_RESULT_CONSTEXPR_OR_CONST WG14_RESULT_PREFIX(status_code_generic)
-  WG14_RESULT_PREFIX(status_code_generic_empty) = {
-  WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(
-  {WG14_RESULT_NULLPTR}, WG14_RESULT_PREFIX(status_code_errc_unknown))};
+  WG14_RESULT_PREFIX(status_code_generic_empty) =
+  WG14_RESULT_STATUS_CODE_GENERIC_EMPTY_INITIALISER;
+#endif
 
   /*! \brief Make a `status_code_generic` */
   WG14_RESULT_EXTERN_INLINE WG14_RESULT_PREFIX(status_code_generic)

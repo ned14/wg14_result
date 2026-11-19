@@ -146,13 +146,24 @@ extern "C"
   };
 
   /*! \brief An empty `status_code_domain_string_ref` */
+#define WG14_RESULT_STATUS_CODE_DOMAIN_STRING_REF_EMPTY_INITIALISER            \
+  {                                                                            \
+    WG14_RESULT_NULLPTR, WG14_RESULT_NULLPTR,                                  \
+    {WG14_RESULT_NULLPTR, WG14_RESULT_NULLPTR, WG14_RESULT_NULLPTR},           \
+    WG14_RESULT_NULLPTR                                                       \
+  }
+#if defined(WG14_RESULT_SOURCE_INLINES)
+  /* Defined out of line by src/wg14_result/inlines.c, so the library exports
+  it for the language bindings. */
+  WG14_RESULT_EXTERN WG14_RESULT_CONSTEXPR_OR_CONST
+  WG14_RESULT_PREFIX(status_code_domain_string_ref)
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_empty);
+#else
   static WG14_RESULT_CONSTEXPR_OR_CONST
   WG14_RESULT_PREFIX(status_code_domain_string_ref)
-  WG14_RESULT_PREFIX(status_code_domain_string_ref_empty) = {
-  WG14_RESULT_NULLPTR,
-  WG14_RESULT_NULLPTR,
-  {WG14_RESULT_NULLPTR, WG14_RESULT_NULLPTR, WG14_RESULT_NULLPTR},
-  WG14_RESULT_NULLPTR};
+  WG14_RESULT_PREFIX(status_code_domain_string_ref_empty) =
+  WG14_RESULT_STATUS_CODE_DOMAIN_STRING_REF_EMPTY_INITIALISER;
+#endif
 
   /*! \brief Returns true if the string ref is empty */
   WG14_RESULT_EXTERN_INLINE bool

@@ -131,13 +131,20 @@ impl<T> Default for result_with<T> {
     }
 }
 impl<T> result_with<T> {
+    // The flags word is two `uint16_t`, so the enum's values are narrowed to
+    // the width of the union member whatever width bindgen gave the enum.
+    const HAVE_VALUE: u16 = result_status_flags_result_status_flag_have_value as u16;
+    const HAVE_ERROR: u16 = result_status_flags_result_status_flag_have_error as u16;
+    const HAVE_ERROR_ERRNO: u16 =
+        result_status_flags_result_status_flag_have_error_error_is_errno as u16;
+
     /// A C Result with successful T
     #[inline]
     pub fn success(v: T) -> Self {
         Self {
             value: MaybeUninit::new(v),
             _flags_: result_flags {
-                status: result_status_flags_result_status_flag_have_value,
+                status: Self::HAVE_VALUE,
             },
             error: status_code_system::default(),
         }
@@ -148,7 +155,7 @@ impl<T> result_with<T> {
         Self {
             value: MaybeUninit::uninit(),
             _flags_: result_flags {
-                status: result_status_flags_result_status_flag_have_error,
+                status: Self::HAVE_ERROR,
             },
             error: v,
         }
@@ -159,7 +166,7 @@ impl<T> result_with<T> {
         Self {
             value: MaybeUninit::uninit(),
             _flags_: result_flags {
-                status: result_status_flags_result_status_flag_have_error_error_is_errno,
+                status: Self::HAVE_ERROR_ERRNO,
             },
             error: unsafe {
                 std::mem::transmute::<status_code_posix, status_code_system>(
@@ -172,8 +179,7 @@ impl<T> result_with<T> {
     #[inline]
     pub fn has_value(&self) -> bool {
         unsafe {
-            (self._flags_.status & result_status_flags_result_status_flag_have_value)
-                == result_status_flags_result_status_flag_have_value
+            (self._flags_.status & Self::HAVE_VALUE) == Self::HAVE_VALUE
         }
     }
     /// The value, if it has one

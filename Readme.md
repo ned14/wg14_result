@@ -29,7 +29,10 @@ implement those operations. This means that if you are using this library from
 C++, or using this library via language bindings generated from the C++,
 lifetime management is taken care of for you.
 - Language bindings are provided for:
-    - Rust (`bindings/rust`) via Rust FFI bindgen.
+    - Rust (`bindings/rust`) via Rust FFI bindgen. The raw bindings are generated
+for the target platform at build time into the build directory (configure with
+`-DBUILD_RUST_WRAPPERS=ON`), which requires `bindgen` and `libclang`. Nothing
+generated is checked in, because the errno derived constants differ per platform.
     - SWIG
         - Python (`bindings/SWIG/python`)
         - Other languages SWIG supports should be trivial to add: C#, D, Go,

@@ -82,10 +82,20 @@ WG14_RESULT_PREFIX(status_code_system);
 #endif
 
   /*| \brief An empty `status_code_system` */
+#define WG14_RESULT_STATUS_CODE_SYSTEM_EMPTY_INITIALISER                       \
+  {WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(               \
+  {WG14_RESULT_NULLPTR}, 0)}
+#if defined(WG14_RESULT_SOURCE_INLINES)
+  /* Defined out of line by src/wg14_result/inlines.c, so the library exports
+  it for the language bindings. */
+  WG14_RESULT_EXTERN WG14_RESULT_CONSTEXPR_OR_CONST
+  WG14_RESULT_PREFIX(status_code_system)
+  WG14_RESULT_PREFIX(status_code_system_empty);
+#else
   static WG14_RESULT_CONSTEXPR_OR_CONST WG14_RESULT_PREFIX(status_code_system)
-  WG14_RESULT_PREFIX(status_code_system_empty) = {
-  WG14_RESULT_STATUS_CODE_SPECIAL_MEMBER_FUNCTIONS_INITIALISER(
-  {WG14_RESULT_NULLPTR}, 0)};
+  WG14_RESULT_PREFIX(status_code_system_empty) =
+  WG14_RESULT_STATUS_CODE_SYSTEM_EMPTY_INITIALISER;
+#endif
 
   /*! \brief Make a system code from an untyped input status code, this will
      fail if the input status cannot fit into a system code or if alignment

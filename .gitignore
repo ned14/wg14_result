@@ -1,2 +1,3 @@
 /build/
 /.vscode/
+bindings/rust/raw_bindings.rs

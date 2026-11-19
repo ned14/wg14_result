@@ -141,4 +141,59 @@ mod tests {
         drop(result_with::success(Tracker(&drops)));
         assert_eq!(drops.get(), 1, "dropping a result_with leaked its value");
     }
+
+    #[test]
+    fn test_layout_matches_c() {
+        // Mirrors WG14_RESULT_ASSERT_LAYOUT() in include/wg14_result/result.h
+        fn align_up(v: usize, a: usize) -> usize {
+            v.div_ceil(a) * a
+        }
+        fn check<T>(c: &result_with<T>) {
+            let base = c as *const result_with<T> as usize;
+            let value = &c.value as *const _ as usize - base;
+            let flags = &c._flags_ as *const _ as usize - base;
+            let error = &c.error as *const _ as usize - base;
+
+            let want_flags = std::mem::size_of::<T>().div_ceil(2) * 2;
+            let want_error = align_up(
+                want_flags + std::mem::size_of::<result_flags>(),
+                std::mem::align_of::<status_code_system>(),
+            );
+            let want_align =
+                std::mem::align_of::<T>().max(std::mem::align_of::<status_code_system>());
+            let want_size = align_up(
+                want_error + std::mem::size_of::<status_code_system>(),
+                want_align,
+            );
+
+            assert_eq!(value, 0, "value is not at the start of the Result");
+            assert_eq!(flags, want_flags, "status word is misplaced");
+            assert_eq!(error, want_error, "status code is misplaced");
+            assert_eq!(
+                std::mem::align_of::<result_with<T>>(),
+                want_align,
+                "Result is not aligned like its most aligned member"
+            );
+            assert_eq!(
+                std::mem::size_of::<result_with<T>>(),
+                want_size,
+                "Result is not padded as C lays it out"
+            );
+        }
+
+        assert_eq!(std::mem::size_of::<result_flags>(), 4);
+        assert_eq!(std::mem::align_of::<result_flags>(), 2);
+
+        #[repr(align(16))]
+        #[allow(dead_code)]
+        struct Aligned16([u8; 24]);
+
+        check(&result_with::success(0u8));
+        check(&result_with::success(false));
+        check(&result_with::success(0u16));
+        check(&result_with::success(0u32));
+        check(&result_with::success(0u64));
+        check(&result_with::success([0u8; 24]));
+        check(&result_with::success(Aligned16([0; 24])));
+    }
 }
