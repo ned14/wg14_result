@@ -83,7 +83,7 @@ int main()
   {
     return 5;
   }
-  if(offsetof(WG14_RESULT(l), _flags_) != 8)
+  if(offsetof(WG14_RESULT(l), _flags_) != (sizeof(long) + 1) / 2 * 2)
   {
     return 6;
   }
