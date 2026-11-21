@@ -1,0 +1,5 @@
+module wg14_result {
+  umbrella header "wg14_result/all.h"
+  config_macros WG14_RESULT_DISABLE_CXX_EXTENSIONS WG14_RESULT_ENABLE_HEADER_ONLY
+  export *
+}
